@@ -2,28 +2,30 @@ package com.mina.mail.ru.cinema.repository.dbo;
 
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * Created by Mina on 22.04.2019.
  */
 
 @Entity
-@Table(name = "order")
-public class OrderDbo {
+@Table(name = "filmticket")
+public class FilmTicketDbo {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "seat")
     private Integer seatNumber;
 
+    @Column(name = "visitor_id")
     private Integer visitorId;
 
-    public OrderDbo() {
+    public FilmTicketDbo() {
     }
 
     public Integer getId() {

@@ -47,4 +47,34 @@
         <renameTable oldTableName="order" newTableName="filmticket" />
     </changeSet>
 
+    <changeSet id="05" author="belski">
+        <addColumn tableName="filmticket">
+            <column name="film_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="06" id="belski">
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="1"
+                          tableName="filmticket"/>
+    </changeSet>
+
+    <changeSet id="07" author="belski">
+        <addForeignKeyConstraint baseTableName="filmticket" baseColumnNames="visitor_id"
+                                 constraintName="fk_visitor"
+                                 referencedTableName="visitor" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="08" author="belski">
+        <renameTable oldTableName="visitor" newTableName="user" />
+    </changeSet>
+
+    <changeSet id="09" author="belski">
+       <renameColumn tableName="filmticket" oldColumnName="seatNumber" newColumnName="seat" columnDataType="int"/>
+    </changeSet>
+
 </databaseChangeLog>

@@ -2,6 +2,9 @@ package com.mina.mail.ru.cinema.repository.dbo;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -9,7 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 
 @Entity
-@Table(name = "visitor")
+@Table(name = "user")
 public class UserDbo {
 
     @Id
@@ -19,6 +22,10 @@ public class UserDbo {
 
     @Column(name = "login")
     private String login;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "visitor_id")
+    private List<FilmTicketDbo> tickets = new ArrayList<>();
 
     public UserDbo() {
     }
@@ -37,5 +44,13 @@ public class UserDbo {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public List<FilmTicketDbo> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<FilmTicketDbo> tickets) {
+        this.tickets = tickets;
     }
 }
