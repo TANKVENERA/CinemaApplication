@@ -1,4 +1,4 @@
-package com.mina.mail.ru.cinema.repository.model;
+package com.mina.mail.ru.cinema.repository.dbo;
 
 
 
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order")
-public class Order {
+public class OrderDbo {
 
     @Id
     @Column(name = "id")
@@ -23,7 +23,7 @@ public class Order {
 
     private Integer visitorId;
 
-    public Order() {
+    public OrderDbo() {
     }
 
     public Integer getId() {

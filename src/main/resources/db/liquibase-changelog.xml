@@ -11,7 +11,7 @@
             <column name="id" type="int">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="personalNumber" type="varchar(100)">
+            <column name="login" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
             <column name="order_id" type="int">
@@ -28,6 +28,23 @@
         <addForeignKeyConstraint baseTableName="visitor" baseColumnNames="order_id"
                                  constraintName="fk_visitor_order"
                                  referencedTableName="order" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="03" author="belski">
+        <addColumn tableName="order">
+            <column name="visitor_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="order" baseColumnNames="visitor_id"
+                                 constraintName="fk_visitor"
+                                 referencedTableName="visitor" referencedColumnNames="id"/>
+
+    </changeSet>
+
+    <changeSet id="04" author="belski">
+        <renameTable oldTableName="order" newTableName="filmticket" />
     </changeSet>
 
 </databaseChangeLog>

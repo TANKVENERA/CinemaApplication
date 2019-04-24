@@ -1,4 +1,4 @@
-package com.mina.mail.ru.cinema.repository.model;
+package com.mina.mail.ru.cinema.repository.dbo;
 
 import javax.persistence.*;
 
@@ -10,14 +10,17 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "visitor")
-public class User {
+public class UserDbo {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private String personalNumber;
 
-    public User() {
+    @Column(name = "login")
+    private String login;
+
+    public UserDbo() {
     }
 
     public Integer getId() {
@@ -28,11 +31,11 @@ public class User {
         this.id = id;
     }
 
-    public String getPersonalNumber() {
-        return personalNumber;
+    public String getLogin() {
+        return login;
     }
 
-    public void setPersonalNumber(String personalNumber) {
-        this.personalNumber = personalNumber;
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

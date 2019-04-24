@@ -1,26 +1,31 @@
 package com.mina.mail.ru.cinema.controllers;
 
-import com.mina.mail.ru.cinema.repository.dao.VisitorDAO;
+import com.mina.mail.ru.cinema.repository.dbo.UserDbo;
+import com.mina.mail.ru.cinema.repository.impl.UserDAO;
+import com.mina.mail.ru.cinema.service.dto.UserDto;
+import com.mina.mail.ru.cinema.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by Mina on 21.04.2019.
  */
 
 @RestController
-public class VisitorController {
+public class UserController {
 
     @Autowired
-    private VisitorDAO visitor;
+    private UserService userService;
 
-    public VisitorController() {
+    public UserController() {
     }
 
-    @RequestMapping("/")
-    public String start() {
-        Long count = visitor.count();
-        return "HI number of users - " + count;
+    @GetMapping("/")
+    public List<UserDto> getAllUsers() {
+        return userService.getAllUsers();
     }
 }
