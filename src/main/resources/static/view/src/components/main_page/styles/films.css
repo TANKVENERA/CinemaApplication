@@ -1,0 +1,38 @@
+.main-block {
+    display: table;
+}
+
+.film-block {
+    display: table-cell;
+    padding-right: 100px;
+    vertical-align: top;
+}
+
+.hall-blcok {
+    display: table-cell;
+}
+
+.film-button {
+    font-weight: 500;
+    font-size: 20px;
+    height: 45px;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 1px solid transparent;
+    border-color: black;
+    background-color: #fff;
+    background-image: radial-gradient(circle at center, #488bf8 50%, transparent 50%);
+    background-repeat: no-repeat;
+    transition: background-size .3s, background-color .3s;
+    background-size: 0 0;
+    background-position: 50% 50%;
+    outline: none;
+}
+
+.film-button:hover {
+    cursor: pointer;
+    background-size: 200px 200px;
+    background-color: #488bf8;
+    color: #fff;
+    outline: none;
+}
