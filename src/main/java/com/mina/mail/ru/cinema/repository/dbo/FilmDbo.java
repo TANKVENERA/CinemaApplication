@@ -2,9 +2,6 @@ package com.mina.mail.ru.cinema.repository.dbo;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -21,23 +18,21 @@ public class FilmDbo implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "filmtitle")
-    private String filmtitle;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "filmdate")
     private Integer filmdate;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "film_id")
+    private Set<FilmTicketDbo> tickets;
+
     public FilmDbo() {
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "film_id")
-    private Set<FilmTicketDbo> filmtickets;
-
-    public FilmDbo(String filmtitle, Integer filmdate, Set<FilmTicketDbo> filmtickets) {
-        this.filmtitle = filmtitle;
-        this.filmdate = filmdate;
-        this.filmtickets = filmtickets;
+    public FilmDbo(String title) {
+        this.title = title;
     }
 
     public Integer getId() {
@@ -48,12 +43,12 @@ public class FilmDbo implements Serializable {
         this.id = id;
     }
 
-    public String getFilmtitle() {
-        return filmtitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setFilmtitle(String title) {
-        this.filmtitle = title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getFilmdate() {
@@ -64,11 +59,11 @@ public class FilmDbo implements Serializable {
         this.filmdate = date;
     }
 
-    public Set<FilmTicketDbo> getFilmtickets() {
-        return filmtickets;
+    public Set<FilmTicketDbo> getTickets() {
+        return tickets;
     }
 
-    public void setFilmtickets(Set<FilmTicketDbo> tickets) {
-        this.filmtickets = tickets;
+    public void setTickets(Set<FilmTicketDbo> tickets) {
+        this.tickets = tickets;
     }
 }

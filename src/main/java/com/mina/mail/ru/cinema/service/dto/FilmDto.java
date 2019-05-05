@@ -9,20 +9,11 @@ public class FilmDto {
 
     private Integer id;
 
-    private String filmtitle;
+    private String title;
 
     private Integer filmdate;
 
-    private Set<FilmTicketDto> filmtickets;
-
-    public FilmDto() {
-    }
-
-    public FilmDto(String filmtitle, Integer filmdate, Set<FilmTicketDto> filmtickets) {
-        this.filmtitle = filmtitle;
-        this.filmdate = filmdate;
-        this.filmtickets = filmtickets;
-    }
+    private Set<FilmTicketDto> tickets;
 
     public Integer getId() {
         return id;
@@ -32,12 +23,12 @@ public class FilmDto {
         this.id = id;
     }
 
-    public String getFilmtitle() {
-        return filmtitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setFilmtitle(String filmtitle) {
-        this.filmtitle = filmtitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getFilmdate() {
@@ -48,11 +39,11 @@ public class FilmDto {
         this.filmdate = filmdate;
     }
 
-    public Set<FilmTicketDto> getFilmtickets() {
-        return filmtickets;
+    public Set<FilmTicketDto> getTickets() {
+        return tickets;
     }
 
-    public void setFilmtickets(Set<FilmTicketDto> filmtickets) {
-        this.filmtickets = filmtickets;
+    public void setTickets(Set<FilmTicketDto> tickets) {
+        this.tickets = tickets;
     }
 }

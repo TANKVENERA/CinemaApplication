@@ -83,4 +83,11 @@
                                  referencedTableName="film" referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet author="11" id="belski">
+        <renameColumn columnDataType="varchar(256)"
+                      newColumnName="title"
+                      oldColumnName="filmtitle"
+                      tableName="film"/>
+    </changeSet>
+
 </databaseChangeLog>

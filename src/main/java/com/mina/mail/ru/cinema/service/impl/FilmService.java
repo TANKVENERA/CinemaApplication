@@ -7,7 +7,6 @@ import com.mina.mail.ru.cinema.service.converter.FilmConverter;
 import com.mina.mail.ru.cinema.service.converter.FilmTicketConverter;
 import com.mina.mail.ru.cinema.service.dto.FilmDto;
 import com.mina.mail.ru.cinema.service.dto.FilmTicketDto;
-import com.mina.mail.ru.cinema.service.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,14 +33,13 @@ public class FilmService {
         this.filmTicketConverter = filmTicketConverter;
     }
 
-    public List<FilmDto> getAllFilms() {
+    public List<FilmDto> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
-        List<FilmDbo> filmsDbo = filmDAO.findAll();
+        List<FilmDbo> filmsDbo = filmDAO.getFilms();
 
         for (FilmDbo d : filmsDbo) {
             filmsDto.add(filmConverter.convertToDto(d));
         }
-
         return filmsDto;
     }
 
@@ -50,14 +48,13 @@ public class FilmService {
         List<FilmDbo> datesDbo = filmDAO.getDatesByFilm(film);
         for (FilmDbo d : datesDbo) {
             Set<FilmTicketDto> ticketDtos = new HashSet<>();
-            for (FilmTicketDbo ticketDbo : d.getFilmtickets()) {
+            for (FilmTicketDbo ticketDbo : d.getTickets()) {
                ticketDtos.add(filmTicketConverter.convertToDto(ticketDbo));
             }
             FilmDto filmDto = filmConverter.convertToDto(d);
-            filmDto.setFilmtickets(ticketDtos);
+            filmDto.setTickets(ticketDtos);
             dates.add(filmDto);
         }
-
         return dates;
     }
 

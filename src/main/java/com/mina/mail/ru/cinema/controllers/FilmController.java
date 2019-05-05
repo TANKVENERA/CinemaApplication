@@ -5,6 +5,7 @@ import com.mina.mail.ru.cinema.service.dto.FilmDto;
 import com.mina.mail.ru.cinema.service.impl.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,12 +20,12 @@ public class FilmController {
     private FilmService filmService;
 
     @GetMapping("/films")
-    public List<FilmDto> getAllFilms() {
-        return filmService.getAllFilms();
+    public List<FilmDto> getFilms() {
+        return filmService.getFilms();
     }
 
-    @GetMapping("/dates")
-    public List<FilmDto> getDatesByFilm() {
-        return filmService.getDatesByFilm("Avatar");
+    @GetMapping(value = "/dates", params = "film")
+    public List<FilmDto> getDatesByFilm(@RequestParam(value = "film") String film) {
+        return filmService.getDatesByFilm(film);
     }
 }

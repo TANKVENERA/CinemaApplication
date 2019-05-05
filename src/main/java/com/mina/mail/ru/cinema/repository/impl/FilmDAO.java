@@ -13,6 +13,9 @@ import java.util.List;
 
 public interface FilmDAO extends JpaRepository<FilmDbo, Integer> {
 
-    @Query("select f from FilmDbo f where f.filmtitle=:film")
+    @Query("select f from FilmDbo f where f.title=:film")
     List<FilmDbo> getDatesByFilm(@Param("film") String film);
+
+    @Query("select new com.mina.mail.ru.cinema.repository.dbo.FilmDbo(f.title) from FilmDbo f group by f.title")
+    List<FilmDbo> getFilms();
 }
