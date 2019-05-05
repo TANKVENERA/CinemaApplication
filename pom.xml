@@ -60,6 +60,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+
+		<finalName>cinema</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>static/view/**</exclude>
+				</excludes>
+			</resource>
+		</resources>
 	</build>
 
 </project>

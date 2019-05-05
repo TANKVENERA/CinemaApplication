@@ -20,12 +20,18 @@ public class FilmTicketDbo {
     private Integer id;
 
     @Column(name = "seat")
-    private Integer seatNumber;
+    private Integer seatnumber;
 
     @Column(name = "visitor_id")
-    private Integer visitorId;
+    private Integer visitorid;
 
     public FilmTicketDbo() {
+    }
+
+    public FilmTicketDbo(Integer id, Integer seatnumber, Integer visitorid) {
+        this.id = id;
+        this.seatnumber = seatnumber;
+        this.visitorid = visitorid;
     }
 
     public Integer getId() {
@@ -36,19 +42,19 @@ public class FilmTicketDbo {
         this.id = id;
     }
 
-    public Integer getSeatNumber() {
-        return seatNumber;
+    public Integer getSeatnumber() {
+        return seatnumber;
     }
 
-    public void setSeatNumber(Integer seatNumber) {
-        this.seatNumber = seatNumber;
+    public void setSeatnumber(Integer seatNumber) {
+        this.seatnumber = seatNumber;
     }
 
-    public Integer getVisitorId() {
-        return visitorId;
+    public Integer getVisitorid() {
+        return visitorid;
     }
 
-    public void setVisitorId(Integer visitorId) {
-        this.visitorId = visitorId;
+    public void setVisitorid(Integer visitorId) {
+        this.visitorid = visitorId;
     }
 }

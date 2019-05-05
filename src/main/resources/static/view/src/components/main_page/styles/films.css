@@ -17,7 +17,7 @@
     font-size: 20px;
     height: 45px;
     margin-bottom: 15px;
-    width: 100%;
+    width: max-content;
     border: 1px solid transparent;
     border-color: black;
     background-color: #fff;

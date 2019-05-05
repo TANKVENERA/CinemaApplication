@@ -4,7 +4,6 @@
 
 import React, {Component} from 'react'
 import './styles/hall.css'
-import Hall from './Hall'
 import Films from './Films'
 
 class Main extends Component {

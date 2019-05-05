@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react'
-import {RadioGroup, RadioButton} from '../../../node_modules/react-custom-radio'
+import {RadioButton} from '../../../node_modules/react-custom-radio'
 
 class Hall extends Component {
     constructor(){
@@ -15,24 +15,25 @@ class Hall extends Component {
 
     handleClick = (index, flag) => {
        const toUpdate = this.state.seats;
-        toUpdate[index] = {index: index, flag: !flag};
+        toUpdate[index - 1] = {index: index - 1, flag: !flag};
         this.setState({seats: toUpdate});
     };
 
-    printSeats = () => {
+    printSeats () {
         const row = [];
-        for (var i = 0; i < 100; i++) {
+        for (var i = 1; i <= 100; i++) {
             row.push({index: i, flag: false});
         }
         return row;
     };
 
     render(){
+        const seats = this.props.tickets.map((ticket) =>(ticket.seatNumber));
         return (
             <div style={{width: '450px'}}>
                 {this.state.seats.map((seat) => (
                      <div key={seat.index} className="seat-block" >
-                        <RadioButton  className={seat.flag === true ? "seat-chosen" : "seat"} onClick={() => this.handleClick(seat.index, seat.flag)}/>
+                        <RadioButton  className={seat.flag === true || seats.includes(seat.index) ? "seat-chosen" : "seat"} onClick={() => this.handleClick(seat.index, seat.flag)}/>
                      </div>
                 ))}
             </div>

@@ -7,9 +7,12 @@ public class FilmTicketDto {
 
     private Integer id;
 
-    private Integer seatNumber;
+    private Integer seatnumber;
 
-    private Integer visitorId;
+    private Integer visitorid;
+
+    public FilmTicketDto() {
+    }
 
     public Integer getId() {
         return id;
@@ -19,19 +22,19 @@ public class FilmTicketDto {
         this.id = id;
     }
 
-    public Integer getSeatNumber() {
-        return seatNumber;
+    public Integer getSeatnumber() {
+        return seatnumber;
     }
 
-    public void setSeatNumber(Integer seatNumber) {
-        this.seatNumber = seatNumber;
+    public void setSeatnumber(Integer seatnumber) {
+        this.seatnumber = seatnumber;
     }
 
-    public Integer getVisitorId() {
-        return visitorId;
+    public Integer getVisitorid() {
+        return visitorid;
     }
 
-    public void setVisitorId(Integer visitorId) {
-        this.visitorId = visitorId;
+    public void setVisitorid(Integer visitorid) {
+        this.visitorid = visitorid;
     }
 }

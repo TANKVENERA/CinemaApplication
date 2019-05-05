@@ -74,7 +74,13 @@
     </changeSet>
 
     <changeSet id="09" author="belski">
-       <renameColumn tableName="filmticket" oldColumnName="seatNumber" newColumnName="seat" columnDataType="int"/>
+       <renameColumn tableName="filmticket" oldColumnName="seatnumber" newColumnName="seat" columnDataType="int"/>
+    </changeSet>
+
+    <changeSet id="10" author="belski">
+        <addForeignKeyConstraint baseTableName="filmticket" baseColumnNames="film_id"
+                                 constraintName="fk_film"
+                                 referencedTableName="film" referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>
