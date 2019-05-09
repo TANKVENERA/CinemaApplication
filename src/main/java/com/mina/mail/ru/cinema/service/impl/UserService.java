@@ -37,4 +37,10 @@ public class UserService {
 
       return usersDto;
     }
+
+    public UserDto getUser(String login) {
+        UserDbo userDbo = userDAO.getUserByName(login);
+        UserDto userDto = userConverter.convertToDto(userDbo);
+        return userDto;
+    }
 }

@@ -5,18 +5,18 @@
 import React, {Component} from 'react'
 import './styles/hall.css'
 import Films from './Films'
+import Head from './Head'
 
 class Main extends Component {
 
   render() {
       return (<div>
-           <div>Hi bot!</div>
+           <div>
+               <Head/>
+           </div>
           <div>
               <Films/>
           </div>
-          {/*<div>*/}
-              {/*<Hall/>*/}
-          {/*</div>*/}
       </div>);
   }
 }

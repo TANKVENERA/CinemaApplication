@@ -41,7 +41,6 @@ class Hall extends Component {
                 ))}
             </div>
         );
-
     }
 }
 

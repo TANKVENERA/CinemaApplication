@@ -1,0 +1,65 @@
+.head-block {
+    margin-top: 15px;
+    margin-bottom: 35px;
+    display: table
+}
+
+
+.input-field {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+    outline: none;
+    height:35px;
+    font-family: Arial;
+    font-size: 14px;
+    width: 200px;
+}
+
+.head-login-item{
+    display: inline-block;
+}
+
+.head-sign-in-button{
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 25px;
+}
+
+.head-sign-up-button{
+    display: table-cell;
+}
+
+.modal-body {
+    border-radius: 10px;
+    width: 300px;
+    background: #eff2f3
+}
+
+.modal-input-block {
+    text-align: center;
+}
+
+.sign-up-title{
+    text-align: center;
+}
+.modal-button-block {
+    display: inline-block;
+    padding-left: 16%;
+    padding-top: 15px;
+}
+
+.modal-sign-up-button {
+    display: inline-block;
+    padding-right: 25px;
+}
+
+.modal-cancel-button {
+    display: inline-block;
+}
+
+.user-not-found-error {
+    font-size: 15px;
+    color: red;
+    font-family: arial;
+}

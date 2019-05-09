@@ -17,18 +17,21 @@ class Films extends Component {
     };
 
     componentWillMount() {
-        fetch(`http://localhost:8080/cinema/rest/films`)
-            .then(result => {
+
+        fetch(`http://localhost:8080/cinema/rest/films`, {
+        }).then(result => {
                 return result.json();
             })
             .then(data => this.setState({films: data}));
     }
 
     handleClick = (index, uniqueFilm) => {
-        fetch(`http://localhost:8080/cinema/rest/dates/?film=${uniqueFilm}`)
-            .then(result => {
+        fetch(`http://localhost:8080/cinema/rest/dates/?film=${uniqueFilm}` , {
+            method: "GET",
+            credentials: 'include'
+        }).then(result => {
                 return result.json();
-            }).then(data => this.setState({dates: data, index: index, isInitial: false}));
+            }).then(data => this.setState({dates: data, index: index, isInitial: false, dateIndex: 0}));
     };
 
     handleDatesChange = (date, index) => {
@@ -59,8 +62,7 @@ class Films extends Component {
                             <button type="button" className="film-button" onClick={() => this.handleClick(index, film.title)}>
                                 {film.title}
                             </button>
-                        </div>))
-                    }
+                        </div>))}
                 </div>
 
                 <div className="hall-block">
@@ -83,8 +85,7 @@ class Films extends Component {
                         ))}
                     </SwipeableViews>
                 </div>
-            </div>
-        )
+            </div>)
     }
 }
 

@@ -90,4 +90,12 @@
                       tableName="film"/>
     </changeSet>
 
+    <changeSet id="12" author="belski">
+        <addColumn tableName="user">
+            <column name="role" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

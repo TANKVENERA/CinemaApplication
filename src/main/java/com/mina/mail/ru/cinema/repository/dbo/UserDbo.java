@@ -23,6 +23,9 @@ public class UserDbo {
     @Column(name = "login")
     private String login;
 
+    @Column(name = "role")
+    private String role;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "visitor_id")
     private List<FilmTicketDbo> tickets = new ArrayList<>();
@@ -52,5 +55,13 @@ public class UserDbo {
 
     public void setTickets(List<FilmTicketDbo> tickets) {
         this.tickets = tickets;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
