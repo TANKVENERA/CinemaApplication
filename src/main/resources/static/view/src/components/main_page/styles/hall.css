@@ -6,17 +6,15 @@
 .seat {
     border-color: transparent;
     border-width: thin;
-    width: 40px;
-    height: 40px;
-    /*box-shadow: inset 0 -8px 9px rgba(41, 41, 41, 0.2)*/
-    /*background: #cabdac;*/
+    width: 30px;
+    height: 30px;
     background: #488bf8;
     cursor: pointer;
 }
 
-.seat-chosen, .seat:active{
-    width: 40px;
-    height: 40px;
+.seat-chosen, .seat:active, .seat-ordered{
+    width: 30px;
+    height: 30px;
     box-shadow: inset 0 1px 6px rgba(41, 41, 41, 0.2);
     border-color: transparent;
     outline: none;
@@ -24,6 +22,25 @@
     cursor: pointer;
 }
 
+.seat-ordered {
+    background: #f5f822 !important;
+}
+
 button:disabled {
     cursor: not-allowed !important;
+}
+.order-button {
+    padding-top: 15px;
+    padding-bottom: 20px;
+    padding-left: 110px;
+    width: 130px;
+}
+
+.block-warn {
+    position: absolute;
+    top: 150px;
+    left: 10px;
+    background:white;
+    font-family: cursive;
+    height: 30px;
 }

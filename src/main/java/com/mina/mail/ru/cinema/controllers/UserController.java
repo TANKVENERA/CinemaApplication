@@ -5,7 +5,9 @@ import com.mina.mail.ru.cinema.repository.impl.UserDAO;
 import com.mina.mail.ru.cinema.service.dto.UserDto;
 import com.mina.mail.ru.cinema.service.impl.UserService;
 import com.mina.mail.ru.cinema.service.util.CurrentUser;
+import com.mina.mail.ru.cinema.service.util.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +32,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    public UserController() {
+    @GetMapping(value = "/checkauth")
+    public CurrentUser pingUser() {
+      CurrentUser currentUser = new CurrentUser();
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      boolean isAnonymous = authentication instanceof AnonymousAuthenticationToken;
+      currentUser.setLoggedInUser(isAnonymous  ? "" : authentication.getName());
+      currentUser.setAuthenticated(isAnonymous ? false : true);
+      return currentUser;
     }
 
     @GetMapping("/")
@@ -59,4 +68,5 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new CurrentUser("none", authentication == null ? false:true );
     }
+
 }

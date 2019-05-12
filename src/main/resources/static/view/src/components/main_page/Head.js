@@ -53,36 +53,37 @@ class Head extends Component {
                 credentials: 'include',
                 headers: {
                     "X-Requested-With": "XMLHttpRequest",
-                    "Content-Type": "application/json",
                     'Authorization': 'Basic ' + btoa(this.state.login + ":1"),
                 }
             }
-        )
-            .then(result => {
-                if (result.status === 401) {
-                  result = JSON.stringify({loggedInUser: 'User not found!', authenticated: false});
-                    return JSON.parse(result);
-                }
-                else {
-                    return result.json();
-                }
-            }).then(data => {
-                console.log('TERMINATOR', data);
-                this.setState({loginLogoutData: data})
+        ).then(result => {
+            return this.checkStatus(result, 'User not found!')
+        }).then(data => {
+            this.setState({loginLogoutData: data})
         });
     };
 
+     checkStatus (result, user) {
+        if (result.status === 401) {
+            result = JSON.stringify({loggedInUser: user, authenticated: false});
+            return JSON.parse(result);
+        }
+        else {
+            return result.json();
+        }
+    }
 
-    // componentDidMount () {
-    //     fetch("http://localhost:8080/cinema/rest/login", {
-    //             method: 'GET',
-    //             credentials: 'include'
-    //         }
-    //     )
-    //         .then(result => {
-    //             return result.json();
-    //         }).then(data => this.setState({loginLogoutData: data}));
-    // }
+    componentDidMount() {
+        fetch("http://localhost:8080/cinema/rest/checkauth", {
+            credentials: 'include',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+            .then(result => {
+              return this.checkStatus(result, '')
+            }).then(data => this.setState({loginLogoutData: data}));
+    }
 
     greeting() {
         const isLoggedIn = this.state.loginLogoutData.authenticated;
@@ -115,12 +116,12 @@ class Head extends Component {
                             </Button>
                         </div>
                     </div>
-                    {user === 'User not found!' && isLoggedIn === false && <div >
-                        <label className="user-not-found-error">User not found!</label>
-                    </div>}
-
+                    {user === 'User not found!' && isLoggedIn === false &&
+                        <div >
+                            <label className="user-not-found-error">User not found!</label>
+                        </div>
+                    }
                 </div>
-
             )
         }
     }
@@ -130,9 +131,7 @@ class Head extends Component {
             <div className="head-block">
                 {this.greeting()}
                 <div className="head-sign-up-button">
-                    <Button variant="outlined" onClick={this.onOpenModal}>
-                        Sing up
-                    </Button>
+                    <Button variant="outlined" onClick={this.onOpenModal}>Sing up</Button>
                 </div>
                 <Modal open={this.state.isOpenModal} onClose={this.onCloseModal}
                        showCloseIcon={false} classNames={{modal: 'modal-body'}}>
@@ -148,9 +147,7 @@ class Head extends Component {
                         </div>
                         <div className="modal-button-block">
                             <div className="modal-sign-up-button">
-                                <Button variant="contained" color="primary">
-                                    Sign Up
-                                </Button>
+                                <Button variant="contained" color="primary">Sign Up</Button>
                             </div>
                             <div className="modal-cancel-button">
                                 <Button variant="contained" color="secondary" onClick={this.onCloseModal}>

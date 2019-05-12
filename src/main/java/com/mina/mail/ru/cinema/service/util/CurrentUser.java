@@ -8,6 +8,9 @@ public class CurrentUser {
     private String loggedInUser;
     boolean authenticated;
 
+    public CurrentUser() {
+    }
+
     public CurrentUser(String loggedInUser, boolean authenticated) {
         this.loggedInUser = loggedInUser;
         this.authenticated = authenticated;

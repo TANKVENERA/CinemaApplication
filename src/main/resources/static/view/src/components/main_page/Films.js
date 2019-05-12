@@ -13,35 +13,37 @@ class Films extends Component {
         isInitial: true,
         dateIndex: 0,
         films: [],
-        dates: []
+        dates: [],
+        currentFilm: ''
     };
 
     componentWillMount() {
-
-        fetch(`http://localhost:8080/cinema/rest/films`, {
-        }).then(result => {
-                return result.json();
-            })
-            .then(data => this.setState({films: data}));
+        fetch(`http://localhost:8080/cinema/rest/films`).then(result => {
+            return result.json();
+        }).then(data => this.setState({films: data}));
     }
 
     handleClick = (index, uniqueFilm) => {
-        fetch(`http://localhost:8080/cinema/rest/dates/?film=${uniqueFilm}` , {
+        fetch(`http://localhost:8080/cinema/rest/dates/?film=${uniqueFilm}`, {
             method: "GET",
-            credentials: 'include'
+            credentials: 'include',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
         }).then(result => {
-                return result.json();
-            }).then(data => this.setState({dates: data, index: index, isInitial: false, dateIndex: 0}));
+            return result.json();
+        }).then(data => this.setState({dates: data, index: index, isInitial: false, dateIndex: 0, currentFilm: uniqueFilm}));
     };
 
-    handleDatesChange = (date, index) => {
+    handleDatesChange = (filmId, index) => {
         this.setState({dateIndex: index})
     };
 
     dateBlock(dates) {
         const dateBlock = dates.map((date, index) => (
             <div key={index} style={{display: 'inline-block'}}>
-                <button type="button" className="film-button" onClick={() => this.handleDatesChange(date.filmdate, index)}>
+                <button type="button" className="film-button"
+                        onClick={() => this.handleDatesChange(date.id, index)}>
                     {date.filmdate}
                 </button>
             </div>
@@ -59,7 +61,8 @@ class Films extends Component {
                 <div className="film-block">
                     {this.state.films.map((film, index) => (
                         <div key={index}>
-                            <button type="button" className="film-button" onClick={() => this.handleClick(index, film.title)}>
+                            <button type="button" className="film-button"
+                                    onClick={() => this.handleClick(index, film.title)}>
                                 {film.title}
                             </button>
                         </div>))}
@@ -74,11 +77,15 @@ class Films extends Component {
                                 </div>
                                 <div>
                                     <SwipeableViews index={dateIndex}>
-                                        {(filmIndex === 0  && isInitial ? [] : dates).map((date, index) => (
-                                        <div key={index}>
-                                            <Hall
-                                                tickets={filmIndex === 0 && isInitial ? [] : dates[dateIndex].tickets}/>
-                                        </div>))}
+                                        {(filmIndex === 0 && isInitial ? [] : dates).map((date, index) => (
+                                            <div key={index}>
+                                                <Hall
+                                                    tickets={filmIndex === 0 && isInitial ? [] : dates[dateIndex].tickets}
+                                                    dateIndex={date.filmdate}
+                                                    filmIndex={filmIndex}
+                                                    film={this.state.currentFilm}
+                                                    />
+                                            </div>))}
                                     </SwipeableViews>
                                 </div>
                             </div>
