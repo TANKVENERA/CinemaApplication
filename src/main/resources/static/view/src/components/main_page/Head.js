@@ -31,8 +31,11 @@ class Head extends Component {
         this.setState({signUpLogin: event.target.value})
     };
 
-    handleSubmit = () => {
-
+    handleSubmitUser = () => {
+        console.log('TERMINATOR',this.state.signUpLogin )
+        fetch(`http://localhost:8080/cinema/rest/register/?login=${this.state.signUpLogin}`, {
+        }).then(result => { return result.text()}).then(data => this.setState({warning: data,
+                                                                               isOpenModal: data.includes('successfully') ? false : true}))
     };
 
     onOpenModal = () => {
@@ -98,7 +101,7 @@ class Head extends Component {
         }).then(data => this.setState({loginLogoutData: data}));
     };
 
-    loginSubmit = () => {
+    handleLoginUser = () => {
         fetch("http://localhost:8080/cinema/rest/login", {
                 method: 'GET',
                 credentials: 'include',
@@ -137,8 +140,8 @@ class Head extends Component {
     }
 
     warnPrinter () {
-        const warn = this.state.warning
-        setTimeout(() => {this.setState({warning: ''})}, 5000);
+        const warn = this.state.warning;
+        setTimeout(() => {this.setState({warning: ''})}, 10000);
         return printWarn(warn)
     }
 
@@ -173,7 +176,7 @@ class Head extends Component {
                                    className="input-field"/>
                         </div>
                         <div className="head-sign-in-button">
-                            <Button variant="outlined" color="primary" onClick={this.loginSubmit}>
+                            <Button variant="outlined" color="primary" onClick={this.handleLoginUser}>
                                 Sing in
                             </Button>
                         </div>
@@ -211,7 +214,7 @@ class Head extends Component {
                         </div>
                         <div className="modal-button-block">
                             <div className="modal-sign-up-button">
-                                <Button variant="contained" color="primary">Sign Up</Button>
+                                <Button variant="contained" color="primary" onClick={this.handleSubmitUser}>Sign Up</Button>
                             </div>
                             <div className="modal-cancel-button">
                                 <Button variant="contained" color="secondary" onClick={this.onCloseModal}>
@@ -221,6 +224,7 @@ class Head extends Component {
                         </div>
                     </div>
                 </Modal>
+                {this.warnPrinter()}
                 <Modal open={this.state.isOpenOrdersModal} onClose={this.onCloseOrdersModal}
                        showCloseIcon={false} classNames={{modal: 'modal-orders-body'}}>
                     <div>

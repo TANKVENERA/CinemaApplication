@@ -44,4 +44,16 @@ public class UserService {
         return userDto;
     }
 
+    public String createUser(UserDto userDto) {
+        UserDbo userDbo = userConverter.convertToDbo(userDto);
+        UserDbo existedUser = userDAO.getUserByName(userDto.getLogin());
+        if (existedUser != null) {
+            return "User already exists!";
+        }
+        else {
+            userDAO.save(userDbo);
+            return "User was created successfully!";
+        }
+    }
+
 }

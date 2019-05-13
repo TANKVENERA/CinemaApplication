@@ -6,6 +6,7 @@ import React, {Component} from 'react'
 import SwipeableViews from '../../../node_modules/react-swipeable-views'
 import Hall from './Hall'
 import './styles/films.css'
+import {checkStatus} from './util/utils'
 
 class Films extends Component {
     state = {
