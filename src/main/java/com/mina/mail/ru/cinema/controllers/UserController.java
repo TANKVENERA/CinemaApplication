@@ -69,4 +69,8 @@ public class UserController {
         return new CurrentUser("none", authentication == null ? false:true );
     }
 
+//    @GetMapping(value = "listOrders", params = "login")
+//    public List<UserDbo> getAllOrders (@RequestParam("login") String login) {
+//        return userService.getOrdersByUser(login);
+//    }
 }

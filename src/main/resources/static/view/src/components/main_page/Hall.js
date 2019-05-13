@@ -4,19 +4,16 @@
 
 import React, {Component} from 'react'
 import {RadioButton} from '../../../node_modules/react-custom-radio'
-import {bounceInDown, rubberBand} from '../../../node_modules/react-animations'
+import {bounceInDown} from '../../../node_modules/react-animations'
 import Radium, {StyleRoot}  from '../../../node_modules/radium'
 import Fab from '../../../node_modules/@material-ui/core/Fab'
+import {printWarn} from './util/utils'
 
 const styles = {
     bounceIn: {
         animation: 'x 1s',
         animationName: Radium.keyframes(bounceInDown, 'bounceInDown')
-    },
-    rubber: {
-        animation: 'x 1.5s',
-        animationName: Radium.keyframes(rubberBand, 'rubberBand')
-    },
+    }
 };
 
 class Hall extends Component {
@@ -80,29 +77,21 @@ class Hall extends Component {
         return row;
     };
 
-    printWarn () {
-        if (this.state.warning !== '') {
-            setTimeout(() => {this.setState({warning: ''})}, 3000);
-            return (
-                <StyleRoot>
-                    <div className="block-warn" style={styles.rubber}>
-                        <label style={{verticalAlign: 'middle'}}>{this.state.warning}</label>
-                    </div>
-                </StyleRoot>
-            )
+    warnPrinter () {
+        const warn = this.state.warning
+        setTimeout(() => {this.setState({warning: ''})}, 5000);
+        return printWarn(warn)
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.dateIndex !== this.props.dateIndex || prevProps.film !== this.props.film) {
+            this.setState({userOrder: []})
         }
     }
-        componentDidUpdate(prevProps) {
-            if (prevProps.dateIndex !== this.props.dateIndex || prevProps.film !== this.props.film) {
-                this.setState({userOrder: []})
-            }
-        }
 
     render(){
-
         const userOrder = this.state.userOrder;
         const successOrder = this.state.successOrder;
-        console.log('CCC', successOrder);
         const blockSeats = this.props.tickets.map((ticket) =>(ticket.seatnumber));
         const style = (seat) => {
             if (blockSeats.includes(seat) || successOrder.includes(seat)) {
@@ -137,7 +126,7 @@ class Hall extends Component {
                         </StyleRoot>
                     }
                 </div>
-                {this.printWarn()}
+                {this.warnPrinter()}
             </div>
         );
     }

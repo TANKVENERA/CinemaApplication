@@ -16,4 +16,5 @@ public interface UserDAO extends JpaRepository<UserDbo, Long> {
 
     @Query("select u from UserDbo u where u.login=:login")
     UserDbo getUserByName(@Param("login") String login);
+
 }

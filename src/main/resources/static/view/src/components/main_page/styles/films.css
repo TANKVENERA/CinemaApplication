@@ -14,13 +14,12 @@
 
 .film-button {
     font-weight: 500;
-    font-size: 20px;
-    height: 45px;
+    font-size: 18px;
+    height: 40px;
     margin-bottom: 15px;
     width: max-content;
     border: 1px solid transparent;
     border-color: black;
-    background-color: #fff;
     background-image: radial-gradient(circle at center, #488bf8 50%, transparent 50%);
     background-repeat: no-repeat;
     transition: background-size .3s, background-color .3s;

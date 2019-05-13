@@ -1,14 +1,12 @@
 package com.mina.mail.ru.cinema.service.impl;
 
-import com.mina.mail.ru.cinema.repository.dbo.UserDbo;
+import com.mina.mail.ru.cinema.repository.dbo.FilmTicketDbo;
 import com.mina.mail.ru.cinema.repository.impl.FilmDAO;
 import com.mina.mail.ru.cinema.repository.impl.FilmTicketDAO;
 import com.mina.mail.ru.cinema.repository.impl.UserDAO;
 import com.mina.mail.ru.cinema.service.util.UserOrder;
+import com.mina.mail.ru.cinema.service.util.UserTickets;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +37,14 @@ public class FilmTicketService {
         for (Integer seat : seats) {
            filmTicketDAO.createOrder(seat, userId, filmId);
         }
+    }
+
+    public List<UserTickets> getOrders(String login) {
+        return filmTicketDAO.getAllOrders(login);
+    }
+
+    public void deleteOrder (String title, Integer date, Integer seat) {
+        filmTicketDAO.deleteOrder(title, date, seat);
     }
 
 }

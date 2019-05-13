@@ -30,10 +30,14 @@
     display: table-cell;
 }
 
-.modal-body {
+.modal-sign-up-body {
     border-radius: 10px;
     width: 300px;
     background: #eff2f3
+}
+
+.modal-orders-body {
+    width: max-content;
 }
 
 .modal-input-block {
@@ -62,4 +66,9 @@
     font-size: 15px;
     color: red;
     font-family: arial;
+}
+
+.delete-icon{
+    width: 35px !important;
+    height: 35px !important;
 }

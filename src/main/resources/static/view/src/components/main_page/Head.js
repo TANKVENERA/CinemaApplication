@@ -5,7 +5,10 @@
 import React, {Component} from 'react';
 import './styles/head.css'
 import Button from '../../../node_modules/@material-ui/core/Button'
+import DeleteIcon from '../../../node_modules/@material-ui/icons/Delete'
+import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Modal from '../../../node_modules/react-responsive-modal'
+import {printWarn} from './util/utils'
 
 class Head extends Component {
 
@@ -13,8 +16,11 @@ class Head extends Component {
         login: "",
         signUpLogin: "",
         isOpenModal: false,
+        isOpenOrdersModal: false,
         loginLogoutData: {loggedInUser: '', authenticated: false},
-        autErr: ""
+        autErr: "",
+        userOrdersData: [],
+        warning: ''
     };
 
     handleLogin = (event) => {
@@ -33,9 +39,54 @@ class Head extends Component {
         this.setState({isOpenModal: true})
     };
 
+    handleOrders = (user) => {
+        fetch(`http://localhost:8080/cinema/rest/listOrders/?login=${user}`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then(result => {
+            return result.json();
+        }).then(data => this.setState({userOrdersData: data, isOpenOrdersModal: true}));
+    };
+
     onCloseModal = () => {
         this.setState({isOpenModal: false})
     };
+
+    onCloseOrdersModal = () => {
+        this.setState({isOpenOrdersModal: false})
+    };
+
+    handleDeleteOrder = (title, date, seat, login) => {
+        fetch(`http://localhost:8080/cinema/rest/delete/?title=${title}&date=${date}&seat=${seat}&login=${login}`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then(result => {
+            return result.json();
+        }).then(data => this.setState({userOrdersData: data, warning: 'Order was successfully removed!'}));
+    };
+
+    printUserOrdersData(userOrders) {
+        return (userOrders.map((order, index) => (
+            <div key={index} style={{display: 'table', paddingBottom: '10px'}}>
+                <div style={{display: 'table-cell', width: '350px'}}>
+                    <label>film: {order.title}, date: {order.filmDate}, seat: {order.seat}</label>
+                </div>
+                <div style={{display: 'table-cell'}}>
+                    <Fab aria-label="Delete" className="delete-icon" >
+                        <DeleteIcon fontSize="small" onClick={() => this.handleDeleteOrder(order.title, order.filmDate,
+                                                                                           order.seat,
+                                                                                           this.state.loginLogoutData.loggedInUser)}/>
+                    </Fab>
+                </div>
+            </div>)
+        ))
+    }
 
     signOut = () => {
         fetch("http://localhost:8080/cinema/rest/signout", {
@@ -85,6 +136,12 @@ class Head extends Component {
             }).then(data => this.setState({loginLogoutData: data}));
     }
 
+    warnPrinter () {
+        const warn = this.state.warning
+        setTimeout(() => {this.setState({warning: ''})}, 5000);
+        return printWarn(warn)
+    }
+
     greeting() {
         const isLoggedIn = this.state.loginLogoutData.authenticated;
         const user = this.state.loginLogoutData.loggedInUser;
@@ -97,6 +154,11 @@ class Head extends Component {
                     <div className="head-sign-in-button">
                         <Button variant="outlined" color="secondary" onClick={this.signOut}>
                             Sing out
+                        </Button>
+                    </div>
+                    <div className="head-sign-in-button">
+                        <Button variant="outlined" color="primary" onClick={() => this.handleOrders(user)}>
+                            My Orders
                         </Button>
                     </div>
                 </div>
@@ -130,11 +192,13 @@ class Head extends Component {
         return (
             <div className="head-block">
                 {this.greeting()}
-                <div className="head-sign-up-button">
-                    <Button variant="outlined" onClick={this.onOpenModal}>Sing up</Button>
-                </div>
+                {this.state.loginLogoutData.authenticated === false &&
+                    <div className="head-sign-up-button">
+                        <Button variant="outlined" onClick={this.onOpenModal}>Sign up</Button>
+                    </div>
+                }
                 <Modal open={this.state.isOpenModal} onClose={this.onCloseModal}
-                       showCloseIcon={false} classNames={{modal: 'modal-body'}}>
+                       showCloseIcon={false} classNames={{modal: 'modal-sign-up-body'}}>
                     <div>
                         <div className="sign-up-title">
                             <h2>Registration</h2>
@@ -155,6 +219,20 @@ class Head extends Component {
                                 </Button>
                             </div>
                         </div>
+                    </div>
+                </Modal>
+                <Modal open={this.state.isOpenOrdersModal} onClose={this.onCloseOrdersModal}
+                       showCloseIcon={false} classNames={{modal: 'modal-orders-body'}}>
+                    <div>
+                        <div>
+                            {this.printUserOrdersData(this.state.userOrdersData)}
+                        </div>
+                        <div style={{paddingLeft: '145px'}}>
+                            <Button variant="outlined" color="secondary" onClick={this.onCloseOrdersModal}>
+                                Exit
+                            </Button>
+                        </div>
+                        {this.warnPrinter()}
                     </div>
                 </Modal>
             </div>
