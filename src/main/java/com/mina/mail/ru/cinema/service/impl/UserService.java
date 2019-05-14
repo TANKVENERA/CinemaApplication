@@ -5,7 +5,6 @@ import com.mina.mail.ru.cinema.repository.impl.UserDAO;
 import com.mina.mail.ru.cinema.service.converter.UserConverter;
 import com.mina.mail.ru.cinema.service.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

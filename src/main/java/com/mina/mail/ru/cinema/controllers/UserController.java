@@ -1,26 +1,23 @@
 package com.mina.mail.ru.cinema.controllers;
 
-import com.mina.mail.ru.cinema.repository.dbo.UserDbo;
-import com.mina.mail.ru.cinema.repository.impl.UserDAO;
+
 import com.mina.mail.ru.cinema.service.dto.UserDto;
 import com.mina.mail.ru.cinema.service.impl.UserService;
 import com.mina.mail.ru.cinema.service.util.CurrentUser;
-import com.mina.mail.ru.cinema.service.util.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * Created by Mina on 21.04.2019.
@@ -48,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/login")
-    public CurrentUser login() {
+    public CurrentUser login(HttpServletRequest request, HttpServletResponse response) {
         String loggedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean authenticated = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         return new CurrentUser(loggedInUser, authenticated);
@@ -69,7 +66,7 @@ public class UserController {
         return new CurrentUser("none", authentication == null ? false:true );
     }
 
-    @GetMapping(value = "register", params = "login")
+    @GetMapping(value = "/register", params = "login")
     public String createUser (@RequestParam("login") String login) {
         UserDto userDto = new UserDto(login, "USER");
         userDto.setLogin(login);

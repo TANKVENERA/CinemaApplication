@@ -1,6 +1,5 @@
 package com.mina.mail.ru.cinema.service.impl;
 
-import com.mina.mail.ru.cinema.repository.dbo.FilmTicketDbo;
 import com.mina.mail.ru.cinema.repository.impl.FilmDAO;
 import com.mina.mail.ru.cinema.repository.impl.FilmTicketDAO;
 import com.mina.mail.ru.cinema.repository.impl.UserDAO;
@@ -27,7 +26,6 @@ public class FilmTicketService {
         this.filmDAO = filmDAO;
         this.userDAO = userDAO;
     }
-
 
     public void createOrder (UserOrder order, String login) {
         Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex()).getId();

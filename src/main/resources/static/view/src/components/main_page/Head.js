@@ -32,7 +32,6 @@ class Head extends Component {
     };
 
     handleSubmitUser = () => {
-        console.log('TERMINATOR',this.state.signUpLogin )
         fetch(`http://localhost:8080/cinema/rest/register/?login=${this.state.signUpLogin}`, {
         }).then(result => { return result.text()}).then(data => this.setState({warning: data,
                                                                                isOpenModal: data.includes('successfully') ? false : true}))
@@ -139,9 +138,9 @@ class Head extends Component {
             }).then(data => this.setState({loginLogoutData: data}));
     }
 
-    warnPrinter () {
+    printWarn () {
         const warn = this.state.warning;
-        setTimeout(() => {this.setState({warning: ''})}, 10000);
+        setTimeout(() => this.setState({warning: ''}), 4000);
         return printWarn(warn)
     }
 
@@ -224,21 +223,21 @@ class Head extends Component {
                         </div>
                     </div>
                 </Modal>
-                {this.warnPrinter()}
                 <Modal open={this.state.isOpenOrdersModal} onClose={this.onCloseOrdersModal}
                        showCloseIcon={false} classNames={{modal: 'modal-orders-body'}}>
                     <div>
                         <div>
                             {this.printUserOrdersData(this.state.userOrdersData)}
                         </div>
-                        <div style={{paddingLeft: '145px'}}>
+                        <div style={{paddingLeft: '40%'}}>
                             <Button variant="outlined" color="secondary" onClick={this.onCloseOrdersModal}>
                                 Exit
                             </Button>
                         </div>
-                        {this.warnPrinter()}
+                        {this.state.warning !== '' ? this.printWarn() :<div/>}
                     </div>
                 </Modal>
+                {this.state.warning !== '' ? this.printWarn() : <div/>}
             </div>
         )
     }

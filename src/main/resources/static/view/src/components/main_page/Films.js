@@ -6,7 +6,7 @@ import React, {Component} from 'react'
 import SwipeableViews from '../../../node_modules/react-swipeable-views'
 import Hall from './Hall'
 import './styles/films.css'
-import {checkStatus} from './util/utils'
+import {printWarn} from './util/utils'
 
 class Films extends Component {
     state = {
@@ -15,7 +15,8 @@ class Films extends Component {
         dateIndex: 0,
         films: [],
         dates: [],
-        currentFilm: ''
+        currentFilm: '',
+        warning: ''
     };
 
     componentWillMount() {
@@ -32,8 +33,15 @@ class Films extends Component {
                 "X-Requested-With": "XMLHttpRequest"
             }
         }).then(result => {
-            return result.json();
-        }).then(data => this.setState({dates: data, index: index, isInitial: false, dateIndex: 0, currentFilm: uniqueFilm}));
+            if (!result.ok) {
+                throw Error(result.status)
+            }
+            else {
+                return result.json();
+            }
+        }).then(data => this.setState({dates: data, index: index, isInitial: false, dateIndex: 0,
+            currentFilm: uniqueFilm})).catch(error => this.setState({warning: 'Unauthorized'}));
+
     };
 
     handleDatesChange = (filmId, index) => {
@@ -52,6 +60,12 @@ class Films extends Component {
         return dateBlock
     }
 
+    printWarn () {
+        const warn = this.state.warning;
+        setTimeout(() => this.setState({warning: ''}), 4000);
+        return printWarn(warn)
+    }
+
     render() {
         let dates = this.state.dates;
         let filmIndex = this.state.index;
@@ -66,6 +80,7 @@ class Films extends Component {
                                     onClick={() => this.handleClick(index, film.title)}>
                                 {film.title}
                             </button>
+                            {this.state.warning !== '' ? this.printWarn() : <div/>}
                         </div>))}
                 </div>
 

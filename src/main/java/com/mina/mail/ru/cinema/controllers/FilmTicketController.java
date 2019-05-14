@@ -3,6 +3,7 @@ package com.mina.mail.ru.cinema.controllers;
 import com.mina.mail.ru.cinema.service.impl.FilmTicketService;
 import com.mina.mail.ru.cinema.service.util.UserOrder;
 import com.mina.mail.ru.cinema.service.util.UserTickets;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -15,11 +16,8 @@ import java.util.List;
 @RestController
 public class FilmTicketController {
 
+    @Autowired
     private FilmTicketService filmTicketService;
-
-    public FilmTicketController(FilmTicketService ticketService) {
-        this.filmTicketService = ticketService;
-    }
 
     @PostMapping(value = "/makeOrder")
     public void createOrder (@RequestBody UserOrder order, Principal principal) {

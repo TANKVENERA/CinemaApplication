@@ -1,7 +1,6 @@
 package com.mina.mail.ru.cinema.repository.impl;
 
 import com.mina.mail.ru.cinema.repository.dbo.FilmTicketDbo;
-import com.mina.mail.ru.cinema.service.util.UserOrder;
 import com.mina.mail.ru.cinema.service.util.UserTickets;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

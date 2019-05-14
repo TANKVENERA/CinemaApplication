@@ -77,9 +77,9 @@ class Hall extends Component {
         return row;
     };
 
-    warnPrinter () {
-        const warn = this.state.warning
-        setTimeout(() => {this.setState({warning: ''})}, 5000);
+    printWarn () {
+        const warn = this.state.warning;
+        setTimeout(() => this.setState({warning: ''}), 4000);
         return printWarn(warn)
     }
 
@@ -126,7 +126,7 @@ class Hall extends Component {
                         </StyleRoot>
                     }
                 </div>
-                {this.warnPrinter()}
+                {this.state.warning !=='' ? this.printWarn() :<div/>}
             </div>
         );
     }
