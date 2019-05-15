@@ -12,12 +12,12 @@ export const styles = {
     }
 };
 
-export function printWarn (warning) {
+export function printWarn (warning, color) {
     if (warning !== '') {
         return (
             <StyleRoot>
                 <div className="block-warn" style={styles.rubber}>
-                    <label style={{verticalAlign: 'middle'}}>{warning}</label>
+                    <label style={{verticalAlign: 'middle', color: color}}>{warning}</label>
                 </div>
             </StyleRoot>
         )

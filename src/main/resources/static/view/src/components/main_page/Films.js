@@ -40,7 +40,7 @@ class Films extends Component {
                 return result.json();
             }
         }).then(data => this.setState({dates: data, index: index, isInitial: false, dateIndex: 0,
-            currentFilm: uniqueFilm})).catch(error => this.setState({warning: 'Unauthorized'}));
+            currentFilm: uniqueFilm})).catch(error => this.setState({warning: 'Unauthorized !'}));
 
     };
 
@@ -63,7 +63,7 @@ class Films extends Component {
     printWarn () {
         const warn = this.state.warning;
         setTimeout(() => this.setState({warning: ''}), 4000);
-        return printWarn(warn)
+        return printWarn(warn, 'red')
     }
 
     render() {

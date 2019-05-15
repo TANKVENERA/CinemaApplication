@@ -138,10 +138,10 @@ class Head extends Component {
             }).then(data => this.setState({loginLogoutData: data}));
     }
 
-    printWarn () {
+    printWarn (color) {
         const warn = this.state.warning;
-        setTimeout(() => this.setState({warning: ''}), 4000);
-        return printWarn(warn)
+        // setTimeout(() => this.setState({warning: ''}), 4000);
+        return printWarn(warn, color)
     }
 
     greeting() {
@@ -234,10 +234,10 @@ class Head extends Component {
                                 Exit
                             </Button>
                         </div>
-                        {this.state.warning !== '' ? this.printWarn() :<div/>}
+                        {this.state.warning !== '' ? this.printWarn('green') :<div/>}
                     </div>
                 </Modal>
-                {this.state.warning !== '' ? this.printWarn() : <div/>}
+                {this.state.warning !== '' ? this.printWarn('red') : <div/>}
             </div>
         )
     }

@@ -37,10 +37,12 @@ button:disabled {
 }
 
 .block-warn {
-    position: absolute;
-    top: 150px;
-    left: 10px;
-    background:white;
+    background: #e4dae4;
     font-family: cursive;
-    height: 30px;
+    font-size: 25px;
+    position: fixed;
+    height: 40px;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
 }
