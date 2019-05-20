@@ -3,7 +3,7 @@ package com.mina.mail.ru.cinema.controllers;
 
 import com.mina.mail.ru.cinema.service.dto.UserDto;
 import com.mina.mail.ru.cinema.service.impl.UserService;
-import com.mina.mail.ru.cinema.service.util.CurrentUser;
+import com.mina.mail.ru.cinema.service.dto.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,8 +26,13 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
+
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/checkauth")
     public CurrentUser pingUser() {

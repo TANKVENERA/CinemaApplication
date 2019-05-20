@@ -1,6 +1,6 @@
 package com.mina.mail.ru.cinema.service.impl;
 
-import com.mina.mail.ru.cinema.repository.dbo.UserDbo;
+import com.mina.mail.ru.cinema.repository.dbo.UserEntity;
 import com.mina.mail.ru.cinema.repository.impl.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +26,7 @@ public class AppUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        UserDbo currentUser = userDAO.getUserByName(login);
+        UserEntity currentUser = userDAO.getUserByName(login);
 
         UserBuilder builder = null;
         if (currentUser != null) {

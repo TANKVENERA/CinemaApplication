@@ -5,8 +5,7 @@ package com.mina.mail.ru.cinema.service.converter;
  */
 public interface CommonConverter<T1, T2> {
 
-     T1 convertToDbo (T2 t2);
+    T1 convertToDbo(T2 t2);
 
     T2 convertToDto(T1 t1);
-
 }

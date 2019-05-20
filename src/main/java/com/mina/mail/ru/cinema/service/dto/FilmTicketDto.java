@@ -14,6 +14,12 @@ public class FilmTicketDto {
     public FilmTicketDto() {
     }
 
+    public FilmTicketDto(Integer id, Integer seatnumber, Integer visitorid) {
+        this.id = id;
+        this.seatnumber = seatnumber;
+        this.visitorid = visitorid;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -36,5 +42,14 @@ public class FilmTicketDto {
 
     public void setVisitorid(Integer visitorid) {
         this.visitorid = visitorid;
+    }
+
+    @Override
+    public String toString() {
+        return "FilmTicketDto{" +
+                "id=" + id +
+                ", seatnumber=" + seatnumber +
+                ", visitorid=" + visitorid +
+                '}';
     }
 }

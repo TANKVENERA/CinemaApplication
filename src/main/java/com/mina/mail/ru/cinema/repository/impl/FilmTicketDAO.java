@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.repository.impl;
 
-import com.mina.mail.ru.cinema.repository.dbo.FilmTicketDbo;
-import com.mina.mail.ru.cinema.service.util.UserTickets;
+import com.mina.mail.ru.cinema.repository.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.service.dto.UserTickets;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Mina on 12.05.2019.
  */
-public interface FilmTicketDAO extends JpaRepository<FilmTicketDbo, Long> {
+public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
 
     static final String GET_ALL_ORDERS="SELECT ft.seat, f.title, f.filmdate FROM filmticket ft join film f on f.id=ft.film_id join user u on u.id=ft.visitor_id where u.login=:login";
 

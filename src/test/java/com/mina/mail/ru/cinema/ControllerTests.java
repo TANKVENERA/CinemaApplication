@@ -1,5 +1,6 @@
 package com.mina.mail.ru.cinema;
 
+import com.mina.mail.ru.cinema.service.dto.PageObjectDto;
 import com.mina.mail.ru.cinema.service.impl.UserService;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -23,15 +24,15 @@ public class ControllerTests {
 
     private static final String mainPageUrl = "http://localhost:3000";
     private static final String testUser = "USER_TEST";
-    private PageObject page = initPage();
+    private PageObjectDto page = initPage();
     private static WebDriver webDriver;
 
     @Autowired
     private UserService userService;
 
-    private PageObject initPage() {
+    private PageObjectDto initPage() {
         if (page == null) {
-            return new PageObject(webDriver);
+            return new PageObjectDto(webDriver);
         } else return page;
     }
 

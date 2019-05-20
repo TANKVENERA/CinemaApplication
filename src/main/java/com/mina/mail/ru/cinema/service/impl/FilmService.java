@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.service.impl;
 
-import com.mina.mail.ru.cinema.repository.dbo.FilmDbo;
-import com.mina.mail.ru.cinema.repository.dbo.FilmTicketDbo;
+import com.mina.mail.ru.cinema.repository.dbo.FilmEntity;
+import com.mina.mail.ru.cinema.repository.dbo.FilmTicketEntity;
 import com.mina.mail.ru.cinema.repository.impl.FilmDAO;
 import com.mina.mail.ru.cinema.service.converter.FilmConverter;
 import com.mina.mail.ru.cinema.service.converter.FilmTicketConverter;
@@ -35,9 +35,9 @@ public class FilmService {
 
     public List<FilmDto> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
-        List<FilmDbo> filmsDbo = filmDAO.getFilms();
+        List<FilmEntity> filmsDbo = filmDAO.getFilms();
 
-        for (FilmDbo d : filmsDbo) {
+        for (FilmEntity d : filmsDbo) {
             filmsDto.add(filmConverter.convertToDto(d));
         }
         return filmsDto;
@@ -45,10 +45,10 @@ public class FilmService {
 
     public List<FilmDto> getDatesByFilm(String film) {
         List<FilmDto> dates = new ArrayList<>();
-        List<FilmDbo> datesDbo = filmDAO.getDatesByFilm(film);
-        for (FilmDbo d : datesDbo) {
+        List<FilmEntity> datesDbo = filmDAO.getDatesByFilm(film);
+        for (FilmEntity d : datesDbo) {
             Set<FilmTicketDto> ticketDtos = new HashSet<>();
-            for (FilmTicketDbo ticketDbo : d.getTickets()) {
+            for (FilmTicketEntity ticketDbo : d.getTickets()) {
                ticketDtos.add(filmTicketConverter.convertToDto(ticketDbo));
             }
             FilmDto filmDto = filmConverter.convertToDto(d);

@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "film")
-public class FilmDbo implements Serializable {
+public class FilmEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -26,12 +26,12 @@ public class FilmDbo implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
-    private Set<FilmTicketDbo> tickets;
+    private Set<FilmTicketEntity> tickets;
 
-    public FilmDbo() {
+    public FilmEntity() {
     }
 
-    public FilmDbo(String title) {
+    public FilmEntity(String title) {
         this.title = title;
     }
 
@@ -59,11 +59,21 @@ public class FilmDbo implements Serializable {
         this.filmdate = date;
     }
 
-    public Set<FilmTicketDbo> getTickets() {
+    public Set<FilmTicketEntity> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Set<FilmTicketDbo> tickets) {
+    public void setTickets(Set<FilmTicketEntity> tickets) {
         this.tickets = tickets;
+    }
+
+    @Override
+    public String toString() {
+        return "FilmEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", filmdate=" + filmdate +
+                ", tickets=" + tickets +
+                '}';
     }
 }

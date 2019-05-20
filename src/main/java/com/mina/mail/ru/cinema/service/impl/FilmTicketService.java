@@ -3,8 +3,8 @@ package com.mina.mail.ru.cinema.service.impl;
 import com.mina.mail.ru.cinema.repository.impl.FilmDAO;
 import com.mina.mail.ru.cinema.repository.impl.FilmTicketDAO;
 import com.mina.mail.ru.cinema.repository.impl.UserDAO;
-import com.mina.mail.ru.cinema.service.util.UserOrder;
-import com.mina.mail.ru.cinema.service.util.UserTickets;
+import com.mina.mail.ru.cinema.service.dto.UserOrder;
+import com.mina.mail.ru.cinema.service.dto.UserTickets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

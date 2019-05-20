@@ -1,21 +1,17 @@
-package com.mina.mail.ru.cinema;
+package com.mina.mail.ru.cinema.service.dto;
 
-import com.mina.mail.ru.cinema.repository.impl.UserDAO;
-import com.mina.mail.ru.cinema.service.impl.UserService;
-import org.junit.runner.RunWith;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by Mina on 18.05.2019.
  */
 
-public class PageObject {
+public class PageObjectDto {
 
     @FindBy(css = ".film-button")
     private   WebElement filmTitle;
@@ -53,7 +49,7 @@ public class PageObject {
     @FindBy(css = ".hall-block")
     private WebElement cinemaHallBlock;
 
-    public PageObject(WebDriver driver) {
+    public PageObjectDto(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 

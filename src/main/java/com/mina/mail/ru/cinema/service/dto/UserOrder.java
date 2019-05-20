@@ -1,4 +1,4 @@
-package com.mina.mail.ru.cinema.service.util;
+package com.mina.mail.ru.cinema.service.dto;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "user")
-public class UserDbo {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -28,9 +28,9 @@ public class UserDbo {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "visitor_id")
-    private List<FilmTicketDbo> tickets = new ArrayList<>();
+    private List<FilmTicketEntity> tickets = new ArrayList<>();
 
-    public UserDbo() {
+    public UserEntity() {
     }
 
     public Integer getId() {
@@ -49,11 +49,11 @@ public class UserDbo {
         this.login = login;
     }
 
-    public List<FilmTicketDbo> getTickets() {
+    public List<FilmTicketEntity> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<FilmTicketDbo> tickets) {
+    public void setTickets(List<FilmTicketEntity> tickets) {
         this.tickets = tickets;
     }
 

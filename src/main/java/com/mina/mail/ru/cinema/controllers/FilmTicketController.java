@@ -1,8 +1,8 @@
 package com.mina.mail.ru.cinema.controllers;
 
 import com.mina.mail.ru.cinema.service.impl.FilmTicketService;
-import com.mina.mail.ru.cinema.service.util.UserOrder;
-import com.mina.mail.ru.cinema.service.util.UserTickets;
+import com.mina.mail.ru.cinema.service.dto.UserOrder;
+import com.mina.mail.ru.cinema.service.dto.UserTickets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

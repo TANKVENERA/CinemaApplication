@@ -12,7 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "filmticket")
-public class FilmTicketDbo {
+public class FilmTicketEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -25,10 +25,10 @@ public class FilmTicketDbo {
     @Column(name = "visitor_id")
     private Integer visitorid;
 
-    public FilmTicketDbo() {
+    public FilmTicketEntity() {
     }
 
-    public FilmTicketDbo(Integer id, Integer seatnumber, Integer visitorid) {
+    public FilmTicketEntity(Integer id, Integer seatnumber, Integer visitorid) {
         this.id = id;
         this.seatnumber = seatnumber;
         this.visitorid = visitorid;
@@ -56,5 +56,14 @@ public class FilmTicketDbo {
 
     public void setVisitorid(Integer visitorId) {
         this.visitorid = visitorId;
+    }
+
+    @Override
+    public String toString() {
+        return "FilmTicketEntity{" +
+                "id=" + id +
+                ", seatnumber=" + seatnumber +
+                ", visitorid=" + visitorid +
+                '}';
     }
 }
