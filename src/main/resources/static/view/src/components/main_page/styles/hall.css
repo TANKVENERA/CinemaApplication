@@ -44,5 +44,5 @@ button:disabled {
     height: 40px;
     top: 50%;
     left: 50%;
-    z-index: 100;
+    z-index: 10000;
 }

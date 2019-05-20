@@ -26,6 +26,8 @@ public class UserService {
         this.userConverter = userConverter;
     }
 
+    public UserService() {
+    }
 
     public List<UserDto> getAllUsers() {
         List<UserDto> usersDto = new ArrayList<>();
@@ -53,6 +55,10 @@ public class UserService {
             userDAO.save(userDbo);
             return "User was created successfully!";
         }
+    }
+
+    public void deleteUser (String login) {
+        userDAO.delete(userDAO.getUserByName(login));
     }
 
 }

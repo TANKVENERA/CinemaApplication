@@ -140,7 +140,7 @@ class Head extends Component {
 
     printWarn (color) {
         const warn = this.state.warning;
-        // setTimeout(() => this.setState({warning: ''}), 4000);
+        setTimeout(() => this.setState({warning: ''}), 3000);
         return printWarn(warn, color)
     }
 
@@ -150,7 +150,7 @@ class Head extends Component {
         if (isLoggedIn) {
             return (
                 <div style={{display: 'table'}}>
-                    <div style={{display: 'table-cell'}}>
+                    <div className="user-sign-in">
                         <label>You are welcome, {this.state.loginLogoutData.loggedInUser} !</label>
                     </div>
                     <div className="head-sign-in-button">
@@ -206,10 +206,8 @@ class Head extends Component {
                             <h2>Registration</h2>
                         </div>
                         <div className="modal-input-block">
-                            <div >
-                                <input value={this.state.signUpLogin} onChange={this.handleLoginSignUp}
-                                       className="input-field"/>
-                            </div>
+                            <input value={this.state.signUpLogin} onChange={this.handleLoginSignUp}
+                                   className="input-field"/>
                         </div>
                         <div className="modal-button-block">
                             <div className="modal-sign-up-button">

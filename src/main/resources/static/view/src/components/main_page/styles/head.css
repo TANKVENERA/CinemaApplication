@@ -68,6 +68,10 @@
     font-family: arial;
 }
 
+.user-sign-in {
+    display: table-cell;
+}
+
 .delete-icon{
     width: 35px !important;
     height: 35px !important;
