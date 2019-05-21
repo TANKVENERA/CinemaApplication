@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
@@ -50,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/login")
-    public CurrentUser login(HttpServletRequest request, HttpServletResponse response) {
+    public CurrentUser login() {
         String loggedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean authenticated = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         return new CurrentUser(loggedInUser, authenticated);
