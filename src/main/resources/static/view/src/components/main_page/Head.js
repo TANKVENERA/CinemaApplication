@@ -8,20 +8,23 @@ import Button from '../../../node_modules/@material-ui/core/Button'
 import DeleteIcon from '../../../node_modules/@material-ui/icons/Delete'
 import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Modal from '../../../node_modules/react-responsive-modal'
-import {printWarn} from './util/utils'
+import {checkStatus} from './util/utils'
+
 
 class Head extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            login: "",
+            signUpLogin: "",
+            isOpenModal: false,
+            isOpenOrdersModal: false,
+            loginLogoutData: {loggedInUser: '', authenticated: false},
+            autErr: "",
+            userOrdersData: []
+        }
+    }
 
-    state = {
-        login: "",
-        signUpLogin: "",
-        isOpenModal: false,
-        isOpenOrdersModal: false,
-        loginLogoutData: {loggedInUser: '', authenticated: false},
-        autErr: "",
-        userOrdersData: [],
-        warning: ''
-    };
 
     handleLogin = (event) => {
         this.setState({login: event.target.value})
@@ -33,8 +36,11 @@ class Head extends Component {
 
     handleSubmitUser = () => {
         fetch(`http://localhost:8080/cinema/rest/register/?login=${this.state.signUpLogin}`, {
-        }).then(result => { return result.text()}).then(data => this.setState({warning: data,
-                                                                               isOpenModal: data.includes('successfully') ? false : true}))
+        }).then(result => { return result.text()})
+            .then(data => {const flag = !data.includes('successfully');
+                           this.setState({isOpenModal: flag});
+                           this.props.warn(data, flag ? 'red' : 'blue')
+            })
     };
 
     onOpenModal = () => {
@@ -70,7 +76,8 @@ class Head extends Component {
             }
         }).then(result => {
             return result.json();
-        }).then(data => this.setState({userOrdersData: data, warning: 'Order was successfully removed!'}));
+        }).then(data => {this.setState({userOrdersData: data});
+                         this.props.warn('Order was successfully removed!', 'green')});
     };
 
     printUserOrdersData(userOrders) {
@@ -81,9 +88,9 @@ class Head extends Component {
                 </div>
                 <div style={{display: 'table-cell'}}>
                     <Fab aria-label="Delete" className="delete-icon" >
-                        <DeleteIcon fontSize="small" onClick={() => this.handleDeleteOrder(order.title, order.filmDate,
-                                                                                           order.seat,
-                                                                                           this.state.loginLogoutData.loggedInUser)}/>
+                        <DeleteIcon fontSize="small"
+                                    onClick={() => this.handleDeleteOrder(order.title, order.filmDate, order.seat,
+                                                   this.state.loginLogoutData.loggedInUser)}/>
                     </Fab>
                 </div>
             </div>)
@@ -110,21 +117,11 @@ class Head extends Component {
                 }
             }
         ).then(result => {
-            return this.checkStatus(result, 'User not found!')
+            return checkStatus(result, 'User not found!')
         }).then(data => {
             this.setState({loginLogoutData: data})
         });
     };
-
-     checkStatus (result, user) {
-        if (result.status === 401) {
-            result = JSON.stringify({loggedInUser: user, authenticated: false});
-            return JSON.parse(result);
-        }
-        else {
-            return result.json();
-        }
-    }
 
     componentDidMount() {
         fetch("http://localhost:8080/cinema/rest/checkauth", {
@@ -134,14 +131,8 @@ class Head extends Component {
             }
         })
             .then(result => {
-              return this.checkStatus(result, '')
+              return checkStatus(result, '')
             }).then(data => this.setState({loginLogoutData: data}));
-    }
-
-    printWarn (color) {
-        const warn = this.state.warning;
-        setTimeout(() => this.setState({warning: ''}), 3000);
-        return printWarn(warn, color)
     }
 
     greeting() {
@@ -232,10 +223,9 @@ class Head extends Component {
                                 Exit
                             </Button>
                         </div>
-                        {this.state.warning !== '' ? this.printWarn('green') :<div/>}
+
                     </div>
                 </Modal>
-                {this.state.warning !== '' ? this.printWarn('red') : <div/>}
             </div>
         )
     }

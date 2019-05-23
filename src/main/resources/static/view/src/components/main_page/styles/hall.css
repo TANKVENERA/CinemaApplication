@@ -39,10 +39,12 @@ button:disabled {
 .block-warn {
     background: #e4dae4;
     font-family: cursive;
-    font-size: 25px;
+    font-size: 20px;
     position: fixed;
-    height: 40px;
-    top: 50%;
-    left: 50%;
+    top: 42%;
+    left: 35%;
     z-index: 10000;
+    width: max-content;
+    opacity: 0.8;
+    border:1px solid black;
 }

@@ -6,18 +6,21 @@ import React, {Component} from 'react'
 import SwipeableViews from '../../../node_modules/react-swipeable-views'
 import Hall from './Hall'
 import './styles/films.css'
-import {printWarn} from './util/utils'
 
 class Films extends Component {
-    state = {
-        index: 0,
-        isInitial: true,
-        dateIndex: 0,
-        films: [],
-        dates: [],
-        currentFilm: '',
-        warning: ''
-    };
+
+    constructor(props){
+        super(props)
+        this.state = {
+            index: 0,
+            isInitial: true,
+            dateIndex: 0,
+            films: [],
+            dates: [],
+            currentFilm: ''
+        }
+    }
+
 
     componentWillMount() {
         fetch(`http://localhost:8080/cinema/rest/films`).then(result => {
@@ -39,13 +42,21 @@ class Films extends Component {
             else {
                 return result.json();
             }
-        }).then(data => this.setState({dates: data, index: index, isInitial: false, dateIndex: 0,
-            currentFilm: uniqueFilm})).catch(error => this.setState({warning: 'Unauthorized!'}));
-
+        }).then(data => {
+                this.setState({
+                    dates: data, index: index, isInitial: false, dateIndex: 0,
+                    currentFilm: uniqueFilm
+                });
+            }
+        ).catch(error => this.props.warn('Unauthorized!', 'red'));
     };
 
     handleDatesChange = (filmId, index) => {
         this.setState({dateIndex: index})
+    };
+
+    throwWarning = (warn, color) => {
+        this.props.warn(warn, color)
     };
 
     dateBlock(dates) {
@@ -60,17 +71,12 @@ class Films extends Component {
         return dateBlock
     }
 
-    printWarn () {
-        const warn = this.state.warning;
-        setTimeout(() => this.setState({warning: ''}), 3000);
-        return printWarn(warn, 'red')
-    }
-
     render() {
         let dates = this.state.dates;
         let filmIndex = this.state.index;
         let dateIndex = this.state.dateIndex;
         let isInitial = this.state.isInitial;
+
         return (
             <div className="main-block">
                 <div className="film-block">
@@ -80,7 +86,6 @@ class Films extends Component {
                                     onClick={() => this.handleClick(index, film.title)}>
                                 {film.title}
                             </button>
-                            {this.state.warning !== '' ? this.printWarn() : <div/>}
                         </div>))}
                 </div>
 
@@ -96,6 +101,7 @@ class Films extends Component {
                                         {(filmIndex === 0 && isInitial ? [] : dates).map((date, index) => (
                                             <div key={index}>
                                                 <Hall
+                                                    warning={(warn, color)=> this.throwWarning(warn, color)}
                                                     tickets={filmIndex === 0 && isInitial ? [] : dates[dateIndex].tickets}
                                                     dateIndex={date.filmdate}
                                                     filmIndex={filmIndex}

@@ -7,7 +7,6 @@ import {RadioButton} from '../../../node_modules/react-custom-radio'
 import {bounceInDown} from '../../../node_modules/react-animations'
 import Radium, {StyleRoot}  from '../../../node_modules/radium'
 import Fab from '../../../node_modules/@material-ui/core/Fab'
-import {printWarn} from './util/utils'
 
 const styles = {
     bounceIn: {
@@ -17,13 +16,13 @@ const styles = {
 };
 
 class Hall extends Component {
-    constructor(){
-        super();
+
+    constructor(props){
+        super(props);
         this.state = {
             seats: this.printSeats(),
             userOrder: [],
-            successOrder: [],
-            warning: ''
+            successOrder: []
         }
     }
 
@@ -33,7 +32,7 @@ class Hall extends Component {
           userOrder = userOrder.filter(i => {return i !== index});
         }
         else  if (userOrder.length > 2) {
-            this.setState({warning: 'Max allowed seat quantity in one order is 3!'})
+            this.props.warning('Max allowed seat quantity in one order is 3!', 'red')
         }
         else {
             userOrder.push(index);
@@ -58,13 +57,13 @@ class Hall extends Component {
                 })
             }).then(result => {
                 if (result.status !== 200) {
-                    this.setState({warning: 'Error occured when saving order!'})
+                    this.props.warning('Error occured when saving order!', 'red')
                 }
                 else {
                     const success = this.state.successOrder;
-                    success.push.apply(success, this.state.userOrder)
-
-                    this.setState({successOrder: success , userOrder: [], warning: 'Order was persisted successfully'})
+                    success.push.apply(success, this.state.userOrder);
+                    this.setState({successOrder: success , userOrder: []});
+                    this.props.warning('Order was persisted successfully', 'blue')
                 }
         });
     };
@@ -76,12 +75,6 @@ class Hall extends Component {
         }
         return row;
     };
-
-    printWarn (color) {
-        const warn = this.state.warning;
-        setTimeout(() => this.setState({warning: ''}), 4000);
-        return printWarn(warn, color)
-    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.dateIndex !== this.props.dateIndex || prevProps.film !== this.props.film) {
@@ -126,7 +119,6 @@ class Hall extends Component {
                         </StyleRoot>
                     }
                 </div>
-                {this.state.warning !=='' ? this.printWarn('blue') :<div/>}
             </div>
         );
     }

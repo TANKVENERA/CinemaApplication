@@ -8,8 +8,9 @@
     vertical-align: top;
 }
 
-.hall-blcok {
+.hall-block {
     display: table-cell;
+    width: 400px;
 }
 
 .film-button {
