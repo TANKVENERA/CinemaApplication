@@ -43,9 +43,9 @@ public class FilmService {
         return filmsDto;
     }
 
-    public List<FilmDto> getDatesByFilm(String film) {
+    public List<FilmDto> getFilmDates(String film) {
         List<FilmDto> dates = new ArrayList<>();
-        List<FilmEntity> datesDbo = filmDAO.getDatesByFilm(film);
+        List<FilmEntity> datesDbo = filmDAO.getFilmDates(film);
         for (FilmEntity d : datesDbo) {
             Set<FilmTicketDto> ticketDtos = new HashSet<>();
             for (FilmTicketEntity ticketDbo : d.getTickets()) {

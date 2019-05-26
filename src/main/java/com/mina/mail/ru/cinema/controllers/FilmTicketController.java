@@ -16,8 +16,12 @@ import java.util.List;
 @RestController
 public class FilmTicketController {
 
-    @Autowired
     private FilmTicketService filmTicketService;
+
+    @Autowired
+    public FilmTicketController(FilmTicketService filmTicketService) {
+        this.filmTicketService = filmTicketService;
+    }
 
     @PostMapping(value = "/makeOrder")
     public void createOrder (@RequestBody UserOrder order, Principal principal) {

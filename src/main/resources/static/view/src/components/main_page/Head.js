@@ -8,7 +8,6 @@ import Button from '../../../node_modules/@material-ui/core/Button'
 import DeleteIcon from '../../../node_modules/@material-ui/icons/Delete'
 import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Modal from '../../../node_modules/react-responsive-modal'
-import {checkStatus} from './util/utils'
 
 
 class Head extends Component {
@@ -19,8 +18,8 @@ class Head extends Component {
             signUpLogin: "",
             isOpenModal: false,
             isOpenOrdersModal: false,
-            loginLogoutData: {loggedInUser: '', authenticated: false},
-            autErr: "",
+            loggedInUser: {login: ''},
+            authErr: "",
             userOrdersData: []
         }
     }
@@ -80,23 +79,6 @@ class Head extends Component {
                          this.props.warn('Order was successfully removed!', 'green')});
     };
 
-    printUserOrdersData(userOrders) {
-        return (userOrders.map((order, index) => (
-            <div key={index} style={{display: 'table', paddingBottom: '10px'}}>
-                <div style={{display: 'table-cell', width: '350px'}}>
-                    <label>film: {order.title}, date: {order.filmDate}, seat: {order.seat}</label>
-                </div>
-                <div style={{display: 'table-cell'}}>
-                    <Fab aria-label="Delete" className="delete-icon" >
-                        <DeleteIcon fontSize="small"
-                                    onClick={() => this.handleDeleteOrder(order.title, order.filmDate, order.seat,
-                                                   this.state.loginLogoutData.loggedInUser)}/>
-                    </Fab>
-                </div>
-            </div>)
-        ))
-    }
-
     signOut = () => {
         fetch("http://localhost:8080/cinema/rest/signout", {
                 method: 'GET',
@@ -104,7 +86,7 @@ class Head extends Component {
             }
         ).then(result => {
             return result.json();
-        }).then(data => this.setState({loginLogoutData: data}));
+        }).then(data => this.setState({loggedInUser: data}));
     };
 
     handleLoginUser = () => {
@@ -117,13 +99,14 @@ class Head extends Component {
                 }
             }
         ).then(result => {
-            return checkStatus(result, 'User not found!')
-        }).then(data => {
-            this.setState({loginLogoutData: data})
+            return result.json()
+        }).then(data => { console.log('KKKK', data.login === '' )
+            this.setState({loggedInUser: data, authErr: data.login === '' ? 'User not found!' : ''})
         });
     };
 
     componentDidMount() {
+
         fetch("http://localhost:8080/cinema/rest/checkauth", {
             credentials: 'include',
             headers: {
@@ -131,18 +114,18 @@ class Head extends Component {
             }
         })
             .then(result => {
-              return checkStatus(result, '')
-            }).then(data => this.setState({loginLogoutData: data}));
+              return result.json()
+            }).then(data =>{
+                this.setState({loggedInUser: data, authErr: ''})});
     }
 
     greeting() {
-        const isLoggedIn = this.state.loginLogoutData.authenticated;
-        const user = this.state.loginLogoutData.loggedInUser;
-        if (isLoggedIn) {
+        const user = this.state.loggedInUser.login;
+        if (user !== '') {
             return (
                 <div style={{display: 'table'}}>
                     <div className="user-sign-in">
-                        <label>You are welcome, {this.state.loginLogoutData.loggedInUser} !</label>
+                        <label>You are welcome, {this.state.loggedInUser.login} !</label>
                     </div>
                     <div className="head-sign-in-button">
                         <Button variant="outlined" color="secondary" onClick={this.signOut}>
@@ -171,21 +154,36 @@ class Head extends Component {
                             </Button>
                         </div>
                     </div>
-                    {user === 'User not found!' && isLoggedIn === false &&
-                        <div >
-                            <label className="user-not-found-error">User not found!</label>
-                        </div>
-                    }
+                    <div >
+                        <label className="user-not-found-error">{this.state.authErr}</label>
+                    </div>
                 </div>
             )
         }
+    }
+
+    printUserOrdersData(userOrders) {
+        return (userOrders.map((order, index) => (
+            <div key={index} style={{display: 'table', paddingBottom: '10px'}}>
+                <div style={{display: 'table-cell', width: '350px'}}>
+                    <label>film: {order.title}, date: {order.filmDate}, seat: {order.seat}</label>
+                </div>
+                <div style={{display: 'table-cell'}}>
+                    <Fab aria-label="Delete" className="delete-icon" >
+                        <DeleteIcon fontSize="small"
+                                    onClick={() => this.handleDeleteOrder(order.title, order.filmDate, order.seat,
+                                        this.state.loggedInUser.login)}/>
+                    </Fab>
+                </div>
+            </div>)
+        ))
     }
 
     render() {
         return (
             <div className="head-block">
                 {this.greeting()}
-                {this.state.loginLogoutData.authenticated === false &&
+                {this.state.loggedInUser.login === '' &&
                     <div className="head-sign-up-button">
                         <Button variant="outlined" onClick={this.onOpenModal}>Sign up</Button>
                     </div>

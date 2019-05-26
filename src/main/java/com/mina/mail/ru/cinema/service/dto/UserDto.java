@@ -1,5 +1,7 @@
 package com.mina.mail.ru.cinema.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +10,13 @@ import java.util.List;
  */
 public class UserDto {
 
+    @JsonIgnore
     private Integer id;
-
     private String login;
-
     private String role;
 
+    @JsonIgnore
+    private List<FilmTicketDto> tickets = new ArrayList<>();
 
     public UserDto() {
     }
@@ -22,8 +25,6 @@ public class UserDto {
         this.login = login;
         this.role = role;
     }
-
-    private List<FilmTicketDto> tickets = new ArrayList<>();
 
     public Integer getId() {
         return id;

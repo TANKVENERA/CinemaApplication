@@ -14,7 +14,7 @@ import java.util.List;
 public interface FilmDAO extends JpaRepository<FilmEntity, Integer> {
 
     @Query("select f from FilmEntity f where f.title=:title")
-    List<FilmEntity> getDatesByFilm(@Param("title") String title);
+    List<FilmEntity> getFilmDates(@Param("title") String title);
 
     @Query("select new com.mina.mail.ru.cinema.repository.dbo.FilmEntity(f.title) from FilmEntity f group by f.title")
     List<FilmEntity> getFilms();
