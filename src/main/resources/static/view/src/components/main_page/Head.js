@@ -100,9 +100,9 @@ class Head extends Component {
             }
         ).then(result => {
             return result.json()
-        }).then(data => { console.log('KKKK', data.login === '' )
+        }).then(data =>
             this.setState({loggedInUser: data, authErr: data.login === '' ? 'User not found!' : ''})
-        });
+        );
     };
 
     componentDidMount() {

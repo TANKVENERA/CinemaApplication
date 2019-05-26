@@ -43,6 +43,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
+    /** Used for test purposes**/
     @GetMapping("/")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
@@ -72,9 +73,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/register", params = "login")
-    public String createUser (@RequestParam("login") String login) {
+    public ResponseEntity<String> createUser (@RequestParam("login") String login) {
         UserDto userDto = new UserDto(login, "USER");
         userDto.setLogin(login);
-        return userService.createUser(userDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(userDto));
     }
 }

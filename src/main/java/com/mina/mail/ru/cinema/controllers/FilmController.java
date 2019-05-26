@@ -26,8 +26,8 @@ public class FilmController {
     }
 
     @GetMapping("/films")
-    public List<FilmDto> getFilms() {
-        return filmService.getFilms();
+    public ResponseEntity<List<FilmDto>> getFilms() {
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilms());
     }
 
     @GetMapping(value = "/dates", params = "film")

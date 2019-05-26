@@ -41,8 +41,8 @@ button:disabled {
     font-family: cursive;
     font-size: 20px;
     position: fixed;
-    top: 42%;
-    left: 35%;
+    top: 40%;
+    left: 41%;
     z-index: 10000;
     width: max-content;
     opacity: 0.8;

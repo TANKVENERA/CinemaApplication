@@ -4,6 +4,8 @@ import com.mina.mail.ru.cinema.service.impl.FilmTicketService;
 import com.mina.mail.ru.cinema.service.dto.UserOrder;
 import com.mina.mail.ru.cinema.service.dto.UserTickets;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -29,18 +31,17 @@ public class FilmTicketController {
     }
 
     @GetMapping(value = "listOrders", params = "login")
-    public List<UserTickets> getAllOrders (@RequestParam("login") String login) {
-       List<UserTickets> filmTicketDbos = filmTicketService.getOrders(login);
-        return filmTicketDbos;
+    public ResponseEntity<List<UserTickets>> getAllOrders (@RequestParam("login") String login) {
+        return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
     }
 
     @GetMapping(value = "/delete", params = {"title", "date", "seat", "login"})
-    public List<UserTickets> deleteOrder(@RequestParam("title") String title,
+    public ResponseEntity<List<UserTickets>> deleteOrder(@RequestParam("title") String title,
                             @RequestParam("date") Integer date,
                             @RequestParam("seat") Integer seat,
                             @RequestParam("login") String login) {
        filmTicketService.deleteOrder(title, date, seat);
-       return filmTicketService.getOrders(login);
+       return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
 
     }
 }
