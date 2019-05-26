@@ -1,4 +1,4 @@
-package com.mina.mail.ru.cinema.repository.dbo;
+package com.mina.mail.ru.cinema.dbo;
 
 
 

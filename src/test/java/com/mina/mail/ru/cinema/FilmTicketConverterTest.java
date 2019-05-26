@@ -1,8 +1,8 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.repository.dbo.FilmTicketEntity;
-import com.mina.mail.ru.cinema.service.converter.FilmTicketConverter;
-import com.mina.mail.ru.cinema.service.dto.FilmTicketDto;
+import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
+import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;

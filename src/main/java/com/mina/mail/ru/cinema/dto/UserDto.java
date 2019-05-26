@@ -1,4 +1,4 @@
-package com.mina.mail.ru.cinema.service.dto;
+package com.mina.mail.ru.cinema.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

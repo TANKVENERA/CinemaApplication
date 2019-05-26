@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.service.dto.PageObjectDto;
-import com.mina.mail.ru.cinema.service.impl.UserService;
+import com.mina.mail.ru.cinema.dto.PageObjectDto;
+import com.mina.mail.ru.cinema.service.UserService;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;

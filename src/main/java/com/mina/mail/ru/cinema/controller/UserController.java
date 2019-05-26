@@ -1,14 +1,11 @@
-package com.mina.mail.ru.cinema.controllers;
+package com.mina.mail.ru.cinema.controller;
 
+import com.mina.mail.ru.cinema.dto.UserDto;
+import com.mina.mail.ru.cinema.service.UserService;
 
-import com.mina.mail.ru.cinema.service.dto.UserDto;
-import com.mina.mail.ru.cinema.service.impl.UserService;
-import com.mina.mail.ru.cinema.service.dto.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.security.Principal;
 import java.util.List;
 
 

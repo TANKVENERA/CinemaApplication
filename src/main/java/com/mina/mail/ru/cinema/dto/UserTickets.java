@@ -1,4 +1,4 @@
-package com.mina.mail.ru.cinema.service.dto;
+package com.mina.mail.ru.cinema.dto;
 
 /**
  * Created by Mina on 13.05.2019.

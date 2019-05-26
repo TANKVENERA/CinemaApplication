@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mina.mail.ru.cinema.service.dto.UserDto;
+import com.mina.mail.ru.cinema.dto.UserDto;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;

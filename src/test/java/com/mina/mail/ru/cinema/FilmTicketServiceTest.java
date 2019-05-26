@@ -1,8 +1,8 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.repository.impl.FilmTicketDAO;
-import com.mina.mail.ru.cinema.service.dto.UserTickets;
-import com.mina.mail.ru.cinema.service.impl.FilmTicketService;
+import com.mina.mail.ru.cinema.repository.FilmTicketDAO;
+import com.mina.mail.ru.cinema.dto.UserTickets;
+import com.mina.mail.ru.cinema.service.FilmTicketService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

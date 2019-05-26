@@ -1,12 +1,12 @@
-package com.mina.mail.ru.cinema.service.impl;
+package com.mina.mail.ru.cinema.service;
 
-import com.mina.mail.ru.cinema.repository.dbo.FilmEntity;
-import com.mina.mail.ru.cinema.repository.dbo.FilmTicketEntity;
-import com.mina.mail.ru.cinema.repository.impl.FilmDAO;
-import com.mina.mail.ru.cinema.service.converter.FilmConverter;
-import com.mina.mail.ru.cinema.service.converter.FilmTicketConverter;
-import com.mina.mail.ru.cinema.service.dto.FilmDto;
-import com.mina.mail.ru.cinema.service.dto.FilmTicketDto;
+import com.mina.mail.ru.cinema.dbo.FilmEntity;
+import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.repository.FilmDAO;
+import com.mina.mail.ru.cinema.converter.FilmConverter;
+import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
+import com.mina.mail.ru.cinema.dto.FilmDto;
+import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

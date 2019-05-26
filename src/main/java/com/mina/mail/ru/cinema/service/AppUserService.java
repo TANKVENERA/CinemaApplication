@@ -1,7 +1,7 @@
-package com.mina.mail.ru.cinema.service.impl;
+package com.mina.mail.ru.cinema.service;
 
-import com.mina.mail.ru.cinema.repository.dbo.UserEntity;
-import com.mina.mail.ru.cinema.repository.impl.UserDAO;
+import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.repository.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.User.UserBuilder;

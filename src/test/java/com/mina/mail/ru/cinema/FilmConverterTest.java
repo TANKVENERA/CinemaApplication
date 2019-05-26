@@ -1,9 +1,9 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.repository.dbo.FilmEntity;
-import com.mina.mail.ru.cinema.service.converter.FilmConverter;
-import com.mina.mail.ru.cinema.service.dto.FilmDto;
-import com.mina.mail.ru.cinema.service.dto.FilmTicketDto;
+import com.mina.mail.ru.cinema.dbo.FilmEntity;
+import com.mina.mail.ru.cinema.converter.FilmConverter;
+import com.mina.mail.ru.cinema.dto.FilmDto;
+import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

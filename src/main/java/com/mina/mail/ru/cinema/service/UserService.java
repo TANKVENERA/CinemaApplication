@@ -1,9 +1,9 @@
-package com.mina.mail.ru.cinema.service.impl;
+package com.mina.mail.ru.cinema.service;
 
-import com.mina.mail.ru.cinema.repository.dbo.UserEntity;
-import com.mina.mail.ru.cinema.repository.impl.UserDAO;
-import com.mina.mail.ru.cinema.service.converter.UserConverter;
-import com.mina.mail.ru.cinema.service.dto.UserDto;
+import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.repository.UserDAO;
+import com.mina.mail.ru.cinema.converter.UserConverter;
+import com.mina.mail.ru.cinema.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
