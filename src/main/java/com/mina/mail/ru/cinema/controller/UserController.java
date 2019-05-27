@@ -3,6 +3,8 @@ package com.mina.mail.ru.cinema.controller;
 import com.mina.mail.ru.cinema.dto.UserDto;
 import com.mina.mail.ru.cinema.service.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private UserService userService;
 
     @Autowired
@@ -34,8 +38,10 @@ public class UserController {
 
     @GetMapping(value = "/checkauth")
     public ResponseEntity<UserDto> checkAuth(Authentication auth) {
+        logger.info("Checking if user is signed in...");
         UserDto userDto = new UserDto();
         userDto.setLogin(auth == null ? "" : auth.getName());
+        logger.info(auth == null ? "user is not in system" : "user is signed in");
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
@@ -58,9 +64,11 @@ public class UserController {
         SecurityContextHolder.clearContext();
         session= request.getSession(false);
         if(session != null) {
+            logger.info("Invalidating user session...");
             session.invalidate();
         }
         for(Cookie cookie : request.getCookies()) {
+            logger.info("Deleting  user session id...");
             cookie.setMaxAge(0);
         }
         UserDto userDto = new UserDto();
@@ -72,6 +80,7 @@ public class UserController {
     public ResponseEntity<String> createUser (@RequestParam("login") String login) {
         UserDto userDto = new UserDto(login, "USER");
         userDto.setLogin(login);
+        logger.info("Trying to save new user...");
         return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(userDto));
     }
 }

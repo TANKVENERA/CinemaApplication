@@ -2,6 +2,8 @@ package com.mina.mail.ru.cinema.controller;
 
 import com.mina.mail.ru.cinema.dto.FilmDto;
 import com.mina.mail.ru.cinema.service.FilmService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import java.util.List;
 @RestController
 public class FilmController {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(FilmController.class);
     private FilmService filmService;
 
     @Autowired
@@ -27,11 +29,13 @@ public class FilmController {
 
     @GetMapping("/films")
     public ResponseEntity<List<FilmDto>> getFilms() {
+        logger.info("Unique list of films is requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilms());
     }
 
     @GetMapping(value = "/dates", params = "film")
-    public ResponseEntity<List<FilmDto>> getDates(@RequestParam(value = "film") String film) {
-        return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmDates(film));
+    public ResponseEntity<List<FilmDto>> dates(@RequestParam(value = "film") String film) {
+        logger.info("Single film with all dates is requested...");
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.getDatesByFilm(film));
     }
 }

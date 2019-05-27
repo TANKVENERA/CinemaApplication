@@ -4,6 +4,8 @@ import com.mina.mail.ru.cinema.dbo.UserEntity;
 import com.mina.mail.ru.cinema.repository.UserDAO;
 import com.mina.mail.ru.cinema.converter.UserConverter;
 import com.mina.mail.ru.cinema.dto.UserDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.List;
 @Service
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private UserDAO userDAO;
     private UserConverter userConverter;
 
@@ -49,14 +52,17 @@ public class UserService {
         UserEntity userEntity = userConverter.convertToDbo(userDto);
         UserEntity existedUser = userDAO.getUserByName(userDto.getLogin());
         if (existedUser != null) {
+            logger.warn("User already exists!");
             return "User already exists!";
         }
         else {
             userDAO.save(userEntity);
+            logger.info("User was saved");
             return "User was created successfully!";
         }
     }
 
+    /**For test purposes**/
     public void deleteUser (String login) {
         userDAO.delete(userDAO.getUserByName(login));
     }

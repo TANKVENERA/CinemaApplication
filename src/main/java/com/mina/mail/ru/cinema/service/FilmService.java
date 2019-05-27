@@ -7,6 +7,8 @@ import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
 import com.mina.mail.ru.cinema.dto.FilmDto;
 import com.mina.mail.ru.cinema.dto.FilmTicketDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ import java.util.Set;
 @Service
 public class FilmService {
 
+    private static final Logger logger = LoggerFactory.getLogger(FilmService.class);
+
     private FilmDAO filmDAO;
     private FilmConverter filmConverter;
     private FilmTicketConverter filmTicketConverter;
@@ -36,16 +40,17 @@ public class FilmService {
     public List<FilmDto> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
         List<FilmEntity> filmsDbo = filmDAO.getFilms();
-
+        logger.info("Unique films were received...");
         for (FilmEntity d : filmsDbo) {
             filmsDto.add(filmConverter.convertToDto(d));
         }
         return filmsDto;
     }
 
-    public List<FilmDto> getFilmDates(String film) {
+    public List<FilmDto> getDatesByFilm(String film) {
         List<FilmDto> dates = new ArrayList<>();
-        List<FilmEntity> datesDbo = filmDAO.getFilmDates(film);
+        List<FilmEntity> datesDbo = filmDAO.geDatesByFilm(film);
+        logger.info("Film with dates was received...");
         for (FilmEntity d : datesDbo) {
             Set<FilmTicketDto> ticketDtos = new HashSet<>();
             for (FilmTicketEntity ticketDbo : d.getTickets()) {
