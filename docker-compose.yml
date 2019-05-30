@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'docker_mysql'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: '3798'
+      MYSQL_ROOT_PASSWORD: '3798'
+    ports:
+      - '3305:3306'
