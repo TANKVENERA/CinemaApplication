@@ -19,7 +19,7 @@ public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT into filmticket (seat, visitor_id, film_id) values (:seat, :userId, :filmId)", nativeQuery = true)
+    @Query(value = "INSERT into filmticket (seat, fkvisitor_id, film_id) values (:seat, :userId, :filmId)", nativeQuery = true)
     Integer createOrder(@Param("seat")Integer seat, @Param("userId") Integer userId, @Param("filmId") Integer filmId);
 
     @Query(value = GET_ALL_ORDERS, nativeQuery = true)
