@@ -69,6 +69,18 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<properties>
+				<activatedProperties>docker</activatedProperties>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -84,6 +96,10 @@
 				<excludes>
 					<exclude>static/view/**</exclude>
 				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/properties</directory>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 	</build>

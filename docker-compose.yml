@@ -5,21 +5,32 @@ services:
     build:
      context: ./
      dockerfile: Dockerfile
-    image: cinemaserver
+    container_name: java_server
+    image: server
+    restart: on-failure
     ports:
-       - '8080'
-#    depends_on:
-#       - db
+       - '8080:8080'
+    depends_on:
+       - db
 
-#  db:
-#    image: mysql:5.7
-#    restart: always
-#    container_name: database
-#    volumes:
-#     - ./initdb:/docker-entrypoint-initdb.d
-#    environment:
-#      MYSQL_DATABASE: 'cinema_demo'
-#      MYSQL_PASSWORD: '3798'
-#      MYSQL_ROOT_PASSWORD: '3798'
-#    ports:
-#      - '3306:3306'
+  db:
+    image: mysql:5.7
+    restart: always
+    container_name: database
+    volumes:
+     - ./initdb:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: 'cinema_demo'
+      MYSQL_PASSWORD: '3798'
+      MYSQL_ROOT_PASSWORD: '3798'
+    ports:
+      - '3306:3306'
+
+  react:
+    build:
+       context: ./
+       dockerfile: src/main/resources/static/view/Dockerfile
+    container_name: react_view
+    image: react
+    ports:
+      - '3000:3000'

@@ -35,7 +35,7 @@ public class FilmTicketController {
         filmTicketService.createOrder(order, principal.getName());
     }
 
-    @GetMapping(value = "listOrders", params = "login")
+    @GetMapping(value = "listorders", params = "login")
     public ResponseEntity<List<UserTickets>> getAllOrders (@RequestParam("login") String login) {
         logger.info("Retrieving user orders...");
         return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
