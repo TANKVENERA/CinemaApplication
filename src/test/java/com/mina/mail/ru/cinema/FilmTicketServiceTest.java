@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema;
 
 import com.mina.mail.ru.cinema.repository.FilmTicketDAO;
-import com.mina.mail.ru.cinema.dto.UserTickets;
+import com.mina.mail.ru.cinema.dto.UserSeat;
 import com.mina.mail.ru.cinema.service.FilmTicketService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class FilmTicketServiceTest {
     @Mock
     private FilmTicketDAO filmTicketDAO;
     @Mock
-    private UserTickets tickets;
+    private UserSeat tickets;
 
     @Test
     public void TestADeleteOrder() {
@@ -42,11 +42,11 @@ public class FilmTicketServiceTest {
 
     @Test
     public void TestBGetAllOrders(){
-        final List<UserTickets> list = new ArrayList<>();
+        final List<UserSeat> list = new ArrayList<>();
         list.add(tickets);
         list.add(tickets);
         doReturn(list).when(filmTicketDAO).getAllOrders("mockUser");
-        final List<UserTickets> tickets = filmTicketService.getOrders("mockUser");
+        final List<UserSeat> tickets = filmTicketService.getOrders("mockUser");
         verify(filmTicketDAO, times(1)).getAllOrders("mockUser");
         Assert.assertEquals(list.size(), tickets.size());
     }

@@ -4,7 +4,7 @@ import com.mina.mail.ru.cinema.repository.FilmDAO;
 import com.mina.mail.ru.cinema.repository.FilmTicketDAO;
 import com.mina.mail.ru.cinema.repository.UserDAO;
 import com.mina.mail.ru.cinema.dto.UserOrder;
-import com.mina.mail.ru.cinema.dto.UserTickets;
+import com.mina.mail.ru.cinema.dto.UserSeat;
 import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +44,19 @@ public class FilmTicketService {
         logger.info("Order was created.");
     }
 
-    public List<UserTickets> getOrders(String login) {
-        List<UserTickets> tickets = filmTicketDAO.getAllOrders(login);
+    public void updateOrder (UserOrder order, String login) {
+        Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex()).getId();
+        Integer userId = userDAO.getUserByName(login).getId();
+        List<Integer> seats = order.getSeats();
+        filmTicketDAO.deleteByTicket(order.getTicket());
+        for (Integer seat : seats) {
+            filmTicketDAO.createOrder(seat, userId, filmId, order.getTicket());
+        }
+        logger.info("Order was updated.");
+    }
+
+    public List<UserSeat> getOrders(String login) {
+        List<UserSeat> tickets = filmTicketDAO.getAllOrders(login);
         logger.info("Received user orders.");
         return tickets;
     }

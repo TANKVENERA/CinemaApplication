@@ -10,6 +10,7 @@ public class UserOrder {
     private String film;
     private List<Integer> seats;
     private Integer dateIndex;
+    private String ticket;
 
     public String getFilm() {
         return film;
@@ -35,12 +36,21 @@ public class UserOrder {
         this.dateIndex = dateIndex;
     }
 
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
+    }
+
     @Override
     public String toString() {
         return "UserOrder{" +
-                ", film='" + film + '\'' +
+                "film='" + film + '\'' +
                 ", seats=" + seats +
                 ", dateIndex=" + dateIndex +
+                ", ticket='" + ticket + '\'' +
                 '}';
     }
 }

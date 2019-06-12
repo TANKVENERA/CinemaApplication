@@ -64,7 +64,6 @@ class Head extends Component {
         }).then(result => {
             return result.json();
         }).then(data =>    {
-                console.log('TERMINATOR', data)
                 this.setState({userOrdersData: data, isOpenOrdersModal: true})
         });
     };
@@ -233,9 +232,9 @@ class Head extends Component {
         var tickets = this.parseTickets(userOrders);
         return (tickets.map((ticket, index) => (
             <div key={index} style={{display: 'table', paddingBottom: '10px'}}>
-                <div style={{display: 'table-cell'}}>
+                <div style={{display: 'table-cell', width: '600px'}}>
                     <label>{index + 1}. </label>
-                    <label>N: {ticket.ticket}, </label>
+                    <label>ID: {ticket.ticket}, </label>
                     <label>film: {ticket.title}, </label>
                     <label>date: {ticket.filmDate}, </label>
                     <label>seat numbers: </label>
@@ -259,6 +258,10 @@ class Head extends Component {
             </div>)
         ))
     }
+
+    throwWarning = (warn, color) => {
+        this.props.warn(warn, color)
+    };
 
     render() {
         return (
@@ -305,13 +308,18 @@ class Head extends Component {
                     </div>
                 </Modal>
                 <Modal open={this.state.isOpenUpdateOrdersModal} onClose={this.onCloseUpdateOrdersModal}
-                       showCloseIcon={false} classNames={{modal: 'modal-orders-body'}}>
+                       classNames={{modal: 'modal-orders-body'}}>
                     <div>
                         <div style={{textAlign: 'center', width: '100%'}} >Updating ticket:</div>
                        <div style={{font: 'Arial'}}>ID: {this.state.ticketID}</div>
                        <div>film: {this.state.title}</div>
                        <div>date: {this.state.filmdate}</div>
-                      <Hall tickets={this.state.bookedSeats} seatsToUpdate={this.state.seatsToUpdate}/>
+                      <Hall tickets={this.state.bookedSeats}
+                            ticketID={this.state.ticketID}
+                            film={this.state.title}
+                            dateIndex={this.state.filmdate}
+                            seatsToUpdate={this.state.seatsToUpdate}
+                            warning={(warn, color)=> this.throwWarning(warn, color)}/>
                     </div>
                 </Modal>
             </div>

@@ -2,8 +2,7 @@ package com.mina.mail.ru.cinema.controller;
 
 import com.mina.mail.ru.cinema.service.FilmTicketService;
 import com.mina.mail.ru.cinema.dto.UserOrder;
-import com.mina.mail.ru.cinema.dto.UserTickets;
-import com.mina.mail.ru.cinema.service.UserService;
+import com.mina.mail.ru.cinema.dto.UserSeat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,23 +28,29 @@ public class FilmTicketController {
         this.filmTicketService = filmTicketService;
     }
 
-    @PostMapping(value = "/makeOrder")
+    @PostMapping(value = "/save")
     public void createOrder (@RequestBody UserOrder order, Principal principal) {
         logger.info("Trying to save user order...");
         filmTicketService.createOrder(order, principal.getName());
     }
 
+    @PostMapping(value = "/update")
+    public void updateOrder (@RequestBody UserOrder order, Principal principal) {
+        logger.info("Trying to update user order...");
+        filmTicketService.updateOrder(order, principal.getName());
+    }
+
     @GetMapping(value = "listorders", params = "login")
-    public ResponseEntity<List<UserTickets>> getAllOrders (@RequestParam("login") String login) {
+    public ResponseEntity<List<UserSeat>> getAllOrders (@RequestParam("login") String login) {
         logger.info("Retrieving user orders...");
         return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
     }
 
     @GetMapping(value = "/delete", params = {"title", "date", "seat", "login"})
-    public ResponseEntity<List<UserTickets>> deleteOrder(@RequestParam("title") String title,
-                            @RequestParam("date") Integer date,
-                            @RequestParam("seat") Integer seat,
-                            @RequestParam("login") String login) {
+    public ResponseEntity<List<UserSeat>> deleteOrder(@RequestParam("title") String title,
+                                                      @RequestParam("date") Integer date,
+                                                      @RequestParam("seat") Integer seat,
+                                                      @RequestParam("login") String login) {
         logger.info("Trying to delete order...");
        filmTicketService.deleteOrder(title, date, seat);
        return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));

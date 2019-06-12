@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.repository;
 
 import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
-import com.mina.mail.ru.cinema.dto.UserTickets;
+import com.mina.mail.ru.cinema.dto.UserSeat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,10 +25,18 @@ public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
                         @Param("ticket") String ticket);
 
     @Query(value = GET_ALL_ORDERS, nativeQuery = true)
-    List<UserTickets> getAllOrders(@Param("login") String login);
+    List<UserSeat> getAllOrders(@Param("login") String login);
+
+    @Query("select f.id from FilmTicketEntity f where f.ticket=:ticket and f.seatnumber=:seat")
+    Integer getSeat(@Param("ticket") String ticket, @Param("seat") Integer seat);
 
     @Transactional
     @Modifying
     @Query(value = "DELETE ft from filmticket ft join film f on f.id=ft.film_id where f.title=:title and f.filmdate=:date and ft.seat=:seat", nativeQuery = true)
     void deleteOrder(@Param("title") String title, @Param("date") Integer date, @Param("seat") Integer seat);
+
+    @Transactional
+    @Modifying
+    @Query("delete from FilmTicketEntity f where f.ticket=:ticket")
+    void deleteByTicket(@Param("ticket") String ticket);
 }

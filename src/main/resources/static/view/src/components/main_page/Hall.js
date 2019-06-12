@@ -36,15 +36,15 @@ class Hall extends Component {
             this.props.warning('Max allowed seat quantity in one order is 3!', 'red')
         }
         else {
-            console.log('SSSSSS', index, ' ', userOrder);
             userOrder.push(index);
         }
         this.setState({userOrder: userOrder});
     };
 
     handleCreateOrder = (e) => {
-        e.stopPropagation()
-        fetch('http://localhost:8080/cinema/rest/makeOrder', {
+        e.stopPropagation();
+        var action = this.props.seatsToUpdate === undefined ? 'save' : 'update';
+        fetch(`http://localhost:8080/cinema/rest/${action}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -55,7 +55,8 @@ class Hall extends Component {
             body: JSON.stringify({
                 film: this.props.film,
                 seats : this.state.userOrder,
-                dateIndex: this.props.dateIndex
+                dateIndex: this.props.dateIndex,
+                ticket: this.props.seatsToUpdate === undefined ? '' : this.props.ticketID
                 })
             }).then(result => {
                 if (result.status !== 200) {
@@ -85,12 +86,10 @@ class Hall extends Component {
     }
 
     componentDidMount() {
-        console.log('TRLOLOLO', this.props.seatsToUpdate === undefined);
         this.setState({userOrder: this.props.seatsToUpdate === undefined ? [] : this.props.seatsToUpdate})
     }
 
     render(){
-        console.log('GGGGGGGAA' , this.state.userOrder);
         const userOrder = this.state.userOrder;
         const successOrder = this.state.successOrder;
         const blockSeats = this.props.tickets.map((ticket) =>(ticket.seatnumber));
