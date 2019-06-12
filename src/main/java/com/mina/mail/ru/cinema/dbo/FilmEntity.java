@@ -31,6 +31,12 @@ public class FilmEntity implements Serializable {
     public FilmEntity() {
     }
 
+    public FilmEntity(String title, Integer filmdate, Set<FilmTicketEntity> tickets) {
+        this.title = title;
+        this.filmdate = filmdate;
+        this.tickets = tickets;
+    }
+
     public FilmEntity(String title) {
         this.title = title;
     }

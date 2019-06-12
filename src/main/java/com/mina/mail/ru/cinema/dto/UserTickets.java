@@ -9,4 +9,5 @@ public interface UserTickets {
     Integer getSeat();
     String getTitle();
     Integer getFilmDate();
+    String getTicket();
 }

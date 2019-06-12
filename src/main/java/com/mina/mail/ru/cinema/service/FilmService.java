@@ -49,7 +49,7 @@ public class FilmService {
 
     public List<FilmDto> getDatesByFilm(String film) {
         List<FilmDto> dates = new ArrayList<>();
-        List<FilmEntity> datesDbo = filmDAO.geDatesByFilm(film);
+        List<FilmEntity> datesDbo = filmDAO.getDatesByFilm(film);
         logger.info("Film with dates was received...");
         for (FilmEntity d : datesDbo) {
             Set<FilmTicketDto> ticketDtos = new HashSet<>();
@@ -62,4 +62,12 @@ public class FilmService {
         }
         return dates;
     }
+
+    public FilmDto getFilmTickets(String title, Integer date) {
+        FilmEntity film = filmDAO.getFilmTickets(title, date);
+        logger.info("Film tickets were received...");
+        FilmDto filmDto = filmConverter.convertToDto(film);
+        return filmDto;
+    }
+
 }

@@ -25,13 +25,10 @@ public class FilmTicketEntity {
     @Column(name = "fkvisitor_id")
     private Integer visitorid;
 
-    public FilmTicketEntity() {
-    }
+    @Column(name = "ticket")
+    private String ticket;
 
-    public FilmTicketEntity(Integer id, Integer seatnumber, Integer visitorid) {
-        this.id = id;
-        this.seatnumber = seatnumber;
-        this.visitorid = visitorid;
+    public FilmTicketEntity() {
     }
 
     public Integer getId() {
@@ -58,12 +55,21 @@ public class FilmTicketEntity {
         this.visitorid = visitorId;
     }
 
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
+    }
+
     @Override
     public String toString() {
         return "FilmTicketEntity{" +
                 "id=" + id +
                 ", seatnumber=" + seatnumber +
                 ", visitorid=" + visitorid +
+                ", ticket=" + ticket +
                 '}';
     }
 }

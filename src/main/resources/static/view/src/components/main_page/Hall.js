@@ -28,6 +28,7 @@ class Hall extends Component {
 
     handleClick = (index) => {
         var userOrder = this.state.userOrder;
+
         if (userOrder.includes(index)){
           userOrder = userOrder.filter(i => {return i !== index});
         }
@@ -35,6 +36,7 @@ class Hall extends Component {
             this.props.warning('Max allowed seat quantity in one order is 3!', 'red')
         }
         else {
+            console.log('SSSSSS', index, ' ', userOrder);
             userOrder.push(index);
         }
         this.setState({userOrder: userOrder});
@@ -82,15 +84,22 @@ class Hall extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log('TRLOLOLO', this.props.seatsToUpdate === undefined);
+        this.setState({userOrder: this.props.seatsToUpdate === undefined ? [] : this.props.seatsToUpdate})
+    }
+
     render(){
+        console.log('GGGGGGGAA' , this.state.userOrder);
         const userOrder = this.state.userOrder;
         const successOrder = this.state.successOrder;
         const blockSeats = this.props.tickets.map((ticket) =>(ticket.seatnumber));
+
         const style = (seat) => {
             if (blockSeats.includes(seat) || successOrder.includes(seat)) {
                 return "seat-chosen"
             }
-            else if (userOrder.includes(seat) ) {
+             if (userOrder.includes(seat)) {
                 return "seat-ordered"
             }
             else
@@ -110,13 +119,13 @@ class Hall extends Component {
                 </div>
                 <div>
                     { userOrder.length > 0 &&
-                        <StyleRoot>
-                            <div className="order-button" style={styles.bounceIn}>
-                                <Fab variant="extended" aria-label="Delete" onClick={(e) => this.handleCreateOrder(e)}>
-                                    Make order
-                                </Fab>
-                            </div>
-                        </StyleRoot>
+                    <StyleRoot>
+                        <div className="order-button" style={styles.bounceIn}>
+                            <Fab variant="extended" aria-label="Delete" onClick={(e) => this.handleCreateOrder(e)}>
+                                {this.props.seatsToUpdate === undefined ? 'Make order' : 'Update order'}
+                            </Fab>
+                        </div>
+                    </StyleRoot>
                     }
                 </div>
             </div>

@@ -6,8 +6,10 @@ import React, {Component} from 'react';
 import './styles/head.css'
 import Button from '../../../node_modules/@material-ui/core/Button'
 import DeleteIcon from '../../../node_modules/@material-ui/icons/Delete'
+import EditIcon from '../../../node_modules/@material-ui/icons/Edit'
 import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Modal from '../../../node_modules/react-responsive-modal'
+import Hall from './Hall'
 
 
 class Head extends Component {
@@ -18,9 +20,15 @@ class Head extends Component {
             signUpLogin: "",
             isOpenModal: false,
             isOpenOrdersModal: false,
+            isOpenUpdateOrdersModal: false,
             loggedInUser: {login: ''},
             authErr: "",
-            userOrdersData: []
+            userOrdersData: [],
+            bookedSeats: [],
+            seatsToUpdate: [],
+            title: '',
+            filmdate: '',
+            ticketID: ''
         }
     }
 
@@ -47,7 +55,7 @@ class Head extends Component {
     };
 
     handleOrders = (user) => {
-        fetch(`http://localhost:8080/cinema/rest/listOrders/?login=${user}`, {
+        fetch(`http://localhost:8080/cinema/rest/listorders/?login=${user}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -55,7 +63,10 @@ class Head extends Component {
             }
         }).then(result => {
             return result.json();
-        }).then(data => this.setState({userOrdersData: data, isOpenOrdersModal: true}));
+        }).then(data =>    {
+                console.log('TERMINATOR', data)
+                this.setState({userOrdersData: data, isOpenOrdersModal: true})
+        });
     };
 
     onCloseModal = () => {
@@ -64,6 +75,10 @@ class Head extends Component {
 
     onCloseOrdersModal = () => {
         this.setState({isOpenOrdersModal: false})
+    };
+
+    onCloseUpdateOrdersModal = () => {
+        this.setState({isOpenUpdateOrdersModal: false})
     };
 
     handleDeleteOrder = (title, date, seat, login) => {
@@ -77,6 +92,27 @@ class Head extends Component {
             return result.json();
         }).then(data => {this.setState({userOrdersData: data});
                          this.props.warn('Order was successfully removed!', 'green')});
+    };
+
+    handleUpdateOrder = (title, date, seats, ticketID) => {
+        this.setState({title: title, filmdate: date, ticketID: ticketID})
+        fetch(`http://localhost:8080/cinema/rest/dates/?film=${title}&date=${date}`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then(result => {return result.json();
+        }).then(data => {
+            var filtered = data.tickets.filter((ticket) =>{
+                if (!seats.includes(ticket.seatnumber)) {
+                    return ticket
+                }
+                    return ''
+            });
+            this.setState({bookedSeats: filtered})
+        });
+        this.setState({isOpenUpdateOrdersModal: true, seatsToUpdate: seats})
     };
 
     signOut = () => {
@@ -106,17 +142,48 @@ class Head extends Component {
     };
 
     componentDidMount() {
-
         fetch("http://localhost:8080/cinema/rest/checkauth", {
             credentials: 'include',
             headers: {
                 "X-Requested-With": "XMLHttpRequest"
             }
-        })
-            .then(result => {
-              return result.json()
-            }).then(data =>{
-                this.setState({loggedInUser: data, authErr: ''})});
+        }).then(result => {
+                return result.json()
+            }).then(data => {
+            this.setState({loggedInUser: data, authErr: ''})
+        });
+    }
+
+    parseTickets(userOrders) {
+        var tickets = [];
+        var ticketID = [];
+        var seats = [];
+
+        for (var i = 0; i < userOrders.length; i++) {
+            if (!ticketID.includes(userOrders[i].ticket)) {
+                ticketID.push(userOrders[i].ticket)
+            }
+        }
+
+        for (var m = 0; m < ticketID.length; m++) {
+            for (var j = 0; j < userOrders.length; j++) {
+                var order = userOrders[j];
+                var ticket;
+                var title;
+                var filmDate;
+                if (ticketID[m] === order.ticket) {
+                    seats.push(userOrders[j].seat);
+                    ticket = order.ticket;
+                    title = order.title;
+                    filmDate = order.filmDate;
+                }
+                if (j === userOrders.length - 1) {
+                    tickets.push({title: title, filmDate: filmDate, ticket: ticket, seats: seats});
+                    seats = [];
+                }
+            }
+        }
+        return tickets;
     }
 
     greeting() {
@@ -163,15 +230,29 @@ class Head extends Component {
     }
 
     printUserOrdersData(userOrders) {
-        return (userOrders.map((order, index) => (
+        var tickets = this.parseTickets(userOrders);
+        return (tickets.map((ticket, index) => (
             <div key={index} style={{display: 'table', paddingBottom: '10px'}}>
-                <div style={{display: 'table-cell', width: '350px'}}>
-                    <label>film: {order.title}, date: {order.filmDate}, seat: {order.seat}</label>
-                </div>
                 <div style={{display: 'table-cell'}}>
-                    <Fab aria-label="Delete" className="delete-icon" >
+                    <label>{index + 1}. </label>
+                    <label>N: {ticket.ticket}, </label>
+                    <label>film: {ticket.title}, </label>
+                    <label>date: {ticket.filmDate}, </label>
+                    <label>seat numbers: </label>
+                    {ticket.seats.map((seat, i) => (
+                     <label key={i}>{seat} </label>
+                    ))}
+                </div>
+                <div style={{display: 'table-cell', paddingLeft: '10px'}}>
+                    <Fab className="delete-icon" color="primary">
+                        <EditIcon fontSize="small"
+                                  onClick={() => this.handleUpdateOrder(ticket.title, ticket.filmDate, ticket.seats, ticket.ticket)}/>
+                    </Fab>
+                </div>
+                <div style={{display: 'table-cell', paddingLeft: '10px'}}>
+                    <Fab className="delete-icon" >
                         <DeleteIcon fontSize="small"
-                                    onClick={() => this.handleDeleteOrder(order.title, order.filmDate, order.seat,
+                                    onClick={() => this.handleDeleteOrder(ticket.title, ticket.filmDate, 1,
                                         this.state.loggedInUser.login)}/>
                     </Fab>
                 </div>
@@ -221,7 +302,16 @@ class Head extends Component {
                                 Exit
                             </Button>
                         </div>
-
+                    </div>
+                </Modal>
+                <Modal open={this.state.isOpenUpdateOrdersModal} onClose={this.onCloseUpdateOrdersModal}
+                       showCloseIcon={false} classNames={{modal: 'modal-orders-body'}}>
+                    <div>
+                        <div style={{textAlign: 'center', width: '100%'}} >Updating ticket:</div>
+                       <div style={{font: 'Arial'}}>ID: {this.state.ticketID}</div>
+                       <div>film: {this.state.title}</div>
+                       <div>date: {this.state.filmdate}</div>
+                      <Hall tickets={this.state.bookedSeats} seatsToUpdate={this.state.seatsToUpdate}/>
                     </div>
                 </Modal>
             </div>

@@ -98,4 +98,12 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="13" author="belski">
+        <addColumn tableName="filmticket">
+            <column name="ticket" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

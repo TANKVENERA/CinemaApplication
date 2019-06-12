@@ -5,11 +5,13 @@ import com.mina.mail.ru.cinema.repository.FilmTicketDAO;
 import com.mina.mail.ru.cinema.repository.UserDAO;
 import com.mina.mail.ru.cinema.dto.UserOrder;
 import com.mina.mail.ru.cinema.dto.UserTickets;
+import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,10 +35,11 @@ public class FilmTicketService {
     public void createOrder (UserOrder order, String login) {
         Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex()).getId();
         Integer userId = userDAO.getUserByName(login).getId();
+        String ticketToken = RandomString.make(7);
 
         List<Integer> seats = order.getSeats();
         for (Integer seat : seats) {
-           filmTicketDAO.createOrder(seat, userId, filmId);
+           filmTicketDAO.createOrder(seat, userId, filmId, ticketToken);
         }
         logger.info("Order was created.");
     }
