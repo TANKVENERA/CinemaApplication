@@ -19,7 +19,7 @@ class Main extends Component {
 
  handleWarningParam = (warning, color) => {
      this.setState({warning: warning, color: color});
-     setTimeout(() => this.setState({warning: ''}), 4000);
+     setTimeout(() => this.setState({warning: ''}), 3000);
  };
 
   render() {

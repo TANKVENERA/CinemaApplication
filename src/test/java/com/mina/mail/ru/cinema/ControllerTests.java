@@ -59,8 +59,8 @@ public class ControllerTests {
 
     @Test
     public void testBInvalidUserSignIn() throws InterruptedException {
-        Thread.sleep(500);
         page.signIn(testUser);
+        Thread.sleep(500);
         Assert.assertTrue("Error occur when sing in with invalid user!",
                 page.getUserNotFoundWarn().getText().equals("User not found!"));
         page.clearInputField(page.getInputSignIn());
@@ -75,7 +75,7 @@ public class ControllerTests {
 
     @Test
     public void testDSaveUser() throws InterruptedException {
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         page.signUp(testUser);
         Assert.assertTrue("Error occur when saving user",
                 page.getBubblingWarn().getText().equals("User was created successfully!"));
@@ -84,7 +84,7 @@ public class ControllerTests {
 
     @Test
     public void testEUserAlreadyExists() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         page.getSignUpButton().click();
         page.signUp(testUser);
         Assert.assertTrue("Error occur when checking that user already exists",

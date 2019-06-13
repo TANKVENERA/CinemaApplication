@@ -64,6 +64,7 @@ public class UserService {
 
     /**For test purposes**/
     public void deleteUser (String login) {
+        UserEntity user = userDAO.getUserByName(login);
         userDAO.delete(userDAO.getUserByName(login));
     }
 

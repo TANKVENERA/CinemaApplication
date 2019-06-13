@@ -22,7 +22,6 @@ public class FilmConverterTest {
     public static void setUpStaticData(){
         dbo.setTitle(filmTitle);
         dto.setTitle(filmTitle);
-        FilmTicketDto ticket = new FilmTicketDto();
     }
 
     @Test
