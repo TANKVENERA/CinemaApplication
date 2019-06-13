@@ -46,13 +46,11 @@ public class FilmTicketController {
         return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
     }
 
-    @GetMapping(value = "/delete", params = {"title", "date", "seat", "login"})
-    public ResponseEntity<List<UserSeat>> deleteOrder(@RequestParam("title") String title,
-                                                      @RequestParam("date") Integer date,
-                                                      @RequestParam("seat") Integer seat,
+    @GetMapping(value = "/delete", params = {"ticket", "login"})
+    public ResponseEntity<List<UserSeat>> deleteOrder(@RequestParam("ticket") String ticket,
                                                       @RequestParam("login") String login) {
         logger.info("Trying to delete order...");
-       filmTicketService.deleteOrder(title, date, seat);
+       filmTicketService.deleteOrderByTicket(ticket);
        return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
 
     }

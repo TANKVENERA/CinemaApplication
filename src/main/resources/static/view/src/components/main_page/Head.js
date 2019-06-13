@@ -80,8 +80,8 @@ class Head extends Component {
         this.setState({isOpenUpdateOrdersModal: false})
     };
 
-    handleDeleteOrder = (title, date, seat, login) => {
-        fetch(`http://localhost:8080/cinema/rest/delete/?title=${title}&date=${date}&seat=${seat}&login=${login}`, {
+    handleDeleteOrder = (ticket, login) => {
+        fetch(`http://localhost:8080/cinema/rest/delete/?ticket=${ticket}&login=${login}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -122,6 +122,9 @@ class Head extends Component {
         ).then(result => {
             return result.json();
         }).then(data => this.setState({loggedInUser: data}));
+
+        /** refresh browser **/
+        window.location.reload();
     };
 
     handleLoginUser = () => {
@@ -251,8 +254,7 @@ class Head extends Component {
                 <div style={{display: 'table-cell', paddingLeft: '10px'}}>
                     <Fab className="delete-icon" >
                         <DeleteIcon fontSize="small"
-                                    onClick={() => this.handleDeleteOrder(ticket.title, ticket.filmDate, 1,
-                                        this.state.loggedInUser.login)}/>
+                                    onClick={() => this.handleDeleteOrder(ticket.ticket, this.state.loggedInUser.login)}/>
                     </Fab>
                 </div>
             </div>)
@@ -310,7 +312,7 @@ class Head extends Component {
                 <Modal open={this.state.isOpenUpdateOrdersModal} onClose={this.onCloseUpdateOrdersModal}
                        classNames={{modal: 'modal-orders-body'}}>
                     <div>
-                        <div style={{textAlign: 'center', width: '100%'}} >Updating ticket:</div>
+                       <div style={{textAlign: 'center', width: '100%'}} >Updating ticket:</div>
                        <div style={{font: 'Arial'}}>ID: {this.state.ticketID}</div>
                        <div>film: {this.state.title}</div>
                        <div>date: {this.state.filmdate}</div>

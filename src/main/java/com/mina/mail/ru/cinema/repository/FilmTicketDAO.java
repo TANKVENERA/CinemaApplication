@@ -32,11 +32,9 @@ public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE ft from filmticket ft join film f on f.id=ft.film_id where f.title=:title and f.filmdate=:date and ft.seat=:seat", nativeQuery = true)
-    void deleteOrder(@Param("title") String title, @Param("date") Integer date, @Param("seat") Integer seat);
-
-    @Transactional
-    @Modifying
     @Query("delete from FilmTicketEntity f where f.ticket=:ticket")
-    void deleteByTicket(@Param("ticket") String ticket);
+    void deleteOrderByTicket(@Param("ticket") String ticket);
+
+    @Query("select f from FilmTicketEntity f where f.ticket=:ticket")
+    List<FilmTicketEntity> getTicketsById(@Param("ticket") String ticket);
 }

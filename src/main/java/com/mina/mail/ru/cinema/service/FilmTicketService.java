@@ -1,5 +1,6 @@
 package com.mina.mail.ru.cinema.service;
 
+import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
 import com.mina.mail.ru.cinema.repository.FilmDAO;
 import com.mina.mail.ru.cinema.repository.FilmTicketDAO;
 import com.mina.mail.ru.cinema.repository.UserDAO;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,11 +35,19 @@ public class FilmTicketService {
     public void createOrder (UserOrder order, String login) {
         Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex()).getId();
         Integer userId = userDAO.getUserByName(login).getId();
-        String ticketToken = RandomString.make(7);
+        String ticketId;
+        for (;;) {
+            ticketId = RandomString.make(7);
+            List<FilmTicketEntity>  tickets = filmTicketDAO.getTicketsById(ticketId);
+            if (tickets.size() == 0) {
+                logger.info("Generated ticket was verified. Start saving order.");
+                break;
+            }
+        }
 
         List<Integer> seats = order.getSeats();
         for (Integer seat : seats) {
-           filmTicketDAO.createOrder(seat, userId, filmId, ticketToken);
+           filmTicketDAO.createOrder(seat, userId, filmId, ticketId);
         }
         logger.info("Order was created.");
     }
@@ -48,7 +56,7 @@ public class FilmTicketService {
         Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex()).getId();
         Integer userId = userDAO.getUserByName(login).getId();
         List<Integer> seats = order.getSeats();
-        filmTicketDAO.deleteByTicket(order.getTicket());
+        deleteOrderByTicket(order.getTicket());
         for (Integer seat : seats) {
             filmTicketDAO.createOrder(seat, userId, filmId, order.getTicket());
         }
@@ -61,8 +69,8 @@ public class FilmTicketService {
         return tickets;
     }
 
-    public void deleteOrder (String title, Integer date, Integer seat) {
-        filmTicketDAO.deleteOrder(title, date, seat);
+    public void deleteOrderByTicket (String ticket) {
+        filmTicketDAO.deleteOrderByTicket(ticket);
         logger.info("Order was deleted.");
     }
 

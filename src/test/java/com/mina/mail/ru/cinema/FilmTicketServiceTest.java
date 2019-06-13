@@ -34,13 +34,6 @@ public class FilmTicketServiceTest {
     private UserSeat tickets;
 
     @Test
-    public void TestADeleteOrder() {
-        doNothing().when(filmTicketDAO).deleteOrder("mockTitle", 1, 1);
-        filmTicketService.deleteOrder("mockTitle", 1, 1);
-        verify(filmTicketDAO, times(1)).deleteOrder("mockTitle", 1,1);
-    }
-
-    @Test
     public void TestBGetAllOrders(){
         final List<UserSeat> list = new ArrayList<>();
         list.add(tickets);
