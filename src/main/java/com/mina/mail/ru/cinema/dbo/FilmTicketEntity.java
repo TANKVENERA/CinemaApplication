@@ -31,6 +31,10 @@ public class FilmTicketEntity {
     public FilmTicketEntity() {
     }
 
+    public FilmTicketEntity(Integer seatnumber) {
+        this.seatnumber = seatnumber;
+    }
+
     public Integer getId() {
         return id;
     }

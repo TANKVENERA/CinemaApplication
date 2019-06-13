@@ -39,28 +39,28 @@ public class FilmService {
 
     public List<FilmDto> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
-        List<FilmEntity> filmsDbo = filmDAO.getFilms();
+        List<FilmEntity> filmEntities = filmDAO.getFilms();
         logger.info("Unique films were received...");
-        for (FilmEntity d : filmsDbo) {
+        for (FilmEntity d : filmEntities) {
             filmsDto.add(filmConverter.convertToDto(d));
         }
         return filmsDto;
     }
 
-    public List<FilmDto> getDatesByFilm(String film) {
-        List<FilmDto> dates = new ArrayList<>();
-        List<FilmEntity> datesDbo = filmDAO.getDatesByFilm(film);
+    public List<FilmDto> getFilmsByTitle(String film) {
+        List<FilmDto> films = new ArrayList<>();
+        List<FilmEntity> filmsDbo = filmDAO.getFilmsByTitle(film);
         logger.info("Film with dates was received...");
-        for (FilmEntity d : datesDbo) {
+        for (FilmEntity d : filmsDbo) {
             Set<FilmTicketDto> ticketDtos = new HashSet<>();
             for (FilmTicketEntity ticketDbo : d.getTickets()) {
                ticketDtos.add(filmTicketConverter.convertToDto(ticketDbo));
             }
             FilmDto filmDto = filmConverter.convertToDto(d);
             filmDto.setTickets(ticketDtos);
-            dates.add(filmDto);
+            films.add(filmDto);
         }
-        return dates;
+        return films;
     }
 
     public FilmDto getFilmTickets(String title, Integer date) {

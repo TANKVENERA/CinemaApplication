@@ -32,8 +32,14 @@ public class FilmTicketService {
         this.userDAO = userDAO;
     }
 
+    public List<UserSeat> getOrders(String login) {
+        List<UserSeat> tickets = filmTicketDAO.getAllOrders(login);
+        logger.info("Received user orders.");
+        return tickets;
+    }
+
     public void createOrder (UserOrder order, String login) {
-        Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex()).getId();
+        Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex());
         Integer userId = userDAO.getUserByName(login).getId();
         String ticketId;
         for (;;) {
@@ -42,6 +48,9 @@ public class FilmTicketService {
             if (tickets.size() == 0) {
                 logger.info("Generated ticket was verified. Start saving order.");
                 break;
+            }
+            else {
+                logger.info("Generated ticket already exists. Generating new one...");
             }
         }
 
@@ -53,7 +62,7 @@ public class FilmTicketService {
     }
 
     public void updateOrder (UserOrder order, String login) {
-        Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex()).getId();
+        Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex());
         Integer userId = userDAO.getUserByName(login).getId();
         List<Integer> seats = order.getSeats();
         deleteOrderByTicket(order.getTicket());
@@ -61,12 +70,6 @@ public class FilmTicketService {
             filmTicketDAO.createOrder(seat, userId, filmId, order.getTicket());
         }
         logger.info("Order was updated.");
-    }
-
-    public List<UserSeat> getOrders(String login) {
-        List<UserSeat> tickets = filmTicketDAO.getAllOrders(login);
-        logger.info("Received user orders.");
-        return tickets;
     }
 
     public void deleteOrderByTicket (String ticket) {

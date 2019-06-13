@@ -16,10 +16,12 @@ public class FilmConverterTest {
     private static final String filmTitle = "SPIDER_MAN";
     private final FilmConverter converter = new FilmConverter();
     private static FilmEntity dbo = new FilmEntity();
+    private static FilmDto dto = new FilmDto();
 
     @BeforeClass
     public static void setUpStaticData(){
         dbo.setTitle(filmTitle);
+        dto.setTitle(filmTitle);
         FilmTicketDto ticket = new FilmTicketDto();
     }
 
@@ -27,6 +29,12 @@ public class FilmConverterTest {
     public void testAConvertToDto () {
         FilmDto dto = converter.convertToDto(dbo);
         Assert.assertEquals("Titles are not equal!", dto.getTitle(), "SPIDER_MAN");
+    }
+
+    @Test
+    public void testBConvertToDbo () {
+        FilmEntity filmEntity = converter.convertToDbo(dto);
+        Assert.assertEquals("Titles are not equal!", filmEntity.getTitle(), "SPIDER_MAN");
     }
 
 }

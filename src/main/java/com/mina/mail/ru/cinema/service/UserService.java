@@ -34,9 +34,9 @@ public class UserService {
 
     public List<UserDto> getAllUsers() {
         List<UserDto> usersDto = new ArrayList<>();
-        List<UserEntity> usersDbo = userDAO.findAll();
+        List<UserEntity> usersEntity = userDAO.findAll();
 
-        for (UserEntity d : usersDbo) {
+        for (UserEntity d : usersEntity) {
             usersDto.add(userConverter.convertToDto(d));
         }
       return usersDto;

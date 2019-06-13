@@ -36,7 +36,7 @@ public class FilmController {
     @GetMapping(value = "/dates", params = "film")
     public ResponseEntity<List<FilmDto>> dates(@RequestParam(value = "film") String film) {
         logger.info("Film with all dates is requested...");
-        return ResponseEntity.status(HttpStatus.OK).body(filmService.getDatesByFilm(film));
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmsByTitle(film));
     }
 
     @GetMapping(value = "/dates", params = {"film", "date"})
