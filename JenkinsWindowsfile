@@ -1,0 +1,16 @@
+/** Windows Example**/
+pipeline {
+ agent any
+ stages {
+   stage('==BUILD==') {
+     steps {
+       bat 'git clone https://github.com/TANKVENERA/CinemaApplication.git'
+       bat 'mvn clean'
+     }
+   }
+   stage('==RUN TESTS==') {
+    steps {
+     bat 'mvn test'
+    }
+    }
+ }
