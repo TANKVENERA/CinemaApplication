@@ -1,16 +1,19 @@
-/** Windows Example**/
 pipeline {
  agent any
  stages {
    stage('==BUILD==') {
      steps {
-       bat 'git clone https://github.com/TANKVENERA/CinemaApplication.git'
-       bat 'mvn clean'
+         dir ('CinemaApplication') {
+            deleteDir()
+        }
+      bat 'git clone https://github.com/TANKVENERA/CinemaApplication.git'
+       bat 'mvn clean -f CinemaApplication '
      }
    }
    stage('==RUN TESTS==') {
     steps {
-     bat 'mvn test'
+     bat 'mvn test -f CinemaApplication'
     }
     }
  }
+}
