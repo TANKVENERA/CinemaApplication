@@ -4,7 +4,6 @@ HELP.md
 /log/
 /.mvn
 mvnw*
-chromedriver.exe
 
 ### STS ###
 .apt_generated
