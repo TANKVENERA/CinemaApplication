@@ -76,7 +76,7 @@
 				<activatedProperties>docker</activatedProperties>
 			</properties>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 		</profile>
 	</profiles>
