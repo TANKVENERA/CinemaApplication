@@ -58,13 +58,13 @@ public class FilmServiceTest {
         filmEntities.add(film2);
     }
 
-    @Test
-    public void TestAGetFilms() {
-        doReturn(filmEntities).when(filmDAO).getFilms();
-        doReturn(new FilmDto()).when(filmConverter).convertToDto(any());
-        List<FilmDto> films = filmService.getFilms();
-        verify(filmConverter, times(2)).convertToDto(any());
-    }
+//    @Test
+//    public void TestAGetFilms() {
+//        doReturn(filmEntities).when(filmDAO).getFilms();
+//        doReturn(new FilmDto()).when(filmConverter).convertToDto(any());
+//        List<FilmDto> films = filmService.getFilms();
+//        verify(filmConverter, times(2)).convertToDto(any());
+//    }
 
     @Test
     public void TestBGetFilmsByTitle() {

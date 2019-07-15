@@ -1,5 +1,6 @@
 package com.mina.mail.ru.cinema.service;
 
+import com.mina.mail.ru.cinema.dbo.FilmDatesEntity;
 import com.mina.mail.ru.cinema.dbo.FilmEntity;
 import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
 import com.mina.mail.ru.cinema.repository.FilmDAO;
@@ -12,10 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Created by Mina on 29.04.2019.
@@ -37,14 +39,14 @@ public class FilmService {
         this.filmTicketConverter = filmTicketConverter;
     }
 
-    public List<FilmDto> getFilms() {
+    public List<FilmEntity> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
         List<FilmEntity> filmEntities = filmDAO.getFilms();
         logger.info("Unique films were received...");
         for (FilmEntity d : filmEntities) {
             filmsDto.add(filmConverter.convertToDto(d));
         }
-        return filmsDto;
+        return filmEntities;
     }
 
     public List<FilmDto> getFilmsByTitle(String film) {
@@ -64,10 +66,41 @@ public class FilmService {
     }
 
     public FilmDto getFilmTickets(String title, Integer date) {
-        FilmEntity film = filmDAO.getFilmTickets(title, date);
+        FilmEntity film = filmDAO.getFilmTickets(title);
         logger.info("Film tickets were received...");
         FilmDto filmDto = filmConverter.convertToDto(film);
         return filmDto;
+    }
+
+    public String addFilm (String title, String filmdate) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String dateAndTime = filmdate +  " 12:00:00";
+        LocalDateTime filmdateAndTime = LocalDateTime.parse(dateAndTime, formatter);
+        FilmEntity filmEntity = filmDAO.getFilmByTitle(title);
+        FilmDatesEntity date = new FilmDatesEntity();
+        date.setDateAndTime(filmdateAndTime);
+        if (filmEntity != null) {
+            List<FilmDatesEntity> dates = filmEntity.getDates();
+            for (FilmDatesEntity filmDatesEntity : dates) {
+                System.out.println("DDD " + filmDatesEntity.getDateAndTime());
+                if (formatter.format(filmDatesEntity.getDateAndTime()).equals(dateAndTime)) {
+                    return "Film with date of performance - " + dateAndTime + " already exists!";
+                }
+            }
+            dates.add(date);
+            filmEntity.setDates(dates);
+            filmDAO.save(filmEntity);
+            return "Date of performance - " + dateAndTime + " for film - " + title + " was successfully added!";
+        }
+        else {
+            FilmEntity newFilm = new FilmEntity();
+            newFilm.setTitle(title);
+            List<FilmDatesEntity> dates = new ArrayList<>();
+            dates.add(date);
+            newFilm.setDates(dates);
+            filmDAO.save(newFilm);
+            return "Film - " + title + " with date of performance - " + dateAndTime + " were successfully added!";
+        }
     }
 
 }

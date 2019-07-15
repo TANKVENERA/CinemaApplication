@@ -1,5 +1,6 @@
 package com.mina.mail.ru.cinema.controller;
 
+import com.mina.mail.ru.cinema.dbo.FilmEntity;
 import com.mina.mail.ru.cinema.dto.FilmDto;
 import com.mina.mail.ru.cinema.service.FilmService;
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +31,7 @@ public class FilmController {
     }
 
     @GetMapping("/films")
-    public ResponseEntity<List<FilmDto>> getFilms() {
+    public ResponseEntity<List<FilmEntity>> getFilms() {
         logger.info("Unique list of films is requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilms());
     }
@@ -41,8 +44,15 @@ public class FilmController {
 
     @GetMapping(value = "/dates", params = {"film", "date"})
     public ResponseEntity<FilmDto> filmTickets(@RequestParam(value = "film") String title,
-                                                     @RequestParam(value = "date") Integer date) {
+                                               @RequestParam(value = "date") Integer date) {
         logger.info("Film tickets at certain date are requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmTickets(title, date));
+    }
+
+    @GetMapping(value = "/addfilm", params = {"title", "firstdate"})
+    public ResponseEntity<String> addFilm(@RequestParam(value = "title") String title,
+                                          @RequestParam(value = "firstdate") String firstDate) throws ParseException {
+
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.addFilm(title, firstDate));
     }
 }

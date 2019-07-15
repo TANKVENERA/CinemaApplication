@@ -77,7 +77,7 @@ public class FilmTicketServiceTest {
 
     @Test
     public void TestBCreateOrder() {
-        doReturn(1).when(filmDAO).getFilmId(order.getFilm(), order.getDateIndex());
+        doReturn(1).when(filmDAO).getFilmId(order.getFilm());
         doReturn(userEntity).when(userDAO).getUserByName(MOCK_USER);
         filmTicketService.createOrder(order, MOCK_USER);
         verify(filmTicketDAO, times(1)).getTicketsById(anyString());
@@ -87,7 +87,7 @@ public class FilmTicketServiceTest {
     @Test
     public void TestCUpdateOrders() {
         order.setTicket("ticketId");
-        doReturn(1).when(filmDAO).getFilmId(order.getFilm(), order.getDateIndex());
+        doReturn(1).when(filmDAO).getFilmId(order.getFilm());
         doReturn(userEntity).when(userDAO).getUserByName(MOCK_USER);
         filmTicketService.updateOrder(order, MOCK_USER);
         verify(filmTicketDAO, times(1)).createOrder(10,1,1,"ticketId");

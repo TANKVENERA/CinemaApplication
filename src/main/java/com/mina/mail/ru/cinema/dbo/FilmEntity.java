@@ -2,6 +2,7 @@ package com.mina.mail.ru.cinema.dbo;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -21,20 +22,20 @@ public class FilmEntity implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "filmdate")
-    private Integer filmdate;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
     private Set<FilmTicketEntity> tickets;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "film_id")
+    private List<FilmDatesEntity> dates;
+
     public FilmEntity() {
     }
 
-    public FilmEntity(String title, Integer filmdate, Set<FilmTicketEntity> tickets) {
+    public FilmEntity(String title, List<FilmDatesEntity> dates) {
         this.title = title;
-        this.filmdate = filmdate;
-        this.tickets = tickets;
+        this.dates = dates;
     }
 
     public FilmEntity(String title) {
@@ -57,14 +58,6 @@ public class FilmEntity implements Serializable {
         this.title = title;
     }
 
-    public Integer getFilmdate() {
-        return filmdate;
-    }
-
-    public void setFilmdate(Integer date) {
-        this.filmdate = date;
-    }
-
     public Set<FilmTicketEntity> getTickets() {
         return tickets;
     }
@@ -73,12 +66,19 @@ public class FilmEntity implements Serializable {
         this.tickets = tickets;
     }
 
+    public List<FilmDatesEntity> getDates() {
+        return dates;
+    }
+
+    public void setDates(List<FilmDatesEntity> dates) {
+        this.dates = dates;
+    }
+
     @Override
     public String toString() {
         return "FilmEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", filmdate=" + filmdate +
                 ", tickets=" + tickets +
                 '}';
     }

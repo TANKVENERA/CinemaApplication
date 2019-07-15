@@ -113,4 +113,43 @@
                       tableName="filmticket"/>
     </changeSet>
 
+    <changeSet id="15" author="belski">
+        <dropColumn columnName="filmdate" tableName="film"/>
+    </changeSet>
+
+    <changeSet id="16" author="belski">
+        <createTable tableName="filmdate">
+            <column name="id" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="filmdate" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_date" references="film(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="17" id="belski">
+        <renameColumn columnDataType="int"
+                      newColumnName="film_id"
+                      oldColumnName="date_id"
+                      tableName="filmdate"/>
+    </changeSet>
+
+    <changeSet id="18" author="belski">
+        <addForeignKeyConstraint baseTableName="filmdate" baseColumnNames="film_id"
+                                 constraintName="fk_film_date"
+                                 referencedTableName="film" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet author="19" id="belski">
+        <addAutoIncrement columnDataType="int"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="1"
+                          tableName="filmdate"/>
+    </changeSet>
+
 </databaseChangeLog>

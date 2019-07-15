@@ -39,7 +39,7 @@ public class FilmTicketService {
     }
 
     public void createOrder (UserOrder order, String login) {
-        Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex());
+        Integer filmId = filmDAO.getFilmId(order.getFilm());
         Integer userId = userDAO.getUserByName(login).getId();
         String ticketId;
         for (;;) {
@@ -62,7 +62,7 @@ public class FilmTicketService {
     }
 
     public void updateOrder (UserOrder order, String login) {
-        Integer filmId = filmDAO.getFilmId(order.getFilm(), order.getDateIndex());
+        Integer filmId = filmDAO.getFilmId(order.getFilm());
         Integer userId = userDAO.getUserByName(login).getId();
         List<Integer> seats = order.getSeats();
         deleteOrderByTicket(order.getTicket());
