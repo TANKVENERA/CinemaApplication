@@ -66,12 +66,12 @@ public class FilmServiceTest {
 //        verify(filmConverter, times(2)).convertToDto(any());
 //    }
 
-    @Test
-    public void TestBGetFilmsByTitle() {
-        doReturn(filmEntities).when(filmDAO).getFilmsByTitle(anyString());
-        doReturn(new FilmTicketDto()).when(ticketConverter).convertToDto(any());
-        doReturn(new FilmDto()).when(filmConverter).convertToDto(any());
-        List<FilmDto> films = filmService.getFilmsByTitle(anyString());
-        Assert.assertTrue(films.size() == 2);
-    }
+//    @Test
+//    public void TestBGetFilmsByTitle() {
+//        doReturn(filmEntities).when(filmDAO).getFilmsByTitle(anyString());
+//        doReturn(new FilmTicketDto()).when(ticketConverter).convertToDto(any());
+//        doReturn(new FilmDto()).when(filmConverter).convertToDto(any());
+//        List<FilmDto> films = filmService.getFilmsByTitle(anyString());
+//        Assert.assertTrue(films.size() == 2);
+//    }
 }

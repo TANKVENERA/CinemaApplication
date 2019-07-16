@@ -45,45 +45,25 @@ public class FilmService {
 
         logger.info("Unique films were received...");
         for (FilmEntity filmEntity : filmEntities) {
-            List<String> formattedDates = new ArrayList<>();
             List<FilmDatesEntity> filmDates = filmEntity.getDates();
 
-            Collections.sort(filmDates, new Comparator<FilmDatesEntity>() {
-                @Override
-                public int compare(FilmDatesEntity o1, FilmDatesEntity o2) {
-                    if (o1 == null || o2 == null) {
-                        return 0;
-                    }
-                    else return o1.getDateAndTime().compareTo(o2.getDateAndTime());
-                }
-            });
-
-            for (FilmDatesEntity dates : filmDates) {
-                formattedDates.add(DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm:ss").format(dates.getDateAndTime()));
-            }
             FilmDto filmDto = filmConverter.convertToDto(filmEntity);
-
-            filmDto.setFormattedDates(formattedDates);
+            filmDto.setFormattedDates(formatDates(filmDates));
             filmsDto.add(filmDto);
 
         }
         return filmsDto;
     }
 
-    public List<FilmDto> getFilmsByTitle(String film) {
-        List<FilmDto> films = new ArrayList<>();
-        List<FilmEntity> filmEntities = filmDAO.getFilmsByTitle(film);
-        logger.info("Film with dates was received...");
-        for (FilmEntity d : filmEntities) {
-            Set<FilmTicketDto> ticketDtos = new HashSet<>();
-            for (FilmTicketEntity ticketDbo : d.getTickets()) {
-               ticketDtos.add(filmTicketConverter.convertToDto(ticketDbo));
-            }
-            FilmDto filmDto = filmConverter.convertToDto(d);
-            filmDto.setTickets(ticketDtos);
-            films.add(filmDto);
-        }
-        return films;
+    public FilmDto getFilmByTitle(String film) {
+        FilmEntity filmEntity = filmDAO.getFilmsByTitle(film);
+        logger.info("Film " + film + " was received...");
+        List<FilmDatesEntity> filmDates = filmEntity.getDates();
+
+        FilmDto filmDto = filmConverter.convertToDto(filmEntity);
+        filmDto.setFormattedDates(formatDates(filmDates));
+
+        return filmDto;
     }
 
     public FilmDto getFilmTickets(String title, Integer date) {
@@ -122,6 +102,25 @@ public class FilmService {
             filmDAO.save(newFilm);
             return "Film - " + title + " with date of performance - " + dateAndTime + " were successfully added!";
         }
+    }
+
+    public List<String> formatDates(List<FilmDatesEntity> list) {
+        List<String> formattedDates = new ArrayList<>();
+
+        Collections.sort(list, new Comparator<FilmDatesEntity>() {
+            @Override
+            public int compare(FilmDatesEntity o1, FilmDatesEntity o2) {
+                if (o1 == null || o2 == null) {
+                    return 0;
+                }
+                else return o1.getDateAndTime().compareTo(o2.getDateAndTime());
+            }
+        });
+
+        for (FilmDatesEntity dates : list) {
+            formattedDates.add(DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm:ss").format(dates.getDateAndTime()));
+        }
+        return formattedDates;
     }
 
 }
