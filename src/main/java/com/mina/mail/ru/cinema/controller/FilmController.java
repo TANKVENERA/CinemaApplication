@@ -55,4 +55,10 @@ public class FilmController {
 
         return ResponseEntity.status(HttpStatus.OK).body(filmService.addFilm(title, firstDate));
     }
+
+    @GetMapping(value = "/deletefilm", params="title")
+    public void deleteFilm (@RequestParam(value = "title") String title) {
+        logger.info("Trying to delete film...");
+        filmService.deleteFilm(title);
+    }
 }

@@ -33,9 +33,9 @@ public class FilmEntity implements Serializable {
     public FilmEntity() {
     }
 
-    public FilmEntity(String title, List<FilmDatesEntity> dates) {
+    public FilmEntity(Integer id, String title) {
+        this.id = id;
         this.title = title;
-        this.dates = dates;
     }
 
     public FilmEntity(String title) {

@@ -61,7 +61,7 @@
     <changeSet id="06" author="belski">
         <addColumn tableName="filmticket">
             <column name="film_id" type="int">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </addColumn>
     </changeSet>
@@ -76,7 +76,6 @@
                 <constraints nullable="false"/>
             </column>
         </addColumn>
-       <!--<renameColumn tableName="filmticket" oldColumnName="seatnumber" newColumnName="seat" columnDataType="int"/>-->
     </changeSet>
 
     <changeSet id="09" author="belski">

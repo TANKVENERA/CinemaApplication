@@ -45,10 +45,10 @@ public class FilmService {
 
         logger.info("Unique films were received...");
         for (FilmEntity filmEntity : filmEntities) {
-            List<FilmDatesEntity> filmDates = filmEntity.getDates();
+//            List<FilmDatesEntity> filmDates = filmEntity.getDates();
 
             FilmDto filmDto = filmConverter.convertToDto(filmEntity);
-            filmDto.setFormattedDates(formatDates(filmDates));
+//            filmDto.setFormattedDates(formatDates(filmDates));
             filmsDto.add(filmDto);
 
         }
@@ -56,7 +56,7 @@ public class FilmService {
     }
 
     public FilmDto getFilmByTitle(String film) {
-        FilmEntity filmEntity = filmDAO.getFilmsByTitle(film);
+        FilmEntity filmEntity = filmDAO.getFilmByTitle(film);
         logger.info("Film " + film + " was received...");
         List<FilmDatesEntity> filmDates = filmEntity.getDates();
 
@@ -121,6 +121,15 @@ public class FilmService {
             formattedDates.add(DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm:ss").format(dates.getDateAndTime()));
         }
         return formattedDates;
+    }
+
+    public void deleteFilm(String title) {
+        FilmEntity filmEntity = filmDAO.getFilmByTitle(title);
+        if (filmEntity != null) {
+            filmDAO.deleteById(filmEntity.getId());
+            logger.info("Film was deleted.");
+        }
+
     }
 
 }
