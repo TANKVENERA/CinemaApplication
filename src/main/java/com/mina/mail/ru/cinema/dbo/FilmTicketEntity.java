@@ -22,7 +22,7 @@ public class FilmTicketEntity {
     @Column(name = "seat")
     private Integer seatnumber;
 
-    @Column(name = "fkvisitor_id")
+    @Column(name = "visitor_id")
     private Integer visitorid;
 
     @Column(name = "ticket")

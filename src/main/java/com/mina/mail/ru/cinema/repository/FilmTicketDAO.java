@@ -16,11 +16,11 @@ import java.util.List;
 public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
 
     String GET_ALL_ORDERS="SELECT ft.seat, f.title, f.filmdate, ft.ticket FROM filmticket ft join film f on" +
-                                        " f.id=ft.film_id join user u on u.id=ft.fkvisitor_id where u.login=:login order by ft.ticket";
+                                        " f.id=ft.film_id join user u on u.id=ft.visitor_id where u.login=:login order by ft.ticket";
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT into filmticket (seat, fkvisitor_id, film_id, ticket) values (:seat, :userId, :filmId, :ticket)", nativeQuery = true)
+    @Query(value = "INSERT into filmticket (seat, visitor_id, film_id, ticket) values (:seat, :userId, :filmId, :ticket)", nativeQuery = true)
     Integer createOrder(@Param("seat")Integer seat, @Param("userId") Integer userId, @Param("filmId") Integer filmId,
                         @Param("ticket") String ticket);
 

@@ -22,7 +22,7 @@ public interface FilmDAO extends JpaRepository<FilmEntity, Integer> {
     @Query("select f from FilmEntity f where f.title=:title")
     FilmEntity getFilmTickets(@Param("title") String title);
 
-    @Query("select f from FilmEntity f join f.dates")
+    @Query("select f from FilmEntity f join f.dates group by f.id")
     List<FilmEntity> getFilms();
 
     @Query("select f.id from FilmEntity f where f.title=:title")

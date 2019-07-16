@@ -39,21 +39,42 @@ public class FilmService {
         this.filmTicketConverter = filmTicketConverter;
     }
 
-    public List<FilmEntity> getFilms() {
+    public List<FilmDto> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
         List<FilmEntity> filmEntities = filmDAO.getFilms();
+
         logger.info("Unique films were received...");
-        for (FilmEntity d : filmEntities) {
-            filmsDto.add(filmConverter.convertToDto(d));
+        for (FilmEntity filmEntity : filmEntities) {
+            List<String> formattedDates = new ArrayList<>();
+            List<FilmDatesEntity> filmDates = filmEntity.getDates();
+
+            Collections.sort(filmDates, new Comparator<FilmDatesEntity>() {
+                @Override
+                public int compare(FilmDatesEntity o1, FilmDatesEntity o2) {
+                    if (o1 == null || o2 == null) {
+                        return 0;
+                    }
+                    else return o1.getDateAndTime().compareTo(o2.getDateAndTime());
+                }
+            });
+
+            for (FilmDatesEntity dates : filmDates) {
+                formattedDates.add(DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm:ss").format(dates.getDateAndTime()));
+            }
+            FilmDto filmDto = filmConverter.convertToDto(filmEntity);
+
+            filmDto.setFormattedDates(formattedDates);
+            filmsDto.add(filmDto);
+
         }
-        return filmEntities;
+        return filmsDto;
     }
 
     public List<FilmDto> getFilmsByTitle(String film) {
         List<FilmDto> films = new ArrayList<>();
-        List<FilmEntity> filmsDbo = filmDAO.getFilmsByTitle(film);
+        List<FilmEntity> filmEntities = filmDAO.getFilmsByTitle(film);
         logger.info("Film with dates was received...");
-        for (FilmEntity d : filmsDbo) {
+        for (FilmEntity d : filmEntities) {
             Set<FilmTicketDto> ticketDtos = new HashSet<>();
             for (FilmTicketEntity ticketDbo : d.getTickets()) {
                ticketDtos.add(filmTicketConverter.convertToDto(ticketDbo));

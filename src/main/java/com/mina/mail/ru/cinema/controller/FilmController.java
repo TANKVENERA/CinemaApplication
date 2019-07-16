@@ -31,7 +31,7 @@ public class FilmController {
     }
 
     @GetMapping("/films")
-    public ResponseEntity<List<FilmEntity>> getFilms() {
+    public ResponseEntity<List<FilmDto>> getFilms() {
         logger.info("Unique list of films is requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilms());
     }
