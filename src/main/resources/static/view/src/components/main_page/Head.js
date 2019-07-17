@@ -103,6 +103,7 @@ class Head extends Component {
             }
         }).then(result => {return result.json();
         }).then(data => {
+            console.log('PULIA',data);
             var filtered = data.tickets.filter((ticket) =>{
                 if (!seats.includes(ticket.seatnumber)) {
                     return ticket
@@ -177,7 +178,8 @@ class Head extends Component {
                     seats.push(userOrders[j].seat);
                     ticket = order.ticket;
                     title = order.title;
-                    filmDate = order.filmDate;
+                    var dateAndTime = new Date(order.filmDate);
+                    filmDate = dateAndTime.toLocaleString().replace(', ', 'T').replace(/\./g, '-');
                 }
                 if (j === userOrders.length - 1) {
                     tickets.push({title: title, filmDate: filmDate, ticket: ticket, seats: seats});
@@ -234,15 +236,16 @@ class Head extends Component {
     printUserOrdersData(userOrders) {
         var tickets = this.parseTickets(userOrders);
         return (tickets.map((ticket, index) => (
+
             <div key={index} style={{display: 'table', paddingBottom: '10px'}}>
                 <div style={{display: 'table-cell', width: '600px'}}>
                     <label>{index + 1}. </label>
                     <label>ID: {ticket.ticket}, </label>
                     <label>film: {ticket.title}, </label>
                     <label>date: {ticket.filmDate}, </label>
-                    <label>seat numbers: </label>
+                    <label>row and seat: </label>
                     {ticket.seats.map((seat, i) => (
-                     <label key={i}>{seat} </label>
+                     <label key={i}>{Math.round(seat/10 + 1)}/{seat%10} </label>
                     ))}
                 </div>
                 <div style={{display: 'table-cell', paddingLeft: '10px'}}>

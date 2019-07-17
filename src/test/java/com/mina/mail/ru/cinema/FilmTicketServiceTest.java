@@ -55,7 +55,7 @@ public class FilmTicketServiceTest {
     public static void setup() {
         order = new UserOrder();
         order.setFilm("Test film");
-        order.setDateIndex(1);
+        order.setDateId(1);
         final List<Integer> seats = new ArrayList<>();
         seats.add(10);
         seats.add(11);

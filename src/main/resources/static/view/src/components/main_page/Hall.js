@@ -55,7 +55,7 @@ class Hall extends Component {
             body: JSON.stringify({
                 film: this.props.film,
                 seats : this.state.userOrder,
-                dateIndex: this.props.dateIndex,
+                dateId: this.props.dateID,
                 ticket: this.props.seatsToUpdate === undefined ? '' : this.props.ticketID
                 })
             }).then(result => {
@@ -80,7 +80,7 @@ class Hall extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (prevProps.dateIndex !== this.props.dateIndex || prevProps.film !== this.props.film) {
+        if (prevProps.dateID !== this.props.dateID || prevProps.film !== this.props.film) {
             this.setState({userOrder: []})
         }
     }

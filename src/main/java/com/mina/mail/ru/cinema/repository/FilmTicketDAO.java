@@ -15,13 +15,13 @@ import java.util.List;
  */
 public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
 
-    String GET_ALL_ORDERS="SELECT ft.seat, f.title, f.filmdate, ft.ticket FROM filmticket ft join film f on" +
-                                        " f.id=ft.film_id join user u on u.id=ft.visitor_id where u.login=:login order by ft.ticket";
+    String GET_ALL_ORDERS="SELECT ft.seat, f.title, fd.filmdate, ft.ticket FROM filmticket ft join filmdate fd on" +
+                                        " fd.id=ft.filmdate_id join user u on u.id=ft.visitor_id join film f on f.id=fd.film_id where u.login=:login order by ft.ticket";
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT into filmticket (seat, visitor_id, film_id, ticket) values (:seat, :userId, :filmId, :ticket)", nativeQuery = true)
-    Integer createOrder(@Param("seat")Integer seat, @Param("userId") Integer userId, @Param("filmId") Integer filmId,
+    @Query(value = "INSERT into filmticket (seat, visitor_id, filmdate_id, ticket) values (:seat, :userId, :filmDateId, :ticket)", nativeQuery = true)
+    Integer createOrder(@Param("seat")Integer seat, @Param("userId") Integer userId, @Param("filmDateId") Integer filmDateId,
                         @Param("ticket") String ticket);
 
     @Query(value = GET_ALL_ORDERS, nativeQuery = true)

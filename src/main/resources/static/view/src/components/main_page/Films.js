@@ -13,8 +13,8 @@ class Films extends Component {
         super(props)
         this.state = {
             index: 0,
-            isInitial: true,
             dateIndex: 0,
+            isInitial: true,
             films: [],
             dates: [],
             currentFilm: ''
@@ -25,7 +25,9 @@ class Films extends Component {
     componentWillMount() {
         fetch(`http://localhost:8080/cinema/rest/films`).then(result => {
             return result.json();
-        }).then(data => this.setState({films: data}));
+        }).then(data => {
+                console.log('INITIAL', data);
+                this.setState({films: data})});
     }
 
     handleClick = (index, uniqueFilm) => {
@@ -46,7 +48,7 @@ class Films extends Component {
             console.log('FFFFFFF', data);
                 this.setState({
 
-                    dates: data, index: index, isInitial: false, dateIndex: 0,
+                    dates: data.dates, index: index, isInitial: false, dateIndex: 0,
                     currentFilm: uniqueFilm
                 });
             }
@@ -67,7 +69,7 @@ class Films extends Component {
                 <div key={index} style={{display: 'inline-block'}}>
                     <button type="button" className="film-button"
                             onClick={() => this.handleDatesChange(index)}>
-                        {date}
+                        {date.formattedDate}
                     </button>
                 </div>
             ));
@@ -75,7 +77,6 @@ class Films extends Component {
     }
 
     render() {
-        console.log('TERMIN', this.state.dates);
         let dates = this.state.dates;
         let filmIndex = this.state.index;
         let dateIndex = this.state.dateIndex;
@@ -98,16 +99,16 @@ class Films extends Component {
                         {this.state.films.map((film, index) => (
                             <div key={index}>
                                 <div >
-                                    {this.dateBlock(filmIndex === 0 && isInitial ? [] : dates.formattedDates)}
+                                    {this.dateBlock(filmIndex === 0 && isInitial ? [] : dates)}
                                 </div>
                                 <div>
                                     <SwipeableViews index={dateIndex}>
-                                        {(filmIndex === 0 && isInitial ? [] : dates.formattedDates).map((date, index) => (
+                                        {(filmIndex === 0 && isInitial ? [] : dates).map((date, index) => (
                                             <div key={index}>
                                                 <Hall
                                                     warning={(warn, color)=> this.throwWarning(warn, color)}
                                                     tickets={filmIndex === 0 && isInitial ? [] : dates[dateIndex].tickets}
-                                                    dateIndex={date.filmdate}
+                                                    dateID={date.id}
                                                     filmIndex={filmIndex}
                                                     film={this.state.currentFilm}
                                                 />

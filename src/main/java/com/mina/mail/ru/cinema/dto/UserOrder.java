@@ -9,7 +9,7 @@ public class UserOrder {
 
     private String film;
     private List<Integer> seats;
-    private Integer dateIndex;
+    private Integer dateId;
     private String ticket;
 
     public String getFilm() {
@@ -28,12 +28,12 @@ public class UserOrder {
         this.seats = seats;
     }
 
-    public Integer getDateIndex() {
-        return dateIndex;
+    public Integer getDateId() {
+        return dateId;
     }
 
-    public void setDateIndex(Integer dateIndex) {
-        this.dateIndex = dateIndex;
+    public void setDateId(Integer dateId) {
+        this.dateId = dateId;
     }
 
     public String getTicket() {
@@ -49,7 +49,7 @@ public class UserOrder {
         return "UserOrder{" +
                 "film='" + film + '\'' +
                 ", seats=" + seats +
-                ", dateIndex=" + dateIndex +
+                ", dateIndex=" + dateId +
                 ", ticket='" + ticket + '\'' +
                 '}';
     }

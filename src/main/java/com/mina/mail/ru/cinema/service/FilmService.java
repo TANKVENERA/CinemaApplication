@@ -44,20 +44,10 @@ public class FilmService {
     public List<FilmDto> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
         List<FilmEntity> filmEntities = filmDAO.getFilms();
-        System.out.println("SSSSS" + filmEntities.get(1).getDates().get(0).getTickets().size());
-        for (FilmDateEntity f : filmEntities.get(0).getDates()) {
-            for (FilmTicketEntity t : f.getTickets()) {
-                System.out.println("LOLOLOL " + f.getDateAndTime() +  " seat: " + t.getSeatnumber() + " " + t.getTicket());
-            }
-        }
         logger.info("Unique films were received...");
         for (FilmEntity filmEntity : filmEntities) {
-//            List<FilmDateEntity> filmDates = filmEntity.getDates();
-
             FilmDto filmDto = filmConverter.convertToDto(filmEntity);
-//            filmDto.setFormattedDates(formatDates(filmDates));
             filmsDto.add(filmDto);
-
         }
         return filmsDto;
     }
@@ -67,7 +57,6 @@ public class FilmService {
         logger.info("Film " + film + " was received...");
         List<FilmDateEntity> filmDates = filmEntity.getDates();
         List<FilmDateDto> filmDateDtos = new ArrayList<>();
-        System.out.println("TERMINA " + filmDates.get(0).getDateAndTime());
         for (FilmDateEntity f : filmDates) {
             filmDateDtos.add(filmDateConverter.convertToDto(f));
         }
@@ -78,7 +67,7 @@ public class FilmService {
         return filmDto;
     }
 
-    public FilmDto getFilmTickets(String title, Integer date) {
+    public FilmDto getFilmTickets(String title, String date) {
         FilmEntity film = filmDAO.getFilmTickets(title);
         logger.info("Film tickets were received...");
         FilmDto filmDto = filmConverter.convertToDto(film);

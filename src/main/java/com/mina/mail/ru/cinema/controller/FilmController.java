@@ -44,7 +44,7 @@ public class FilmController {
 
     @GetMapping(value = "/dates", params = {"film", "date"})
     public ResponseEntity<FilmDto> filmTickets(@RequestParam(value = "film") String title,
-                                               @RequestParam(value = "date") Integer date) {
+                                               @RequestParam(value = "date") String date) {
         logger.info("Film tickets at certain date are requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmTickets(title, date));
     }

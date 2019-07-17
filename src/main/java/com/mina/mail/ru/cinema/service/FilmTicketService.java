@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -39,7 +41,6 @@ public class FilmTicketService {
     }
 
     public void createOrder (UserOrder order, String login) {
-        Integer filmId = filmDAO.getFilmId(order.getFilm());
         Integer userId = userDAO.getUserByName(login).getId();
         String ticketId;
         for (;;) {
@@ -56,7 +57,7 @@ public class FilmTicketService {
 
         List<Integer> seats = order.getSeats();
         for (Integer seat : seats) {
-           filmTicketDAO.createOrder(seat, userId, filmId, ticketId);
+           filmTicketDAO.createOrder(seat, userId, order.getDateId(), ticketId);
         }
         logger.info("Order was created.");
     }
