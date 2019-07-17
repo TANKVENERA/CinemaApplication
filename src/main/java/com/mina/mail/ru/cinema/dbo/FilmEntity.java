@@ -1,9 +1,10 @@
 package com.mina.mail.ru.cinema.dbo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -22,13 +23,10 @@ public class FilmEntity implements Serializable {
     @Column(name = "title")
     private String title;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
-    private Set<FilmTicketEntity> tickets;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "film_id")
-    private List<FilmDatesEntity> dates;
+    private List<FilmDateEntity> dates;
 
     public FilmEntity() {
     }
@@ -58,19 +56,11 @@ public class FilmEntity implements Serializable {
         this.title = title;
     }
 
-    public Set<FilmTicketEntity> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<FilmTicketEntity> tickets) {
-        this.tickets = tickets;
-    }
-
-    public List<FilmDatesEntity> getDates() {
+    public List<FilmDateEntity> getDates() {
         return dates;
     }
 
-    public void setDates(List<FilmDatesEntity> dates) {
+    public void setDates(List<FilmDateEntity> dates) {
         this.dates = dates;
     }
 
@@ -79,7 +69,6 @@ public class FilmEntity implements Serializable {
         return "FilmEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", tickets=" + tickets +
                 '}';
     }
 }

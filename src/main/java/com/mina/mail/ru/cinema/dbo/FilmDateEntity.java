@@ -1,9 +1,13 @@
 package com.mina.mail.ru.cinema.dbo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -13,15 +17,20 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "filmdate")
-public class FilmDatesEntity implements Serializable {
+public class FilmDateEntity implements Serializable {
 
    @Id
    @GeneratedValue(strategy = IDENTITY)
    @Column(name = "id")
    private Integer id;
 
+
    @Column(name = "filmdate", columnDefinition = "DATETIME")
    private LocalDateTime dateAndTime;
+
+   @OneToMany(cascade = CascadeType.ALL)
+   @JoinColumn(name = "filmdate_id")
+   private List<FilmTicketEntity> tickets;
 
    public LocalDateTime getDateAndTime() {
       return dateAndTime;
@@ -37,5 +46,13 @@ public class FilmDatesEntity implements Serializable {
 
    public void setId(Integer id) {
       this.id = id;
+   }
+
+   public List<FilmTicketEntity> getTickets() {
+      return tickets;
+   }
+
+   public void setTickets(List<FilmTicketEntity> tickets) {
+      this.tickets = tickets;
    }
 }

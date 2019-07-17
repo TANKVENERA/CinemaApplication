@@ -19,10 +19,13 @@ public interface FilmDAO extends JpaRepository<FilmEntity, Integer> {
     @Query("select f from FilmEntity f where f.title=:title")
     FilmEntity getFilmTickets(@Param("title") String title);
 
-    @Query("select new com.mina.mail.ru.cinema.dbo.FilmEntity(f.title)  from FilmEntity f")
+//    @Query("select new com.mina.mail.ru.cinema.dbo.FilmEntity(f.title)  from FilmEntity f")
+//    List<FilmEntity> getFilms();
+
+    @Query("select f from FilmEntity f")
     List<FilmEntity> getFilms();
 
-    @Query("select f.id from FilmEntity f where f.title=:title")
+    @Query("select f.id from FilmEntity f join f.dates where f.title=:title")
     Integer getFilmId(@Param("title")String title);
 
 

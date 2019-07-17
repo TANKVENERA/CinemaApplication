@@ -32,7 +32,6 @@
     </changeSet>
 
 
-
     <changeSet author="03" id="belski">
         <addAutoIncrement columnDataType="int"
                           columnName="id"
@@ -55,7 +54,7 @@
     </changeSet>
 
     <changeSet id="05" author="belski">
-        <renameTable oldTableName="order" newTableName="filmticket" />
+        <renameTable oldTableName="order" newTableName="filmticket"/>
     </changeSet>
 
     <changeSet id="06" author="belski">
@@ -67,7 +66,7 @@
     </changeSet>
 
     <changeSet id="07" author="belski">
-        <renameTable oldTableName="visitor" newTableName="user" />
+        <renameTable oldTableName="visitor" newTableName="user"/>
     </changeSet>
 
     <changeSet id="08" author="belski">
@@ -152,6 +151,29 @@
                           incrementBy="1"
                           startWith="1"
                           tableName="filmdate"/>
+    </changeSet>
+
+    <changeSet id="18" author="belski">
+        <dropForeignKeyConstraint baseTableName="filmticket" constraintName="fk_film"/>
+    </changeSet>
+
+    <changeSet id="19" author="belski">
+        <dropColumn columnName="film_id"
+                    tableName="filmticket"/>
+    </changeSet>
+
+    <changeSet id="20" author="belski">
+        <addColumn tableName="filmticket">
+            <column name="filmdate_id" type="int">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="21" author="belski">
+        <addForeignKeyConstraint baseTableName="filmticket" baseColumnNames="filmdate_id"
+                                 constraintName="fk_filmdate"
+                                 referencedTableName="filmdate" referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>

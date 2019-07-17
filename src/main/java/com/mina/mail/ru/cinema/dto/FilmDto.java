@@ -1,7 +1,5 @@
 package com.mina.mail.ru.cinema.dto;
 
-import com.mina.mail.ru.cinema.dbo.FilmDatesEntity;
-
 import java.util.List;
 import java.util.Set;
 
@@ -14,9 +12,7 @@ public class FilmDto {
 
     private String title;
 
-    private Set<FilmTicketDto> tickets;
-
-    private List<String> formattedDates;
+    private List<FilmDateDto> dates;
 
     public Integer getId() {
         return id;
@@ -34,19 +30,11 @@ public class FilmDto {
         this.title = title;
     }
 
-    public Set<FilmTicketDto> getTickets() {
-        return tickets;
+    public List<FilmDateDto> getDates() {
+        return dates;
     }
 
-    public void setTickets(Set<FilmTicketDto> tickets) {
-        this.tickets = tickets;
-    }
-
-    public List<String> getFormattedDates() {
-        return formattedDates;
-    }
-
-    public void setFormattedDates(List<String> formattedDates) {
-        this.formattedDates = formattedDates;
+    public void setDates(List<FilmDateDto> dates) {
+        this.dates = dates;
     }
 }

@@ -42,21 +42,21 @@ public class FilmServiceTest {
     private static List<FilmEntity> filmEntities = new ArrayList<>();
     private static Set<FilmTicketEntity> tickets = new HashSet<>();
 
-    @BeforeClass
-    public static void setup() {
-        FilmTicketEntity ticket1 = new FilmTicketEntity(7);
-        FilmTicketEntity ticket2 = new FilmTicketEntity(8);
-        tickets.add(ticket1);
-        tickets.add(ticket2);
-        FilmEntity film1 = new FilmEntity();
-        FilmEntity film2 = new FilmEntity();
-        film1.setTitle("film1");
-        film1.setTickets(tickets);
-        film2.setTickets(tickets);
-        film2.setTitle("film2");
-        filmEntities.add(film1);
-        filmEntities.add(film2);
-    }
+//    @BeforeClass
+//    public static void setup() {
+//        FilmTicketEntity ticket1 = new FilmTicketEntity(7);
+//        FilmTicketEntity ticket2 = new FilmTicketEntity(8);
+//        tickets.add(ticket1);
+//        tickets.add(ticket2);
+//        FilmEntity film1 = new FilmEntity();
+//        FilmEntity film2 = new FilmEntity();
+//        film1.setTitle("film1");
+//        film1.setTickets(tickets);
+//        film2.setTickets(tickets);
+//        film2.setTitle("film2");
+//        filmEntities.add(film1);
+//        filmEntities.add(film2);
+//    }
 
 //    @Test
 //    public void TestAGetFilms() {
