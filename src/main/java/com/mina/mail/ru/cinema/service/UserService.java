@@ -7,8 +7,13 @@ import com.mina.mail.ru.cinema.dto.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +53,9 @@ public class UserService {
         return userDto;
     }
 
-    public String createUser(UserDto userDto) {
+    public String createUser(String login) {
+        UserDto userDto = new UserDto(login, "USER");
+        userDto.setLogin(login);
         UserEntity userEntity = userConverter.convertToDbo(userDto);
         UserEntity existedUser = userDAO.getUserByName(userDto.getLogin());
         if (existedUser != null) {
@@ -60,6 +67,30 @@ public class UserService {
             logger.info("User was saved");
             return "User was created successfully!";
         }
+    }
+
+    public UserDto checkAuthentication (Authentication auth) {
+        UserDto userDto = new UserDto();
+        userDto.setLogin(auth == null ? "" : auth.getName());
+        logger.info(auth == null ? "user is not in system" : "user is signed in");
+        return userDto;
+    }
+
+    public UserDto logout (HttpServletRequest request) {
+        HttpSession session;
+        SecurityContextHolder.clearContext();
+        session= request.getSession(false);
+        if(session != null) {
+            logger.info("Invalidating user session...");
+            session.invalidate();
+        }
+        for(Cookie cookie : request.getCookies()) {
+            logger.info("Deleting  user session id...");
+            cookie.setMaxAge(0);
+        }
+        UserDto userDto = new UserDto();
+        userDto.setLogin("");
+        return userDto;
     }
 
     /**For test purposes**/

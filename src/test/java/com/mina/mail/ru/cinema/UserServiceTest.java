@@ -74,11 +74,9 @@ public class UserServiceTest {
     /** User already exists case **/
     @Test
     public void TestCCreateUser() {
-        UserDto userDto = new UserDto();
-        userDto.setLogin(userEntities.get(0).getLogin());
         doReturn(userEntities.get(0)).when(userConverter).convertToDbo(any());
         doReturn(userEntities.get(0)).when(userDAO).getUserByName(anyString());
-        String result = userService.createUser(userDto);
+        String result = userService.createUser(userEntities.get(0).getLogin());
         Assert.assertTrue(result == "User already exists!" );
     }
 
@@ -89,7 +87,7 @@ public class UserServiceTest {
         userDto.setLogin(userEntities.get(0).getLogin());
         doReturn(userEntities.get(0)).when(userConverter).convertToDbo(userDto);
         doReturn(null).when(userDAO).getUserByName(anyString());
-        String result = userService.createUser(userDto);
+        String result = userService.createUser(userEntities.get(0).getLogin());
         Assert.assertTrue(result == "User was created successfully!" );
         verify(userDAO, times(1)).save(userEntities.get(0));
     }

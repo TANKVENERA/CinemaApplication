@@ -39,16 +39,7 @@ public class UserController {
     @GetMapping(value = "/checkauth")
     public ResponseEntity<UserDto> checkAuth(Authentication auth) {
         logger.info("Checking if user is signed in...");
-        UserDto userDto = new UserDto();
-        userDto.setLogin(auth == null ? "" : auth.getName());
-        logger.info(auth == null ? "user is not in system" : "user is signed in");
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
-    }
-
-    /** Used for test purposes**/
-    @GetMapping("/")
-    public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
+        return ResponseEntity.status(HttpStatus.OK).body(userService.checkAuthentication(auth));
     }
 
     @GetMapping(value = "/login")
@@ -60,27 +51,18 @@ public class UserController {
 
     @GetMapping(value = "/signout")
     public ResponseEntity<UserDto> logout(HttpServletRequest request) {
-        HttpSession session;
-        SecurityContextHolder.clearContext();
-        session= request.getSession(false);
-        if(session != null) {
-            logger.info("Invalidating user session...");
-            session.invalidate();
-        }
-        for(Cookie cookie : request.getCookies()) {
-            logger.info("Deleting  user session id...");
-            cookie.setMaxAge(0);
-        }
-        UserDto userDto = new UserDto();
-        userDto.setLogin("");
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.logout(request));
     }
 
     @GetMapping(value = "/register", params = "login")
     public ResponseEntity<String> createUser (@RequestParam("login") String login) {
-        UserDto userDto = new UserDto(login, "USER");
-        userDto.setLogin(login);
         logger.info("Trying to save new user...");
-        return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(userDto));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(login));
+    }
+
+    /** Used for test purposes**/
+    @GetMapping("/")
+    public List<UserDto> getAllUsers() {
+        return userService.getAllUsers();
     }
 }

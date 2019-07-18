@@ -64,6 +64,7 @@ class Head extends Component {
         }).then(result => {
             return result.json();
         }).then(data =>    {
+                console.log('ORDERS', data)
                 this.setState({userOrdersData: data, isOpenOrdersModal: true})
         });
     };
@@ -174,15 +175,17 @@ class Head extends Component {
                 var ticket;
                 var title;
                 var filmDate;
+                var dateId;
                 if (ticketID[m] === order.ticket) {
                     seats.push(userOrders[j].seat);
                     ticket = order.ticket;
                     title = order.title;
+                    dateId = order.dateId
                     var dateAndTime = new Date(order.filmDate);
                     filmDate = dateAndTime.toLocaleString().replace(', ', 'T').replace(/\./g, '-');
                 }
                 if (j === userOrders.length - 1) {
-                    tickets.push({title: title, filmDate: filmDate, ticket: ticket, seats: seats});
+                    tickets.push({title: title, filmDate: filmDate, ticket: ticket, seats: seats, dateId: dateId});
                     seats = [];
                 }
             }
@@ -245,7 +248,7 @@ class Head extends Component {
                     <label>date: {ticket.filmDate}, </label>
                     <label>row and seat: </label>
                     {ticket.seats.map((seat, i) => (
-                     <label key={i}>{Math.round(seat/10 + 1)}/{seat%10} </label>
+                     <label key={i}>{seat===100 ? 10 : Math.floor(seat/10 + 1)}/{seat===100 ? 10 : seat%10} </label>
                     ))}
                 </div>
                 <div style={{display: 'table-cell', paddingLeft: '10px'}}>
