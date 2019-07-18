@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
 
-    String GET_ALL_ORDERS="SELECT ft.seat, f.title, fd.filmdate, ft.ticket FROM filmticket ft join filmdate fd on" +
+    String GET_ALL_ORDERS="SELECT ft.seat, f.title, fd.filmdate, fd.id as dateId, ft.ticket FROM filmticket ft join filmdate fd on" +
                                         " fd.id=ft.filmdate_id join user u on u.id=ft.visitor_id join film f on f.id=fd.film_id where u.login=:login order by ft.ticket";
 
     @Transactional

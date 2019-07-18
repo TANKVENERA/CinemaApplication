@@ -1,6 +1,7 @@
 package com.mina.mail.ru.cinema.controller;
 
 import com.mina.mail.ru.cinema.dbo.FilmEntity;
+import com.mina.mail.ru.cinema.dto.FilmDateDto;
 import com.mina.mail.ru.cinema.dto.FilmDto;
 import com.mina.mail.ru.cinema.service.FilmService;
 import org.slf4j.Logger;
@@ -42,11 +43,10 @@ public class FilmController {
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmByTitle(film));
     }
 
-    @GetMapping(value = "/dates", params = {"film", "date"})
-    public ResponseEntity<FilmDto> filmTickets(@RequestParam(value = "film") String title,
-                                               @RequestParam(value = "date") String date) {
+    @GetMapping(value = "/ticketsOnDate", params = "dateId")
+    public ResponseEntity<FilmDateDto> ticketsAtOneDate(@RequestParam(value = "dateId") Integer dateId) {
         logger.info("Film tickets at certain date are requested...");
-        return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmTickets(title, date));
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.getTicketsByDate(dateId));
     }
 
     @GetMapping(value = "/addfilm", params = {"title", "firstdate"})

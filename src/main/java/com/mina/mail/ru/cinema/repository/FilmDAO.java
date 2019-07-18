@@ -1,5 +1,6 @@
 package com.mina.mail.ru.cinema.repository;
 
+import com.mina.mail.ru.cinema.dbo.FilmDateEntity;
 import com.mina.mail.ru.cinema.dbo.FilmEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +17,8 @@ public interface FilmDAO extends JpaRepository<FilmEntity, Integer> {
     @Query("select f from FilmEntity f where f.title=:title")
     FilmEntity getFilmByTitle(@Param("title") String title);
 
-    @Query("select f from FilmEntity f where f.title=:title")
-    FilmEntity getFilmTickets(@Param("title") String title);
+    @Query("select d from FilmDateEntity d where d.id=:dateId")
+    FilmDateEntity getTicketsByDate(@Param("dateId") Integer dateId);
 
     @Query("select new com.mina.mail.ru.cinema.dbo.FilmEntity(f.title)  from FilmEntity f")
     List<FilmEntity> getFilms();

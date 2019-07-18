@@ -67,11 +67,11 @@ public class FilmService {
         return filmDto;
     }
 
-    public FilmDto getFilmTickets(String title, String date) {
-        FilmEntity film = filmDAO.getFilmTickets(title);
+    public FilmDateDto getTicketsByDate(Integer dateId) {
+        FilmDateEntity dateEntity = filmDAO.getTicketsByDate(dateId);
         logger.info("Film tickets were received...");
-        FilmDto filmDto = filmConverter.convertToDto(film);
-        return filmDto;
+        FilmDateDto filmDateDto = filmDateConverter.convertToDto(dateEntity);
+        return filmDateDto;
     }
 
     public String addFilm (String title, String filmdate) throws ParseException {

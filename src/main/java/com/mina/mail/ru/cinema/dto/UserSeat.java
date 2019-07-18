@@ -12,5 +12,5 @@ public interface UserSeat {
     String getTitle();
     String getFilmDate();
     String getTicket();
-    void setFilmDate();
+    Integer getDateId();
 }

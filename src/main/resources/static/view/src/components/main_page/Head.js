@@ -93,9 +93,9 @@ class Head extends Component {
                          this.props.warn('Order was successfully removed!', 'green')});
     };
 
-    handleUpdateOrder = (title, date, seats, ticketID) => {
+    handleUpdateOrder = (title, date, seats, ticketID, dateId) => {
         this.setState({title: title, filmdate: date, ticketID: ticketID})
-        fetch(`http://localhost:8080/cinema/rest/dates/?film=${title}&date=${date}`, {
+        fetch(`http://localhost:8080/cinema/rest/ticketsOnDate/?dateId=${dateId}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -251,7 +251,7 @@ class Head extends Component {
                 <div style={{display: 'table-cell', paddingLeft: '10px'}}>
                     <Fab className="delete-icon" color="primary">
                         <EditIcon fontSize="small"
-                                  onClick={() => this.handleUpdateOrder(ticket.title, ticket.filmDate, ticket.seats, ticket.ticket)}/>
+                                  onClick={() => this.handleUpdateOrder(ticket.title, ticket.filmDate, ticket.seats, ticket.ticket, ticket.dateId)}/>
                     </Fab>
                 </div>
                 <div style={{display: 'table-cell', paddingLeft: '10px'}}>
