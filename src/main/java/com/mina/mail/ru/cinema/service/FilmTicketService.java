@@ -35,7 +35,7 @@ public class FilmTicketService {
     }
 
     public List<UserSeat> getOrders(String login) {
-        List<UserSeat> tickets = filmTicketDAO.getAllOrders(login);
+        final List<UserSeat> tickets = filmTicketDAO.getAllOrders(login);
         logger.info("Received user orders.");
         return tickets;
     }

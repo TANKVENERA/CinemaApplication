@@ -28,7 +28,7 @@ public class AppUserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public final UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         UserEntity currentUser = userDAO.getUserByName(login);
         UserBuilder builder;
         logger.info("Trying to sign in. Comparing user credentials...");

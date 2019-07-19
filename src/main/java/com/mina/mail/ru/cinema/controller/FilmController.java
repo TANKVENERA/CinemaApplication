@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,10 +51,10 @@ public class FilmController {
     }
 
     @GetMapping(value = "/addfilm", params = {"title", "firstdate"})
-    public ResponseEntity<String> addFilm(@RequestParam(value = "title") String title,
+    public ResponseEntity<String> addFilm(Authentication auth, @RequestParam(value = "title") String title,
                                           @RequestParam(value = "firstdate") String firstDate) throws ParseException {
 
-        return ResponseEntity.status(HttpStatus.OK).body(filmService.addFilm(title, firstDate));
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.addFilm(auth, title, firstDate));
     }
 
     @GetMapping(value = "/deletefilm", params="title")

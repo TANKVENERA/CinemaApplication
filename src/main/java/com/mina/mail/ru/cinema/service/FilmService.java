@@ -9,9 +9,11 @@ import com.mina.mail.ru.cinema.repository.FilmDAO;
 import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
 import com.mina.mail.ru.cinema.dto.FilmDto;
+import com.mina.mail.ru.cinema.repository.UserDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -30,14 +32,14 @@ public class FilmService {
 
     private FilmDAO filmDAO;
     private FilmConverter filmConverter;
-    private FilmTicketConverter filmTicketConverter;
+    private UserDAO userDAO;
     private FilmDateConverter filmDateConverter;
 
     @Autowired
-    public FilmService(FilmDAO filmDAO, FilmConverter converter, FilmTicketConverter filmTicketConverter, FilmDateConverter filmDateConverter) {
+    public FilmService(FilmDAO filmDAO, FilmConverter filmConverter, UserDAO userDAO, FilmDateConverter filmDateConverter) {
         this.filmDAO = filmDAO;
-        this.filmConverter = converter;
-        this.filmTicketConverter = filmTicketConverter;
+        this.filmConverter = filmConverter;
+        this.userDAO = userDAO;
         this.filmDateConverter = filmDateConverter;
     }
 
@@ -46,8 +48,8 @@ public class FilmService {
         List<FilmEntity> filmEntities = filmDAO.getFilms();
         logger.info("Unique films were received...");
         for (FilmEntity filmEntity : filmEntities) {
-            FilmDto filmDto = filmConverter.convertToDto(filmEntity);
-            filmsDto.add(filmDto);
+           final FilmDto filmDto = filmConverter.convertToDto(filmEntity);
+           filmsDto.add(filmDto);
         }
         return filmsDto;
     }
@@ -56,12 +58,12 @@ public class FilmService {
         FilmEntity filmEntity = filmDAO.getFilmByTitle(film);
         logger.info("Film " + film + " was received...");
         List<FilmDateEntity> filmDates = filmEntity.getDates();
-        List<FilmDateDto> filmDateDtos = new ArrayList<>();
+        final List<FilmDateDto> filmDateDtos = new ArrayList<>();
         for (FilmDateEntity f : filmDates) {
             filmDateDtos.add(filmDateConverter.convertToDto(f));
         }
 
-        FilmDto filmDto = filmConverter.convertToDto(filmEntity);
+        final FilmDto filmDto = filmConverter.convertToDto(filmEntity);
         filmDto.setDates(formatDates(filmDateDtos));
 
         return filmDto;
@@ -70,18 +72,24 @@ public class FilmService {
     public FilmDateDto getTicketsByDate(Integer dateId) {
         FilmDateEntity dateEntity = filmDAO.getTicketsByDate(dateId);
         logger.info("Film tickets were received...");
-        FilmDateDto filmDateDto = filmDateConverter.convertToDto(dateEntity);
+        final FilmDateDto filmDateDto = filmDateConverter.convertToDto(dateEntity);
         return filmDateDto;
     }
 
-    public String addFilm (String title, String filmdate) throws ParseException {
+    public String addFilm (Authentication auth, String title, String filmdate) throws ParseException {
+        if (!filmdate.replaceAll("(\\d){2}(-){1}(\\d){2}(-){1}(\\d){4}", "isOk").equals("isOk")) {
+            return "Wrong date pattern, use dd-mm-yyyy";
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String dateAndTime = filmdate +  " 12:00:00";
         LocalDateTime filmdateAndTime = LocalDateTime.parse(dateAndTime, formatter);
         FilmEntity filmEntity = filmDAO.getFilmByTitle(title);
         FilmDateEntity date = new FilmDateEntity();
         date.setDateAndTime(filmdateAndTime);
-        if (filmEntity != null) {
+        if (!userDAO.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
+            return "Not enough permissions for this action";
+        }
+        else if (filmEntity != null) {
             List<FilmDateEntity> dates = filmEntity.getDates();
             for (FilmDateEntity filmDatesEntity : dates) {
                 if (formatter.format(filmDatesEntity.getDateAndTime()).equals(dateAndTime)) {

@@ -38,7 +38,7 @@ public class UserService {
     }
 
     public List<UserDto> getAllUsers() {
-        List<UserDto> usersDto = new ArrayList<>();
+        final List<UserDto> usersDto = new ArrayList<>();
         List<UserEntity> usersEntity = userDAO.findAll();
 
         for (UserEntity d : usersEntity) {
@@ -49,12 +49,12 @@ public class UserService {
 
     public UserDto getUser(String login) {
         UserEntity userEntity = userDAO.getUserByName(login);
-        UserDto userDto = userConverter.convertToDto(userEntity);
+        final UserDto userDto = userConverter.convertToDto(userEntity);
         return userDto;
     }
 
     public String createUser(String login) {
-        UserDto userDto = new UserDto(login, "USER");
+        final UserDto userDto = new UserDto(login, "USER");
         userDto.setLogin(login);
         UserEntity userEntity = userConverter.convertToDbo(userDto);
         UserEntity existedUser = userDAO.getUserByName(userDto.getLogin());
@@ -70,7 +70,7 @@ public class UserService {
     }
 
     public UserDto checkAuthentication (Authentication auth) {
-        UserDto userDto = new UserDto();
+        final UserDto userDto = new UserDto();
         userDto.setLogin(auth == null ? "" : auth.getName());
         logger.info(auth == null ? "user is not in system" : "user is signed in");
         return userDto;
@@ -88,7 +88,7 @@ public class UserService {
             logger.info("Deleting  user session id...");
             cookie.setMaxAge(0);
         }
-        UserDto userDto = new UserDto();
+        final UserDto userDto = new UserDto();
         userDto.setLogin("");
         return userDto;
     }
