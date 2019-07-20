@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +24,6 @@ public class FilmDateEntity implements Serializable {
    @GeneratedValue(strategy = IDENTITY)
    @Column(name = "id")
    private Integer id;
-
 
    @Column(name = "filmdate", columnDefinition = "DATETIME")
    private LocalDateTime dateAndTime;

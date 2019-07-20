@@ -7,8 +7,10 @@ import com.mina.mail.ru.cinema.dto.FilmDto;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -43,5 +45,4 @@ public class FilmConverterTest  {
         FilmEntity filmEntity = converter.convertToDbo(dto);
         Assert.assertEquals("Titles are not equal!", filmEntity.getTitle(), "Armageddon");
     }
-
 }

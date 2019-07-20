@@ -12,8 +12,6 @@ import java.util.Properties;
  */
 public class TestPropsLoader {
 
-    private static String value;
-
     public static String loadTestProperty (String key) throws IOException {
         File file = ResourceUtils.getFile("classpath:application_test.properties");
         Properties properties = new Properties();

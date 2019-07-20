@@ -5,6 +5,7 @@ import com.mina.mail.ru.cinema.dbo.FilmDateEntity;
 import com.mina.mail.ru.cinema.dbo.FilmEntity;
 import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
 import com.mina.mail.ru.cinema.dto.FilmDateDto;
+import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import com.mina.mail.ru.cinema.repository.FilmDAO;
 import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
@@ -34,13 +35,14 @@ public class FilmService {
     private FilmConverter filmConverter;
     private UserDAO userDAO;
     private FilmDateConverter filmDateConverter;
+    private FilmTicketConverter ticketConverter;
 
-    @Autowired
-    public FilmService(FilmDAO filmDAO, FilmConverter filmConverter, UserDAO userDAO, FilmDateConverter filmDateConverter) {
+    public FilmService(FilmDAO filmDAO, FilmConverter filmConverter, UserDAO userDAO, FilmDateConverter filmDateConverter, FilmTicketConverter ticketConverter) {
         this.filmDAO = filmDAO;
         this.filmConverter = filmConverter;
         this.userDAO = userDAO;
         this.filmDateConverter = filmDateConverter;
+        this.ticketConverter = ticketConverter;
     }
 
     public List<FilmDto> getFilms() {
@@ -71,8 +73,14 @@ public class FilmService {
 
     public FilmDateDto getTicketsByDate(Integer dateId) {
         FilmDateEntity dateEntity = filmDAO.getTicketsByDate(dateId);
+        final List<FilmTicketDto> ticketDtos = new ArrayList<>();
+
+        for (FilmTicketEntity t : dateEntity.getTickets()) {
+            ticketDtos.add(ticketConverter.convertToDto(t));
+        }
         logger.info("Film tickets were received...");
         final FilmDateDto filmDateDto = filmDateConverter.convertToDto(dateEntity);
+        filmDateDto.setTickets(ticketDtos);
         return filmDateDto;
     }
 
