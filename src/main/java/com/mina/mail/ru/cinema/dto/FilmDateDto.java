@@ -44,10 +44,6 @@ public class FilmDateDto {
         this.dateAndTime = dateAndTime;
     }
 
-    public String getFormattedDate() {
-        return formattedDate;
-    }
-
     public void setFormattedDate(String formattedDate) {
         this.formattedDate = formattedDate;
     }

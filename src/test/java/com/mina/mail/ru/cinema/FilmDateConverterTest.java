@@ -27,23 +27,23 @@ public class FilmDateConverterTest {
     private final FilmDateConverter converter = new FilmDateConverter();
     private static FilmDateEntity dbo = new FilmDateEntity();
     private static FilmDateDto dto = new FilmDateDto();
+    private static final Integer DATE_ID = TestPropsLoader.dateId;
 
     @BeforeClass
     public static void setUpStaticData() throws IOException {
-        final Integer dateId = Integer.parseInt(TestPropsLoader.loadTestProperty("test.ticket.id"));
-        dbo.setId(dateId);
-        dto.setId(dateId);
+        dbo.setId(DATE_ID);
+        dto.setId(DATE_ID);
     }
 
     @Test
     public void testAConvertToDto () {
         FilmDateDto dateDto = converter.convertToDto(dbo);
-        Assert.assertEquals("Ticket ids are not equal!", dateDto.getId(), new Integer(1));
+        Assert.assertEquals("Ticket ids are not equal!", dateDto.getId(), new Integer(DATE_ID));
     }
 
     @Test
     public void testBConvertToDbo () {
         FilmDateEntity dateEntity = converter.convertToDbo(dto);
-        Assert.assertEquals("Ticket ids are not equal!", dateEntity.getId(), new Integer(1));
+        Assert.assertEquals("Ticket ids are not equal!", dateEntity.getId(), new Integer(DATE_ID));
     }
 }

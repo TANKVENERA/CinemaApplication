@@ -44,13 +44,4 @@ public class UserOrder {
         this.ticket = ticket;
     }
 
-    @Override
-    public String toString() {
-        return "UserOrder{" +
-                "film='" + film + '\'' +
-                ", seats=" + seats +
-                ", dateIndex=" + dateId +
-                ", ticket='" + ticket + '\'' +
-                '}';
-    }
 }

@@ -22,16 +22,16 @@ public class FilmTicketConverterTest {
     private final FilmTicketConverter converter = new FilmTicketConverter();
     private static FilmTicketEntity dbo = new FilmTicketEntity();
     private static FilmTicketDto dto = new FilmTicketDto();
+    private static final Integer FILM_ID = TestPropsLoader.filmId;
+    private static final Integer SEAT = TestPropsLoader.seatFirst;
+    private static final Integer USER_ID = TestPropsLoader.userId;
 
 
     @BeforeClass
     public static void setUp() throws IOException {
-        final Integer filmId = Integer.parseInt(TestPropsLoader.loadTestProperty("test.ticket.id"));
-        final Integer seatNmb = Integer.parseInt(TestPropsLoader.loadTestProperty("test.seat.one"));
-        final Integer userId = Integer.parseInt(TestPropsLoader.loadTestProperty("test.user.id"));
-        dbo.setId(filmId);
-        dbo.setSeatnumber(seatNmb);
-        dto.setVisitorid(userId);
+        dbo.setId(FILM_ID);
+        dbo.setSeatnumber(SEAT);
+        dto.setVisitorid(USER_ID);
     }
 
     @Test
@@ -43,12 +43,12 @@ public class FilmTicketConverterTest {
     @Test
     public void testBCheckSeat(){
         FilmTicketDto ticketDto = converter.convertToDto(dbo);
-        Assert.assertTrue("Seats are not equal!", ticketDto.getSeatnumber().equals(1));
+        Assert.assertTrue("Seats are not equal!", ticketDto.getSeatnumber().equals(SEAT));
     }
 
     @Test
     public void testCCheckVisitorID(){
         FilmTicketEntity ticketDbo = converter.convertToDbo(dto);
-        Assert.assertTrue("Visitor Ids are not equal!", ticketDbo.getVisitorid().equals(1));
+        Assert.assertTrue("Visitor Ids are not equal!", ticketDbo.getVisitorid().equals(USER_ID));
     }
 }

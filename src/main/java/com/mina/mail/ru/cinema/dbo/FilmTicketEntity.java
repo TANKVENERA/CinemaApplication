@@ -31,10 +31,6 @@ public class FilmTicketEntity {
     public FilmTicketEntity() {
     }
 
-    public FilmTicketEntity(Integer seatnumber) {
-        this.seatnumber = seatnumber;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -67,13 +63,4 @@ public class FilmTicketEntity {
         this.ticket = ticket;
     }
 
-    @Override
-    public String toString() {
-        return "FilmTicketEntity{" +
-                "id=" + id +
-                ", seatnumber=" + seatnumber +
-                ", visitorid=" + visitorid +
-                ", ticket=" + ticket +
-                '}';
-    }
 }

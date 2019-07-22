@@ -72,96 +72,40 @@ public class PageObjectDto {
         return filmTitle;
     }
 
-    public void setFilmTitle(WebElement filmTitle) {
-        this.filmTitle = filmTitle;
-    }
-
     public WebElement getBubblingWarn() {
         return bubblingWarn;
-    }
-
-    public void setBubblingWarn(WebElement bubblingWarn) {
-        this.bubblingWarn = bubblingWarn;
-    }
-
-    public WebElement getSignInButton() {
-        return signInButton;
-    }
-
-    public void setSignInButton(WebElement signInButton) {
-        this.signInButton = signInButton;
     }
 
     public WebElement getInputSignIn() {
         return inputSignIn;
     }
 
-    public void setInputSignIn(WebElement inputSignIn) {
-        this.inputSignIn = inputSignIn;
-    }
-
     public WebElement getUserNotFoundWarn() {
         return userNotFoundWarn;
-    }
-
-    public void setUserNotFoundWarn(WebElement userNotFoundWarn) {
-        this.userNotFoundWarn = userNotFoundWarn;
     }
 
     public WebElement getSignUpButton() {
         return signUpButton;
     }
 
-    public void setSignUpButton(WebElement signUpButton) {
-        this.signUpButton = signUpButton;
-    }
-
-    public WebElement getRegisterButton() {
-        return registerButton;
-    }
-
-    public void setRegisterButton(WebElement registerButton) {
-        this.registerButton = registerButton;
-    }
-
     public WebElement getInputSignUp() {
         return inputSignUp;
-    }
-
-    public void setInputSignUp(WebElement inputSignUp) {
-        this.inputSignUp = inputSignUp;
     }
 
     public WebElement getSignUpModalTitle() {
         return signUpModalTitle;
     }
 
-    public void setSignUpModalTitle(WebElement signUpModalTitle) {
-        this.signUpModalTitle = signUpModalTitle;
-    }
-
     public WebElement getCancelButton() {
         return cancelButton;
-    }
-
-    public void setCancelButton(WebElement cancelButton) {
-        this.cancelButton = cancelButton;
     }
 
     public WebElement getSignInWarn() {
         return signInWarn;
     }
 
-    public void setSignInWarn(WebElement signInWarn) {
-        this.signInWarn = signInWarn;
-    }
-
     public WebElement getCinemaHallBlock() {
         return cinemaHallBlock;
-    }
-
-    public void setCinemaHallBlock(WebElement cinemaHallBlock) {
-        this.cinemaHallBlock = cinemaHallBlock;
     }
 
 }

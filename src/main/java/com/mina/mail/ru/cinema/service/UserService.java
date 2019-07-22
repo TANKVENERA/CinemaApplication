@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.service;
 
 import com.mina.mail.ru.cinema.dbo.UserEntity;
-import com.mina.mail.ru.cinema.repository.UserDAO;
+import com.mina.mail.ru.cinema.repository.UserRepository;
 import com.mina.mail.ru.cinema.converter.UserConverter;
 import com.mina.mail.ru.cinema.dto.UserDto;
 import org.slf4j.Logger;
@@ -25,12 +25,12 @@ import java.util.List;
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    private UserDAO userDAO;
+    private UserRepository userRepository;
     private UserConverter userConverter;
 
     @Autowired
-    public UserService(UserDAO userDAO, UserConverter userConverter) {
-        this.userDAO = userDAO;
+    public UserService(UserRepository userRepository, UserConverter userConverter) {
+        this.userRepository = userRepository;
         this.userConverter = userConverter;
     }
 
@@ -39,7 +39,7 @@ public class UserService {
 
     public List<UserDto> getAllUsers() {
         final List<UserDto> usersDto = new ArrayList<>();
-        List<UserEntity> usersEntity = userDAO.findAll();
+        List<UserEntity> usersEntity = userRepository.findAll();
 
         for (UserEntity d : usersEntity) {
             usersDto.add(userConverter.convertToDto(d));
@@ -48,7 +48,7 @@ public class UserService {
     }
 
     public UserDto getUser(String login) {
-        UserEntity userEntity = userDAO.getUserByName(login);
+        UserEntity userEntity = userRepository.getUserByName(login);
         final UserDto userDto = userConverter.convertToDto(userEntity);
         return userDto;
     }
@@ -57,13 +57,13 @@ public class UserService {
         final UserDto userDto = new UserDto(login, "USER");
         userDto.setLogin(login);
         UserEntity userEntity = userConverter.convertToDbo(userDto);
-        UserEntity existedUser = userDAO.getUserByName(userDto.getLogin());
+        UserEntity existedUser = userRepository.getUserByName(userDto.getLogin());
         if (existedUser != null) {
             logger.warn("User already exists!");
             return "User already exists!";
         }
         else {
-            userDAO.save(userEntity);
+            userRepository.save(userEntity);
             logger.info("User was saved");
             return "User was created successfully!";
         }
@@ -95,8 +95,8 @@ public class UserService {
 
     /**For test purposes**/
     public void deleteUser (String login) {
-        UserEntity user = userDAO.getUserByName(login);
-        userDAO.delete(userDAO.getUserByName(login));
+        UserEntity user = userRepository.getUserByName(login);
+        userRepository.delete(userRepository.getUserByName(login));
     }
 
 }

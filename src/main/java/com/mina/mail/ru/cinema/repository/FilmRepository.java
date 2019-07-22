@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Mina on 29.04.2019.
  */
 
-public interface FilmDAO extends JpaRepository<FilmEntity, Integer> {
+public interface FilmRepository extends JpaRepository<FilmEntity, Integer> {
 
     @Query("select f from FilmEntity f where f.title=:title")
     FilmEntity getFilmByTitle(@Param("title") String title);

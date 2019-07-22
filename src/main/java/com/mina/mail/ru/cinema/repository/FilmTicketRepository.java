@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Mina on 12.05.2019.
  */
-public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
+public interface FilmTicketRepository extends JpaRepository<FilmTicketEntity, Long> {
 
     String GET_ALL_ORDERS="SELECT ft.seat, f.title, fd.filmdate, fd.id as dateId, ft.ticket FROM filmticket ft join filmdate fd on" +
                                         " fd.id=ft.filmdate_id join user u on u.id=ft.visitor_id join film f on f.id=fd.film_id where u.login=:login order by ft.ticket";
@@ -26,9 +26,6 @@ public interface FilmTicketDAO extends JpaRepository<FilmTicketEntity, Long> {
 
     @Query(value = GET_ALL_ORDERS, nativeQuery = true)
     List<UserSeat> getAllOrders(@Param("login") String login);
-
-    @Query("select f.id from FilmTicketEntity f where f.ticket=:ticket and f.seatnumber=:seat")
-    Integer getSeat(@Param("ticket") String ticket, @Param("seat") Integer seat);
 
     @Transactional
     @Modifying

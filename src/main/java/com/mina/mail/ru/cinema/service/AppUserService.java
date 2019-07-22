@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.service;
 
 import com.mina.mail.ru.cinema.dbo.UserEntity;
-import com.mina.mail.ru.cinema.repository.UserDAO;
+import com.mina.mail.ru.cinema.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,16 @@ import org.springframework.stereotype.Service;
 public class AppUserService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
     @Autowired
-    public AppUserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public AppUserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public final UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        UserEntity currentUser = userDAO.getUserByName(login);
+        UserEntity currentUser = userRepository.getUserByName(login);
         UserBuilder builder;
         logger.info("Trying to sign in. Comparing user credentials...");
         if (currentUser != null) {

@@ -31,11 +31,6 @@ public class FilmEntity implements Serializable {
     public FilmEntity() {
     }
 
-    public FilmEntity(Integer id, String title) {
-        this.id = id;
-        this.title = title;
-    }
-
     public FilmEntity(String title) {
         this.title = title;
     }
@@ -64,11 +59,4 @@ public class FilmEntity implements Serializable {
         this.dates = dates;
     }
 
-    @Override
-    public String toString() {
-        return "FilmEntity{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
-    }
 }

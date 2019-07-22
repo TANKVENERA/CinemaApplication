@@ -26,23 +26,23 @@ public class FilmConverterTest  {
     private final FilmConverter converter = new FilmConverter();
     private static FilmEntity dbo = new FilmEntity();
     private static FilmDto dto = new FilmDto();
+    private static final String TITLE_ONE = TestPropsLoader.titleOne;
 
     @BeforeClass
     public static void setUpStaticData() throws IOException {
-      final String title = TestPropsLoader.loadTestProperty("test.film");
-        dbo.setTitle(title);
-        dto.setTitle(title);
+        dbo.setTitle(TITLE_ONE);
+        dto.setTitle(TITLE_ONE);
     }
 
     @Test
     public void testAConvertToDto () {
         FilmDto dto = converter.convertToDto(dbo);
-        Assert.assertEquals("Titles are not equal!", dto.getTitle(), "Armageddon");
+        Assert.assertEquals("Titles are not equal!", dto.getTitle(), TITLE_ONE);
     }
 
     @Test
     public void testBConvertToDbo () {
         FilmEntity filmEntity = converter.convertToDbo(dto);
-        Assert.assertEquals("Titles are not equal!", filmEntity.getTitle(), "Armageddon");
+        Assert.assertEquals("Titles are not equal!", filmEntity.getTitle(), TITLE_ONE);
     }
 }

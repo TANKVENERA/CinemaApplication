@@ -6,14 +6,13 @@ import com.mina.mail.ru.cinema.dbo.FilmEntity;
 import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
 import com.mina.mail.ru.cinema.dto.FilmDateDto;
 import com.mina.mail.ru.cinema.dto.FilmTicketDto;
-import com.mina.mail.ru.cinema.repository.FilmDAO;
+import com.mina.mail.ru.cinema.repository.FilmRepository;
 import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
 import com.mina.mail.ru.cinema.dto.FilmDto;
-import com.mina.mail.ru.cinema.repository.UserDAO;
+import com.mina.mail.ru.cinema.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -31,23 +30,23 @@ public class FilmService {
 
     private static final Logger logger = LoggerFactory.getLogger(FilmService.class);
 
-    private FilmDAO filmDAO;
+    private FilmRepository filmRepository;
     private FilmConverter filmConverter;
-    private UserDAO userDAO;
+    private UserRepository userRepository;
     private FilmDateConverter filmDateConverter;
     private FilmTicketConverter ticketConverter;
 
-    public FilmService(FilmDAO filmDAO, FilmConverter filmConverter, UserDAO userDAO, FilmDateConverter filmDateConverter, FilmTicketConverter ticketConverter) {
-        this.filmDAO = filmDAO;
+    public FilmService(FilmRepository filmRepository, FilmConverter filmConverter, UserRepository userRepository, FilmDateConverter filmDateConverter, FilmTicketConverter ticketConverter) {
+        this.filmRepository = filmRepository;
         this.filmConverter = filmConverter;
-        this.userDAO = userDAO;
+        this.userRepository = userRepository;
         this.filmDateConverter = filmDateConverter;
         this.ticketConverter = ticketConverter;
     }
 
     public List<FilmDto> getFilms() {
         List<FilmDto> filmsDto = new ArrayList<>();
-        List<FilmEntity> filmEntities = filmDAO.getFilms();
+        List<FilmEntity> filmEntities = filmRepository.getFilms();
         logger.info("Unique films were received...");
         for (FilmEntity filmEntity : filmEntities) {
            final FilmDto filmDto = filmConverter.convertToDto(filmEntity);
@@ -57,7 +56,7 @@ public class FilmService {
     }
 
     public FilmDto getFilmByTitle(String film) {
-        FilmEntity filmEntity = filmDAO.getFilmByTitle(film);
+        FilmEntity filmEntity = filmRepository.getFilmByTitle(film);
         logger.info("Film " + film + " was received...");
         List<FilmDateEntity> filmDates = filmEntity.getDates();
         final List<FilmDateDto> filmDateDtos = new ArrayList<>();
@@ -72,7 +71,7 @@ public class FilmService {
     }
 
     public FilmDateDto getTicketsByDate(Integer dateId) {
-        FilmDateEntity dateEntity = filmDAO.getTicketsByDate(dateId);
+        FilmDateEntity dateEntity = filmRepository.getTicketsByDate(dateId);
         final List<FilmTicketDto> ticketDtos = new ArrayList<>();
 
         for (FilmTicketEntity t : dateEntity.getTickets()) {
@@ -91,10 +90,10 @@ public class FilmService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String dateAndTime = filmdate +  " 12:00:00";
         LocalDateTime filmdateAndTime = LocalDateTime.parse(dateAndTime, formatter);
-        FilmEntity filmEntity = filmDAO.getFilmByTitle(title);
+        FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
         FilmDateEntity date = new FilmDateEntity();
         date.setDateAndTime(filmdateAndTime);
-        if (!userDAO.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
+        if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
             return "Not enough permissions for this action";
         }
         else if (filmEntity != null) {
@@ -106,7 +105,7 @@ public class FilmService {
             }
             dates.add(date);
             filmEntity.setDates(dates);
-            filmDAO.save(filmEntity);
+            filmRepository.save(filmEntity);
             return "Date of performance - " + dateAndTime + " for film - " + title + " was successfully added!";
         }
         else {
@@ -115,7 +114,7 @@ public class FilmService {
             List<FilmDateEntity> dates = new ArrayList<>();
             dates.add(date);
             newFilm.setDates(dates);
-            filmDAO.save(newFilm);
+            filmRepository.save(newFilm);
             return "Film - " + title + " with date of performance - " + dateAndTime + " were successfully added!";
         }
     }
@@ -139,9 +138,9 @@ public class FilmService {
     }
 
     public void deleteFilm(String title) {
-        FilmEntity filmEntity = filmDAO.getFilmByTitle(title);
+        FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
         if (filmEntity != null) {
-            filmDAO.deleteById(filmEntity.getId());
+            filmRepository.deleteById(filmEntity.getId());
             logger.info("Film was deleted.");
         }
 

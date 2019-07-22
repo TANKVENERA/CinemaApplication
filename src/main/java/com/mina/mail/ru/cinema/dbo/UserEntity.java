@@ -27,7 +27,7 @@ public class UserEntity {
     private String role;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fkvisitor_id")
+    @JoinColumn(name = "visitor_id")
     private List<FilmTicketEntity> tickets = new ArrayList<>();
 
     public UserEntity() {

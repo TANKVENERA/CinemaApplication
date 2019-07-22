@@ -54,13 +54,4 @@ public class FilmTicketDto {
         this.ticket = ticket;
     }
 
-    @Override
-    public String toString() {
-        return "FilmTicketDto{" +
-                "id=" + id +
-                ", seatnumber=" + seatnumber +
-                ", visitorid=" + visitorid +
-                ", ticket='" + ticket + '\'' +
-                '}';
-    }
 }

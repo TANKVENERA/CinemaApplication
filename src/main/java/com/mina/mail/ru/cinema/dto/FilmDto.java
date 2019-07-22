@@ -14,6 +14,14 @@ public class FilmDto {
 
     private List<FilmDateDto> dates;
 
+
+    public FilmDto() {
+    }
+
+    public FilmDto(String title) {
+        this.title = title;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -28,10 +36,6 @@ public class FilmDto {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<FilmDateDto> getDates() {
-        return dates;
     }
 
     public void setDates(List<FilmDateDto> dates) {
