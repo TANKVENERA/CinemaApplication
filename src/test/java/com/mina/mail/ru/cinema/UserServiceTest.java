@@ -22,6 +22,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.*;
 
@@ -131,11 +132,17 @@ public class UserServiceTest {
     @Test
     public void TestHLogout(){
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-//        Mockito.when(request.getSession()).thenReturn(null);
-        System.out.println(request);
-        Mockito.when(request.getCookies()).thenReturn(new Cookie[]{new Cookie("1", "111")});
+        HttpSession session = Mockito.mock(HttpSession.class);
+        Mockito.when(request.getSession(false)).thenReturn(session);
+        Cookie cookieOne =Mockito.mock(Cookie.class);
+        Cookie cookieTwo =Mockito.mock(Cookie.class);
+        Mockito.when(request.getCookies()).thenReturn(new Cookie[]{cookieOne, cookieTwo});
         final UserDto result = userService.logout(request);
         verify(request, times(1)).getSession(false);
+        verify(session, times(1)).invalidate();
+        verify(cookieOne, times(1)).setMaxAge(0);
+        verify(cookieTwo, times(1)).setMaxAge(0);
+        Assert.assertTrue(request.getCookies().length == 2);
         Assert.assertTrue(result.getLogin() == "");
     }
 
