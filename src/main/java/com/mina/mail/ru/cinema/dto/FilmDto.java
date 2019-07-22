@@ -38,6 +38,10 @@ public class FilmDto {
         this.title = title;
     }
 
+    public List<FilmDateDto> getDates() {
+        return dates;
+    }
+
     public void setDates(List<FilmDateDto> dates) {
         this.dates = dates;
     }

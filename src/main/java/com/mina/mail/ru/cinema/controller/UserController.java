@@ -44,9 +44,7 @@ public class UserController {
 
     @GetMapping(value = "/login")
     public ResponseEntity<UserDto> login(Authentication auth) {
-        UserDto userDto = new UserDto();
-        userDto.setLogin(auth.getName());
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.login(auth));
     }
 
     @GetMapping(value = "/signout")

@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * Created by Mina on 20.05.2019.
  */
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FilmConverterTest  {
 
     private final FilmConverter converter = new FilmConverter();
@@ -29,7 +29,7 @@ public class FilmConverterTest  {
     private static final String TITLE_ONE = TestPropsLoader.titleOne;
 
     @BeforeClass
-    public static void setUpStaticData() throws IOException {
+    public static void setUpStaticData() {
         dbo.setTitle(TITLE_ONE);
         dto.setTitle(TITLE_ONE);
     }

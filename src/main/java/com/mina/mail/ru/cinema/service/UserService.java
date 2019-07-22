@@ -99,4 +99,10 @@ public class UserService {
         userRepository.delete(userRepository.getUserByName(login));
     }
 
+    public UserDto login(Authentication auth) {
+        final UserDto userDto = new UserDto();
+        userDto.setLogin(auth.getName());
+        return userDto;
+    }
+
 }

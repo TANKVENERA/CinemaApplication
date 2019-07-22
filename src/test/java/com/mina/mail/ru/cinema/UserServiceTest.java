@@ -8,8 +8,10 @@ import com.mina.mail.ru.cinema.service.UserService;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -30,6 +32,7 @@ import java.util.List;
  * Created by Mina on 13.06.2019.
  */
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
@@ -113,9 +116,9 @@ public class UserServiceTest {
     @Test
     @WithMockUser
     public void TestFCheckAuthNotNull() {
-        Authentication authentication = Mockito.mock(Authentication.class);
-        Mockito.when(authentication.getName()).thenReturn(USER);
-       final UserDto result = userService.checkAuthentication(authentication);
+        Authentication auth = Mockito.mock(Authentication.class);
+        Mockito.when(auth.getName()).thenReturn(USER);
+       final UserDto result = userService.checkAuthentication(auth);
        Assert.assertTrue(result.getLogin() == USER);
     }
 
@@ -128,12 +131,21 @@ public class UserServiceTest {
     @Test
     public void TestHLogout(){
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        Mockito.when(request.getSession()).thenReturn(null);
+//        Mockito.when(request.getSession()).thenReturn(null);
         System.out.println(request);
         Mockito.when(request.getCookies()).thenReturn(new Cookie[]{new Cookie("1", "111")});
         final UserDto result = userService.logout(request);
         verify(request, times(1)).getSession(false);
         Assert.assertTrue(result.getLogin() == "");
+    }
+
+    @Test
+    public void TestILogin() {
+        Authentication auth = Mockito.mock(Authentication.class);
+        Mockito.when(auth.getName()).thenReturn(USER);
+        final UserDto userDto = userService.login(auth);
+        verify(auth, times(1)).getName();
+        Assert.assertEquals("", userDto.getLogin(), USER);
     }
 
 }

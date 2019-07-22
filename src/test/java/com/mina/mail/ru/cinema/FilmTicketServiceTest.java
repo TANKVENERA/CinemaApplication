@@ -11,8 +11,10 @@ import com.mina.mail.ru.cinema.service.FilmTicketService;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -27,7 +29,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Mina on 21.05.2019.
  */
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(MockitoJUnitRunner.class)
 public class FilmTicketServiceTest {
 

@@ -6,6 +6,7 @@ import com.mina.mail.ru.cinema.dbo.FilmEntity;
 import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
 import com.mina.mail.ru.cinema.dto.FilmDateDto;
 import com.mina.mail.ru.cinema.dto.FilmTicketDto;
+import com.mina.mail.ru.cinema.dto.UserDto;
 import com.mina.mail.ru.cinema.repository.FilmRepository;
 import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
@@ -145,5 +146,6 @@ public class FilmService {
         }
 
     }
+
 
 }

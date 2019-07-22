@@ -94,7 +94,7 @@ public class ControllerTests {
     @Test
     public void testFUserSignIn() throws InterruptedException{
         page.getCancelButton().click();
-        Thread.sleep(500);
+        Thread.sleep(1000);
         page.signIn(testUser);
         Assert.assertTrue("Error occur when user sign in",
                 page.getSignInWarn().getText().contains("You are welcome"));
@@ -103,7 +103,7 @@ public class ControllerTests {
     @Test
     public void  testGCheckFilm() throws InterruptedException {
         page.getFilmTitle().click();
-        Thread.sleep(500);
+        Thread.sleep(1000);
         Assert.assertTrue("Error occur when displaying film seats",
                 page.getCinemaHallBlock().isDisplayed());
         userService.deleteUser(testUser);

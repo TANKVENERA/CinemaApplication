@@ -12,7 +12,9 @@ import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import java.util.List;
 /**
  * Created by Mina on 20.07.2019.
  */
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FilmDateConverterTest {
 
     private final FilmDateConverter converter = new FilmDateConverter();

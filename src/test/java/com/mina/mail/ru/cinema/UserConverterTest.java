@@ -6,7 +6,9 @@ import com.mina.mail.ru.cinema.dto.UserDto;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.security.core.userdetails.User;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.io.IOException;
 /**
  * Created by Mina on 21.07.2019.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserConverterTest {
 
     private final UserConverter converter = new UserConverter();

@@ -15,14 +15,15 @@ import com.mina.mail.ru.cinema.service.FilmService;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -36,7 +37,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Mina on 13.06.2019.
  */
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(MockitoJUnitRunner.class)
 public class FilmServiceTest  {
 
@@ -142,13 +143,36 @@ public class FilmServiceTest  {
     }
 
     @Test
-    public void TestGCheck() throws ParseException{
+    public void TestGCheckUserRole() throws ParseException{
         Authentication authentication = Mockito.mock(Authentication.class);
         UserEntity user = new UserEntity();
         user.setRole("USER");
         doReturn(user).when(userRepository).getUserByName(any());
-        String result = filmService.addFilm(authentication, TITLE_ONE, "01-07-2019");
+        final String result = filmService.addFilm(authentication, TITLE_ONE, "01-07-2019");
         Assert.assertEquals("Error occured when checking wrong permission!", "Not enough permissions for this action", result);
+    }
+
+    @Test
+    public void TestHCheckAdminRole() throws ParseException{
+        Authentication authentication = Mockito.mock(Authentication.class);
+        UserEntity  user = new UserEntity();
+        user.setRole("ADMIN");
+        doReturn(user).when(userRepository).getUserByName(any());
+        doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);
+        final String result = filmService.addFilm(authentication, TITLE_ONE, "01-07-2019");
+        Assert.assertTrue("Error occured when checking that film exists!", result.contains("Date of performance -"));
+        verify(filmRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void TestICheckFilmAndDateExists () throws ParseException {
+        Authentication authentication = Mockito.mock(Authentication.class);
+        UserEntity  user = new UserEntity();
+        user.setRole("ADMIN");
+        doReturn(user).when(userRepository).getUserByName(any());
+        doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);
+        final String result = filmService.addFilm(authentication, TITLE_ONE, "01-08-2017");
+        Assert.assertTrue("Error occured when checking that film and date exists!", result.contains("Film with date of performance -"));
     }
 
 
