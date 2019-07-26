@@ -58,8 +58,9 @@ public class FilmController {
     }
 
     @GetMapping(value = "/deletefilm", params="title")
-    public void deleteFilm (@RequestParam(value = "title") String title) {
+    public ResponseEntity<String> deleteFilm (@RequestParam(value = "title") String title, Authentication auth) {
         logger.info("Trying to delete film...");
-        filmService.deleteFilm(title);
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.deleteFilm(title, auth));
+
     }
 }

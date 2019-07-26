@@ -38,7 +38,7 @@ public class ControllerTests {
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
         webDriver = new ChromeDriver();
         webDriver.get(mainPageUrl);
     }

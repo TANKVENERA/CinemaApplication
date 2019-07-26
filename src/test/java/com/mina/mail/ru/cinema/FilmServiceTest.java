@@ -123,17 +123,24 @@ public class FilmServiceTest  {
     }
 
     @Test
-    public void TestDDeleteFilmByTitle() {
-        doReturn(null).when(filmRepository).getFilmByTitle(TITLE_ONE);
-        filmService.deleteFilm(TITLE_ONE);
-        verify(filmRepository, times(0)).deleteById(anyInt());
+    public void TestDDeleteFilmWithNotEnoughPermissions() {
+        Authentication authentication = Mockito.mock(Authentication.class);
+        UserEntity user = new UserEntity();
+        user.setRole("USER");
+        doReturn(user).when(userRepository).getUserByName(any());
+        final String result =  filmService.deleteFilm(TITLE_ONE, authentication);
+        Assert.assertEquals("Error occured when checking wrong permission!", "Not enough permissions for this action", result);
     }
 
     @Test
-    public void TestEDeleteFilmByTitleNotNull() {
-        doReturn(filmEntities.get(1)).when(filmRepository).getFilmByTitle(TITLE_TWO);
-        filmService.deleteFilm(TITLE_TWO);
-        verify(filmRepository, times(1)).deleteById(filmEntities.get(0).getId());
+    public void TestEDeleteFilmNotFound() {
+        Authentication authentication = Mockito.mock(Authentication.class);
+        UserEntity user = new UserEntity();
+        user.setRole("ADMIN");
+        doReturn(user).when(userRepository).getUserByName(any());
+        doReturn(null).when(filmRepository).getFilmByTitle(TITLE_TWO);
+        final String result = filmService.deleteFilm(TITLE_TWO, authentication);
+        Assert.assertEquals("Error occured when checking that film was not found!", "Film was not found", result);
     }
 
     @Test

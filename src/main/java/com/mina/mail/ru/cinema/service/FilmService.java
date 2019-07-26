@@ -138,13 +138,21 @@ public class FilmService {
         return list;
     }
 
-    public void deleteFilm(String title) {
-        FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
-        if (filmEntity != null) {
-            filmRepository.deleteById(filmEntity.getId());
-            logger.info("Film was deleted.");
+    public String deleteFilm(String title, Authentication auth) {
+        if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
+            return "Not enough permissions for this action";
         }
-
+        else {
+            FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
+            if (filmEntity != null) {
+                filmRepository.deleteById(filmEntity.getId());
+                logger.info("Film was deleted.");
+                return "Film was deleted.";
+            }
+            else {
+                return "Film was not found";
+            }
+        }
     }
 
 
