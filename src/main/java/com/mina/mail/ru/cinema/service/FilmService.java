@@ -84,12 +84,12 @@ public class FilmService {
         return filmDateDto;
     }
 
-    public String addFilm (Authentication auth, String title, String filmdate) throws ParseException {
-        if (!filmdate.replaceAll("(\\d){2}(-){1}(\\d){2}(-){1}(\\d){4}", "isOk").equals("isOk")) {
+    public String addFilm (Authentication auth, String title, String filmDate) throws ParseException {
+        if (!filmDate.replaceAll("(\\d){2}(-){1}(\\d){2}(-){1}(\\d){4}", "isOk").equals("isOk")) {
             return "Wrong date pattern, use dd-mm-yyyy";
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String dateAndTime = filmdate +  " 12:00:00";
+        String dateAndTime = filmDate +  " 12:00:00";
         LocalDateTime filmdateAndTime = LocalDateTime.parse(dateAndTime, formatter);
         FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
         FilmDateEntity date = new FilmDateEntity();

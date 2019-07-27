@@ -68,8 +68,4 @@ public class PageObjectDto {
         el.sendKeys(Keys.CONTROL + "a");
         el.sendKeys(Keys.DELETE);
     }
-
-    public WebElement getFilmTitle() {
-        return filmTitle;
-    }
 }

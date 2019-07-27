@@ -34,7 +34,7 @@ public class FilmTicketController {
         filmTicketService.createOrder(order, principal.getName());
     }
 
-    @PostMapping(value = "/update")
+    @PutMapping(value = "/update")
     public void updateOrder (@RequestBody UserOrder order, Principal principal) {
         logger.info("Trying to update user order...");
         filmTicketService.updateOrder(order, principal.getName());
@@ -46,12 +46,11 @@ public class FilmTicketController {
         return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
     }
 
-    @GetMapping(value = "/delete", params = {"ticket", "login"})
-    public ResponseEntity<List<UserSeat>> deleteOrder(@RequestParam("ticket") String ticket,
-                                                      @RequestParam("login") String login) {
-        logger.info("Trying to delete order...");
+    @DeleteMapping("/deleteOrder/{ticket}")
+    public ResponseEntity<List<UserSeat>> deleteOrder(@PathVariable("ticket") String ticket, Principal principal) {
+       logger.info("Trying to delete order...");
        filmTicketService.deleteOrderByTicket(ticket);
-       return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
+       return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(principal.getName()));
 
     }
 }

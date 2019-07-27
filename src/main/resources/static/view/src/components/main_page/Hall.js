@@ -45,7 +45,7 @@ class Hall extends Component {
         e.stopPropagation();
         var action = this.props.seatsToUpdate === undefined ? 'save' : 'update';
         fetch(`http://localhost:8080/cinema/rest/${action}`, {
-            method: 'POST',
+            method: this.props.seatsToUpdate === undefined ? 'POST' : 'PUT',
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',

@@ -43,6 +43,7 @@ class Head extends Component {
 
     handleSubmitUser = () => {
         fetch(`http://localhost:8080/cinema/rest/register/?login=${this.state.signUpLogin}`, {
+            method: "POST",
         }).then(result => { return result.text()})
             .then(data => {const flag = !data.includes('successfully');
                            this.setState({isOpenModal: flag});
@@ -82,8 +83,8 @@ class Head extends Component {
     };
 
     handleDeleteOrder = (ticket, login) => {
-        fetch(`http://localhost:8080/cinema/rest/delete/?ticket=${ticket}&login=${login}`, {
-            method: "GET",
+        fetch(`http://localhost:8080/cinema/rest/deleteOrder/${ticket}`, {
+            method: "DELETE",
             credentials: 'include',
             headers: {
                 "X-Requested-With": "XMLHttpRequest"

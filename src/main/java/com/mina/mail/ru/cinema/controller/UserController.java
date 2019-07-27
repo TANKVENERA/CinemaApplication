@@ -52,10 +52,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.logout(request));
     }
 
-    @GetMapping(value = "/register", params = "login")
+    @PostMapping(value = "/register")
     public ResponseEntity<String> createUser (@RequestParam("login") String login) {
         logger.info("Trying to save new user...");
-        return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(login));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(login));
     }
 
     /** Used for test purposes**/

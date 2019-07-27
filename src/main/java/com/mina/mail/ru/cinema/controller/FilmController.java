@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -50,15 +48,15 @@ public class FilmController {
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getTicketsByDate(dateId));
     }
 
-    @GetMapping(value = "/addfilm", params = {"title", "firstdate"})
-    public ResponseEntity<String> addFilm(Authentication auth, @RequestParam(value = "title") String title,
-                                          @RequestParam(value = "firstdate") String firstDate) throws ParseException {
+    @PostMapping(value = "/addFilm")
+    public ResponseEntity<String> addFilm( Authentication auth, @RequestParam(value = "title") String title,
+                                          @RequestParam(value = "firstDate") String firstDate) throws ParseException {
 
-        return ResponseEntity.status(HttpStatus.OK).body(filmService.addFilm(auth, title, firstDate));
+        return ResponseEntity.status(HttpStatus.CREATED).body(filmService.addFilm(auth, title, firstDate));
     }
 
-    @GetMapping(value = "/deletefilm", params="title")
-    public ResponseEntity<String> deleteFilm (@RequestParam(value = "title") String title, Authentication auth) {
+    @DeleteMapping("/deleteFilm/{title}")
+    public ResponseEntity<String> deleteFilm (@PathVariable("title") String title, Authentication auth) {
         logger.info("Trying to delete film...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.deleteFilm(title, auth));
 
