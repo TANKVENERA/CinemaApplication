@@ -26,7 +26,6 @@ class Films extends Component {
         fetch(`http://localhost:8080/cinema/rest/films`).then(result => {
             return result.json();
         }).then(data => {
-                console.log('INITIAL', data);
                 this.setState({films: data})});
     }
 
@@ -45,9 +44,7 @@ class Films extends Component {
                 return result.json();
             }
         }).then(data => {
-            console.log('FFFFFFF', data);
                 this.setState({
-
                     dates: data.dates, index: index, isInitial: false, dateIndex: 0,
                     currentFilm: uniqueFilm
                 });

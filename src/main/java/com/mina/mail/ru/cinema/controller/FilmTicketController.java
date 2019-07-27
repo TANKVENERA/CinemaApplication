@@ -40,7 +40,7 @@ public class FilmTicketController {
         filmTicketService.updateOrder(order, principal.getName());
     }
 
-    @GetMapping(value = "/listorders", params = "login")
+    @GetMapping(value = "/listOrders", params = "login")
     public ResponseEntity<List<UserSeat>> getAllOrders (@RequestParam("login") final String login) {
         logger.info("Retrieving user orders...");
         return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));

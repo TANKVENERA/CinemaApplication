@@ -1,6 +1,7 @@
 package com.mina.mail.ru.cinema.service;
 
 import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.dto.SeatAndRow;
 import com.mina.mail.ru.cinema.repository.FilmRepository;
 import com.mina.mail.ru.cinema.repository.FilmTicketRepository;
 import com.mina.mail.ru.cinema.repository.UserRepository;
@@ -40,10 +41,10 @@ public class FilmTicketService {
 
     public void createOrder (final UserOrder order, final String login) {
         Integer userId = userRepository.getUserByName(login).getId();
-        String ticketId;
+        String ticketToken;
         for (;;) {
-            ticketId = RandomString.make(7);
-            List<FilmTicketEntity>  tickets = filmTicketRepository.getTicketsById(ticketId);
+            ticketToken = RandomString.make(7);
+            List<FilmTicketEntity>  tickets = filmTicketRepository.getTicketsById(ticketToken);
             if (tickets.size() == 0) {
                 logger.info("Generated ticket was verified. Start saving order.");
                 break;
@@ -53,9 +54,9 @@ public class FilmTicketService {
             }
         }
 
-        List<Integer> seats = order.getSeats();
-        for (Integer seat : seats) {
-           filmTicketRepository.createOrder(seat, userId, order.getDateId(), ticketId);
+        List<SeatAndRow> seats = order.getSeats();
+        for (SeatAndRow seatAndRow : seats) {
+           filmTicketRepository.createOrder(seatAndRow.getSeatNmb(), seatAndRow.getRowNmb(), userId, order.getDateId(), ticketToken);
         }
         logger.info("Order was created.");
     }
@@ -63,10 +64,10 @@ public class FilmTicketService {
     public void updateOrder (final UserOrder order, final String login) {
         Integer filmId = filmRepository.getFilmId(order.getFilm());
         Integer userId = userRepository.getUserByName(login).getId();
-        List<Integer> seats = order.getSeats();
+        List<SeatAndRow> seats = order.getSeats();
         deleteOrderByTicket(order.getTicket());
-        for (Integer seat : seats) {
-            filmTicketRepository.createOrder(seat, userId, filmId, order.getTicket());
+        for (SeatAndRow seatAndRow : seats) {
+            filmTicketRepository.createOrder(seatAndRow.getSeatNmb(), seatAndRow.getRowNmb(), userId, filmId, order.getTicket());
         }
         logger.info("Order was updated.");
     }

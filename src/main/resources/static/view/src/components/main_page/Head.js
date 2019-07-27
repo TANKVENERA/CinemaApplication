@@ -56,7 +56,7 @@ class Head extends Component {
     };
 
     handleOrders = (user) => {
-        fetch(`http://localhost:8080/cinema/rest/listorders/?login=${user}`, {
+        fetch(`http://localhost:8080/cinema/rest/listOrders/?login=${user}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -65,7 +65,6 @@ class Head extends Component {
         }).then(result => {
             return result.json();
         }).then(data =>    {
-                console.log('ORDERS', data)
                 this.setState({userOrdersData: data, isOpenOrdersModal: true})
         });
     };
@@ -95,6 +94,10 @@ class Head extends Component {
                          this.props.warn('Order was successfully removed!', 'green')});
     };
 
+    includeSeat(seats, seat, row) {
+        return seats.filter((s) => (s.seatNmb === seat && s.rowNmb === row)).length === 1
+    }
+
     handleUpdateOrder = (title, date, seats, ticketID, dateId) => {
         this.setState({title: title, filmdate: date, ticketID: ticketID})
         fetch(`http://localhost:8080/cinema/rest/ticketsOnDate/?dateId=${dateId}`, {
@@ -105,9 +108,8 @@ class Head extends Component {
             }
         }).then(result => {return result.json();
         }).then(data => {
-            console.log('PULIA',data);
             var filtered = data.tickets.filter((ticket) =>{
-                if (!seats.includes(ticket.seatnumber)) {
+                if (!this.includeSeat(seats, ticket.seatnumber, ticket.row)) {
                     return ticket
                 }
                     return ''
@@ -178,7 +180,7 @@ class Head extends Component {
                 var filmDate;
                 var dateId;
                 if (ticketID[m] === order.ticket) {
-                    seats.push(userOrders[j].seat);
+                    seats.push({seatNmb: userOrders[j].seat, rowNmb: userOrders[j].row});
                     ticket = order.ticket;
                     title = order.title;
                     dateId = order.dateId
@@ -247,9 +249,9 @@ class Head extends Component {
                     <label>ID: {ticket.ticket}, </label>
                     <label>film: {ticket.title}, </label>
                     <label>date: {ticket.filmDate}, </label>
-                    <label>row and seat: </label>
-                    {ticket.seats.map((seat, i) => (
-                     <label key={i}>{seat===100 ? 10 : Math.floor(seat/10 + 1)}/{seat===100 ? 10 : seat%10} </label>
+                    <label>seat/row: </label>
+                    {ticket.seats.map((s, i) => (
+                     <label key={i}>{s.seatNmb}/{s.rowNmb} </label>
                     ))}
                 </div>
                 <div style={{display: 'table-cell', paddingLeft: '10px'}}>

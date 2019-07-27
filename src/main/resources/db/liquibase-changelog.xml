@@ -176,4 +176,12 @@
                                  referencedTableName="filmdate" referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet id="22" author="belski">
+        <addColumn tableName="filmticket">
+            <column name="row" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

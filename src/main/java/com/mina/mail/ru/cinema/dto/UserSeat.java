@@ -8,6 +8,7 @@ package com.mina.mail.ru.cinema.dto;
 public interface UserSeat {
 
     Integer getSeat();
+    Integer getRow();
     String getTitle();
     String getFilmDate();
     String getTicket();

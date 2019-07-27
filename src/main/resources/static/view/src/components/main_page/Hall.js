@@ -26,17 +26,25 @@ class Hall extends Component {
         }
     }
 
-    handleClick = (index) => {
+    handleClick = (seat, row) => {
         var userOrder = this.state.userOrder;
 
-        if (userOrder.includes(index)){
-          userOrder = userOrder.filter(i => {return i !== index});
+        if (this.includeSeat(userOrder, seat, row)){
+          userOrder = userOrder.filter((s) => {
+              if (s.seatNmb === seat && s.rowNmb === row) {
+                  return false;
+              }
+              else {
+                  return true;
+              }
+          })
+
         }
         else  if (userOrder.length > 2) {
             this.props.warning('Max allowed seat quantity in one order is 3!', 'red')
         }
         else {
-            userOrder.push(index);
+            userOrder.push({seatNmb: seat, rowNmb: row});
         }
         this.setState({userOrder: userOrder});
     };
@@ -73,11 +81,17 @@ class Hall extends Component {
 
     printSeats () {
         const row = [];
-        for (var i = 1; i <= 100; i++) {
-            row.push(i);
+        for (var i = 1; i <= 8; i++) {
+            for (var j = 1; j <=12; j++) {
+                row.push({seat: j, row: i});
+            }
         }
         return row;
     };
+
+    includeSeat(seats, seat, row) {
+       return seats.filter((s) => (s.seatNmb === seat && s.rowNmb === row)).length === 1
+    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.dateID !== this.props.dateID || prevProps.film !== this.props.film) {
@@ -92,13 +106,14 @@ class Hall extends Component {
     render(){
         const userOrder = this.state.userOrder;
         const successOrder = this.state.successOrder;
-        const blockSeats = this.props.tickets.map((ticket) =>(ticket.seatnumber));
 
-        const style = (seat) => {
-            if (blockSeats.includes(seat) || successOrder.includes(seat)) {
+        const blockSeats = this.props.tickets.map((ticket) =>({seatNmb: ticket.seatnumber, rowNmb: ticket.row}));
+        const style = (index, seat, row) => {
+
+            if (this.includeSeat(successOrder, seat, row) || this.includeSeat(blockSeats, seat, row)) {
                 return "seat-chosen"
             }
-             if (userOrder.includes(seat)) {
+             if (this.includeSeat(userOrder, seat, row)) {
                 return "seat-ordered"
             }
             else
@@ -106,15 +121,30 @@ class Hall extends Component {
         };
 
         return (
-            <div>
-                <div style={{width: '350px'}}>
-                    {this.state.seats.map((seat) => (
-                        <div key={seat} className="seat-block" >
-                            <RadioButton disabled={successOrder.includes(seat) || blockSeats.includes(seat) ? true : false}
-                                         className={style(seat)}
-                                         onClick={() => this.handleClick(seat)} />
-                        </div>
-                    ))}
+            <div >
+                <div style={{display: 'inline-flex'}}>
+                    <div>
+                        {this.state.seats.map((seat, index) => (
+                            seat.seat%12 === 0 &&
+                            <div key={index} style={{display: 'block', paddingRight: '15px', paddingBottom: '5px'}}>
+                                <RadioButton disabled={true} className="seat-chosen">
+                                    <label>{seat.row}</label>
+                                </RadioButton>
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{width: '420px'}}>
+                        {this.state.seats.map((seat, index) => (
+                            <div key={index} className="seat-block" >
+                                <RadioButton disabled={this.includeSeat(successOrder, seat.seat, seat.row) ||
+                                                       this.includeSeat(blockSeats, seat.seat, seat.row) ? true : false}
+                                             className={style(index, seat.seat, seat.row)}
+                                             onClick={() => this.handleClick(seat.seat, seat.row)} >
+                                    <label>{seat.seat}</label>
+                                </RadioButton>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div>
                     { userOrder.length > 0 &&

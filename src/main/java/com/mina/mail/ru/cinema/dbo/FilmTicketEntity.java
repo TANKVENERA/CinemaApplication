@@ -25,6 +25,9 @@ public class FilmTicketEntity {
     @Column(name = "seat")
     private Integer seatnumber;
 
+    @Column(name = "row")
+    private Integer row;
+
     @Column(name = "visitor_id")
     private Integer visitorid;
 

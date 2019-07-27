@@ -12,6 +12,8 @@ public class FilmTicketDto {
 
     private Integer seatnumber;
 
+    private Integer row;
+
     private Integer visitorid;
 
     private String ticket;
