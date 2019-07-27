@@ -26,19 +26,19 @@ public class FilmTicketService {
     private UserRepository userRepository;
 
     @Autowired
-    public FilmTicketService(FilmTicketRepository filmTicketRepository, FilmRepository filmRepository, UserRepository userRepository) {
+    public FilmTicketService(final FilmTicketRepository filmTicketRepository, final FilmRepository filmRepository, final UserRepository userRepository) {
         this.filmTicketRepository = filmTicketRepository;
         this.filmRepository = filmRepository;
         this.userRepository = userRepository;
     }
 
-    public List<UserSeat> getOrders(String login) {
+    public List<UserSeat> getOrders(final String login) {
         final List<UserSeat> tickets = filmTicketRepository.getAllOrders(login);
         logger.info("Received user orders.");
         return tickets;
     }
 
-    public void createOrder (UserOrder order, String login) {
+    public void createOrder (final UserOrder order, final String login) {
         Integer userId = userRepository.getUserByName(login).getId();
         String ticketId;
         for (;;) {
@@ -60,7 +60,7 @@ public class FilmTicketService {
         logger.info("Order was created.");
     }
 
-    public void updateOrder (UserOrder order, String login) {
+    public void updateOrder (final UserOrder order, final String login) {
         Integer filmId = filmRepository.getFilmId(order.getFilm());
         Integer userId = userRepository.getUserByName(login).getId();
         List<Integer> seats = order.getSeats();
@@ -71,7 +71,7 @@ public class FilmTicketService {
         logger.info("Order was updated.");
     }
 
-    public void deleteOrderByTicket (String ticket) {
+    public void deleteOrderByTicket (final String ticket) {
         filmTicketRepository.deleteOrderByTicket(ticket);
         logger.info("Order was deleted.");
     }

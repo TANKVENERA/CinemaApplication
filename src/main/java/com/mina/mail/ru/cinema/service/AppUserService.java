@@ -23,12 +23,12 @@ public class AppUserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    public AppUserService(UserRepository userRepository) {
+    public AppUserService(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public final UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public final UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
         UserEntity currentUser = userRepository.getUserByName(login);
         UserBuilder builder;
         logger.info("Trying to sign in. Comparing user credentials...");

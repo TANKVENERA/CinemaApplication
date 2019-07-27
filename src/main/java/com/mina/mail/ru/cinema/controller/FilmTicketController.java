@@ -24,30 +24,30 @@ public class FilmTicketController {
     private FilmTicketService filmTicketService;
 
     @Autowired
-    public FilmTicketController(FilmTicketService filmTicketService) {
+    public FilmTicketController(final FilmTicketService filmTicketService) {
         this.filmTicketService = filmTicketService;
     }
 
     @PostMapping(value = "/save")
-    public void createOrder (@RequestBody UserOrder order, Principal principal) {
+    public void createOrder (@RequestBody final UserOrder order, final Principal principal) {
         logger.info("Trying to save user order...");
         filmTicketService.createOrder(order, principal.getName());
     }
 
     @PutMapping(value = "/update")
-    public void updateOrder (@RequestBody UserOrder order, Principal principal) {
+    public void updateOrder (@RequestBody final UserOrder order, final Principal principal) {
         logger.info("Trying to update user order...");
         filmTicketService.updateOrder(order, principal.getName());
     }
 
     @GetMapping(value = "/listorders", params = "login")
-    public ResponseEntity<List<UserSeat>> getAllOrders (@RequestParam("login") String login) {
+    public ResponseEntity<List<UserSeat>> getAllOrders (@RequestParam("login") final String login) {
         logger.info("Retrieving user orders...");
         return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
     }
 
     @DeleteMapping("/deleteOrder/{ticket}")
-    public ResponseEntity<List<UserSeat>> deleteOrder(@PathVariable("ticket") String ticket, Principal principal) {
+    public ResponseEntity<List<UserSeat>> deleteOrder(@PathVariable("ticket") final String ticket, final Principal principal) {
        logger.info("Trying to delete order...");
        filmTicketService.deleteOrderByTicket(ticket);
        return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(principal.getName()));

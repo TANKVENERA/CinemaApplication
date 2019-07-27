@@ -20,7 +20,7 @@ public class FilmDto {
     public FilmDto() {
     }
 
-    public FilmDto(String title) {
+    public FilmDto(final String title) {
         this.title = title;
     }
 

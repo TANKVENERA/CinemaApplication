@@ -29,7 +29,7 @@ public class UserService {
     private UserConverter userConverter;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserConverter userConverter) {
+    public UserService(final UserRepository userRepository, final UserConverter userConverter) {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
     }
@@ -47,13 +47,13 @@ public class UserService {
       return usersDto;
     }
 
-    public UserDto getUser(String login) {
+    public UserDto getUser(final String login) {
         UserEntity userEntity = userRepository.getUserByName(login);
         final UserDto userDto = userConverter.convertToDto(userEntity);
         return userDto;
     }
 
-    public String createUser(String login) {
+    public String createUser(final String login) {
         final UserDto userDto = new UserDto(login, "USER");
         userDto.setLogin(login);
         UserEntity userEntity = userConverter.convertToDbo(userDto);
@@ -69,14 +69,14 @@ public class UserService {
         }
     }
 
-    public UserDto checkAuthentication (Authentication auth) {
+    public UserDto checkAuthentication (final Authentication auth) {
         final UserDto userDto = new UserDto();
         userDto.setLogin(auth == null ? "" : auth.getName());
         logger.info(auth == null ? "user is not in system" : "user is signed in");
         return userDto;
     }
 
-    public UserDto logout (HttpServletRequest request) {
+    public UserDto logout (final HttpServletRequest request) {
         HttpSession session;
         SecurityContextHolder.clearContext();
         session= request.getSession(false);
@@ -94,12 +94,12 @@ public class UserService {
     }
 
     /**For test purposes**/
-    public void deleteUser (String login) {
+    public void deleteUser (final String login) {
         UserEntity user = userRepository.getUserByName(login);
         userRepository.delete(userRepository.getUserByName(login));
     }
 
-    public UserDto login(Authentication auth) {
+    public UserDto login(final Authentication auth) {
         final UserDto userDto = new UserDto();
         userDto.setLogin(auth.getName());
         return userDto;

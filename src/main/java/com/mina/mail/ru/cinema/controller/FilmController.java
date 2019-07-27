@@ -26,7 +26,7 @@ public class FilmController {
     private FilmService filmService;
 
     @Autowired
-    public FilmController(FilmService filmService) {
+    public FilmController(final FilmService filmService) {
         this.filmService = filmService;
     }
 
@@ -37,26 +37,26 @@ public class FilmController {
     }
 
     @GetMapping(value = "/dates", params = "film")
-    public ResponseEntity<FilmDto> dates(@RequestParam(value = "film") String film) {
+    public ResponseEntity<FilmDto> dates(@RequestParam(value = "film") final String film) {
         logger.info("Film with all dates is requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmByTitle(film));
     }
 
     @GetMapping(value = "/ticketsOnDate", params = "dateId")
-    public ResponseEntity<FilmDateDto> ticketsAtOneDate(@RequestParam(value = "dateId") Integer dateId) {
+    public ResponseEntity<FilmDateDto> ticketsAtOneDate(@RequestParam(value = "dateId") final Integer dateId) {
         logger.info("Film tickets at certain date are requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getTicketsByDate(dateId));
     }
 
     @PostMapping(value = "/addFilm")
-    public ResponseEntity<String> addFilm( Authentication auth, @RequestParam(value = "title") String title,
-                                          @RequestParam(value = "firstDate") String firstDate) throws ParseException {
+    public ResponseEntity<String> addFilm(final Authentication auth, @RequestParam(value = "title") final String title,
+                                          @RequestParam(value = "firstDate") final String firstDate) throws ParseException {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(filmService.addFilm(auth, title, firstDate));
     }
 
     @DeleteMapping("/deleteFilm/{title}")
-    public ResponseEntity<String> deleteFilm (@PathVariable("title") String title, Authentication auth) {
+    public ResponseEntity<String> deleteFilm (@PathVariable("title") final String title, final Authentication auth) {
         logger.info("Trying to delete film...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.deleteFilm(title, auth));
 

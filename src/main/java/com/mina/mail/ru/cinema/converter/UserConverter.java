@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 public class UserConverter implements CommonConverter<UserEntity, UserDto> {
 
     @Override
-    public UserEntity convertToDbo(UserDto userDto) {
+    public UserEntity convertToDbo(final UserDto userDto) {
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(userDto, userEntity);
         return userEntity;
     }
 
     @Override
-    public UserDto convertToDto(UserEntity userEntity) {
+    public UserDto convertToDto(final UserEntity userEntity) {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userEntity, userDto);
         return userDto;

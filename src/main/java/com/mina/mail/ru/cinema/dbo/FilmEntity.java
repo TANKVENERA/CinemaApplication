@@ -33,7 +33,7 @@ public class FilmEntity implements Serializable {
     public FilmEntity() {
     }
 
-    public FilmEntity(String title) {
+    public FilmEntity(final String title) {
         this.title = title;
     }
 }

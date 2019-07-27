@@ -19,7 +19,7 @@ public class FilmTicketDto {
     public FilmTicketDto() {
     }
 
-    public FilmTicketDto(Integer id, Integer seatnumber, Integer visitorid) {
+    public FilmTicketDto(final Integer id, final Integer seatnumber, final Integer visitorid) {
         this.id = id;
         this.seatnumber = seatnumber;
         this.visitorid = visitorid;

@@ -26,7 +26,7 @@ public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationEntryPoint.class);
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException, ServletException {
+    public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException ex) throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         logger.warn("User is invalid or not authorized in system...");
         UserDto user = new UserDto();

@@ -23,7 +23,7 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(String login, String role) {
+    public UserDto(final String login, final String role) {
         this.login = login;
         this.role = role;
     }
@@ -32,7 +32,7 @@ public class UserDto {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ public class UserDto {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -48,7 +48,7 @@ public class UserDto {
         return tickets;
     }
 
-    public void setTickets(List<FilmTicketDto> tickets) {
+    public void setTickets(final List<FilmTicketDto> tickets) {
         this.tickets = tickets;
     }
 
@@ -56,7 +56,7 @@ public class UserDto {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(final String role) {
         this.role = role;
     }
 }

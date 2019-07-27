@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 public class FilmConverter implements CommonConverter<FilmEntity, FilmDto> {
 
     @Override
-    public FilmEntity convertToDbo(FilmDto filmDto) {
+    public FilmEntity convertToDbo(final FilmDto filmDto) {
         FilmEntity filmEntity = new FilmEntity();
         BeanUtils.copyProperties(filmDto, filmEntity);
         return filmEntity;
     }
 
     @Override
-    public FilmDto convertToDto(FilmEntity filmEntity) {
+    public FilmDto convertToDto(final FilmEntity filmEntity) {
         FilmDto filmDto = new FilmDto();
         BeanUtils.copyProperties(filmEntity, filmDto);
         return filmDto;

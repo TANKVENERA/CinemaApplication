@@ -37,7 +37,7 @@ public class FilmService {
     private FilmDateConverter filmDateConverter;
     private FilmTicketConverter ticketConverter;
 
-    public FilmService(FilmRepository filmRepository, FilmConverter filmConverter, UserRepository userRepository, FilmDateConverter filmDateConverter, FilmTicketConverter ticketConverter) {
+    public FilmService(final FilmRepository filmRepository, final FilmConverter filmConverter, final UserRepository userRepository, final FilmDateConverter filmDateConverter, final FilmTicketConverter ticketConverter) {
         this.filmRepository = filmRepository;
         this.filmConverter = filmConverter;
         this.userRepository = userRepository;
@@ -56,7 +56,7 @@ public class FilmService {
         return filmsDto;
     }
 
-    public FilmDto getFilmByTitle(String film) {
+    public FilmDto getFilmByTitle(final String film) {
         FilmEntity filmEntity = filmRepository.getFilmByTitle(film);
         logger.info("Film " + film + " was received...");
         List<FilmDateEntity> filmDates = filmEntity.getDates();
@@ -71,7 +71,7 @@ public class FilmService {
         return filmDto;
     }
 
-    public FilmDateDto getTicketsByDate(Integer dateId) {
+    public FilmDateDto getTicketsByDate(final Integer dateId) {
         FilmDateEntity dateEntity = filmRepository.getTicketsByDate(dateId);
         final List<FilmTicketDto> ticketDtos = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class FilmService {
         return filmDateDto;
     }
 
-    public String addFilm (Authentication auth, String title, String filmDate) throws ParseException {
+    public String addFilm (final Authentication auth, final String title, final String filmDate) throws ParseException {
         if (!filmDate.replaceAll("(\\d){2}(-){1}(\\d){2}(-){1}(\\d){4}", "isOk").equals("isOk")) {
             return "Wrong date pattern, use dd-mm-yyyy";
         }
@@ -120,11 +120,11 @@ public class FilmService {
         }
     }
 
-    public List<FilmDateDto> formatDates(List<FilmDateDto> list) {
+    public List<FilmDateDto> formatDates(final List<FilmDateDto> list) {
 
         Collections.sort(list, new Comparator<FilmDateDto>() {
             @Override
-            public int compare(FilmDateDto o1, FilmDateDto o2) {
+            public int compare(final FilmDateDto o1, final FilmDateDto o2) {
                 if (o1 == null || o2 == null) {
                     return 0;
                 }
@@ -138,7 +138,7 @@ public class FilmService {
         return list;
     }
 
-    public String deleteFilm(String title, Authentication auth) {
+    public String deleteFilm(final String title, final Authentication auth) {
         if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
             return "Not enough permissions for this action";
         }

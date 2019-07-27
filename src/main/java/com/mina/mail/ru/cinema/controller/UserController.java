@@ -32,28 +32,28 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(final UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping(value = "/checkauth")
-    public ResponseEntity<UserDto> checkAuth(Authentication auth) {
+    public ResponseEntity<UserDto> checkAuth(final Authentication auth) {
         logger.info("Checking if user is signed in...");
         return ResponseEntity.status(HttpStatus.OK).body(userService.checkAuthentication(auth));
     }
 
     @GetMapping(value = "/login")
-    public ResponseEntity<UserDto> login(Authentication auth) {
+    public ResponseEntity<UserDto> login(final Authentication auth) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.login(auth));
     }
 
     @GetMapping(value = "/signout")
-    public ResponseEntity<UserDto> logout(HttpServletRequest request) {
+    public ResponseEntity<UserDto> logout(final HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.logout(request));
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<String> createUser (@RequestParam("login") String login) {
+    public ResponseEntity<String> createUser (@RequestParam("login") final String login) {
         logger.info("Trying to save new user...");
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(login));
     }

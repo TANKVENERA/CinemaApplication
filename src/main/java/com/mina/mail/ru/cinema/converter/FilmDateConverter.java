@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 public class FilmDateConverter implements CommonConverter<FilmDateEntity, FilmDateDto> {
 
     @Override
-    public FilmDateEntity convertToDbo(FilmDateDto filmDateDto) {
+    public FilmDateEntity convertToDbo(final FilmDateDto filmDateDto) {
         FilmDateEntity filmDateEntity = new FilmDateEntity();
         BeanUtils.copyProperties(filmDateDto, filmDateEntity);
         return filmDateEntity;
     }
 
     @Override
-    public FilmDateDto convertToDto(FilmDateEntity filmDateEntity) {
+    public FilmDateDto convertToDto(final FilmDateEntity filmDateEntity) {
         FilmDateDto filmDateDto = new FilmDateDto();
         BeanUtils.copyProperties(filmDateEntity, filmDateDto);
         return filmDateDto;

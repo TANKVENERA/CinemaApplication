@@ -50,21 +50,21 @@ public class PageObjectDto {
     @FindBy(css = ".hall-block")
     private WebElement cinemaHallBlock;
 
-    public PageObjectDto(WebDriver driver) {
+    public PageObjectDto(final WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
-    public void signUp(CharSequence ch) {
+    public void signUp(final CharSequence ch) {
         inputSignUp.sendKeys(ch);
         registerButton.click();
     }
 
-    public void signIn(CharSequence ch) {
+    public void signIn(final CharSequence ch) {
         inputSignIn.sendKeys(ch);
         signInButton.click();
     }
 
-    public void clearInputField(WebElement el) {
+    public void clearInputField(final WebElement el) {
         el.sendKeys(Keys.CONTROL + "a");
         el.sendKeys(Keys.DELETE);
     }
