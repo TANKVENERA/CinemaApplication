@@ -1,6 +1,5 @@
 package com.mina.mail.ru.cinema.dto;
 
-import java.time.LocalDateTime;
 
 /**
  * Created by Mina on 13.05.2019.

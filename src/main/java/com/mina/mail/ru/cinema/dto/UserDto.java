@@ -1,6 +1,7 @@
 package com.mina.mail.ru.cinema.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Created by Mina on 23.04.2019.
  */
+@Data
 public class UserDto {
 
     @JsonIgnore

@@ -1,6 +1,7 @@
 package com.mina.mail.ru.cinema.dto;
 
 
+import lombok.Data;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by Mina on 18.05.2019.
  */
-
+@Data
 public class PageObjectDto {
 
     @FindBy(css = ".film-button")
@@ -71,41 +72,4 @@ public class PageObjectDto {
     public WebElement getFilmTitle() {
         return filmTitle;
     }
-
-    public WebElement getBubblingWarn() {
-        return bubblingWarn;
-    }
-
-    public WebElement getInputSignIn() {
-        return inputSignIn;
-    }
-
-    public WebElement getUserNotFoundWarn() {
-        return userNotFoundWarn;
-    }
-
-    public WebElement getSignUpButton() {
-        return signUpButton;
-    }
-
-    public WebElement getInputSignUp() {
-        return inputSignUp;
-    }
-
-    public WebElement getSignUpModalTitle() {
-        return signUpModalTitle;
-    }
-
-    public WebElement getCancelButton() {
-        return cancelButton;
-    }
-
-    public WebElement getSignInWarn() {
-        return signInWarn;
-    }
-
-    public WebElement getCinemaHallBlock() {
-        return cinemaHallBlock;
-    }
-
 }

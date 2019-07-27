@@ -1,11 +1,14 @@
 package com.mina.mail.ru.cinema.dto;
 
+import lombok.Data;
+
 import java.util.List;
 import java.util.Set;
 
 /**
  * Created by Mina on 29.04.2019.
  */
+@Data
 public class FilmDto {
 
     private Integer id;
@@ -14,7 +17,6 @@ public class FilmDto {
 
     private List<FilmDateDto> dates;
 
-
     public FilmDto() {
     }
 
@@ -22,27 +24,4 @@ public class FilmDto {
         this.title = title;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<FilmDateDto> getDates() {
-        return dates;
-    }
-
-    public void setDates(List<FilmDateDto> dates) {
-        this.dates = dates;
-    }
 }

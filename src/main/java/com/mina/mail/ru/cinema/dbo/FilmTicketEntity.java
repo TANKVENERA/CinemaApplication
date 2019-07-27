@@ -2,6 +2,8 @@ package com.mina.mail.ru.cinema.dbo;
 
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -11,6 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 
 @Entity
+@Data
 @Table(name = "filmticket")
 public class FilmTicketEntity {
 
@@ -30,37 +33,4 @@ public class FilmTicketEntity {
 
     public FilmTicketEntity() {
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getSeatnumber() {
-        return seatnumber;
-    }
-
-    public void setSeatnumber(Integer seatNumber) {
-        this.seatnumber = seatNumber;
-    }
-
-    public Integer getVisitorid() {
-        return visitorid;
-    }
-
-    public void setVisitorid(Integer visitorId) {
-        this.visitorid = visitorId;
-    }
-
-    public String getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(String ticket) {
-        this.ticket = ticket;
-    }
-
 }

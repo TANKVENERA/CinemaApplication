@@ -1,8 +1,11 @@
 package com.mina.mail.ru.cinema.dto;
 
+import lombok.Data;
+
 /**
  * Created by Mina on 24.04.2019.
  */
+@Data
 public class FilmTicketDto {
 
     private Integer id;
@@ -21,37 +24,4 @@ public class FilmTicketDto {
         this.seatnumber = seatnumber;
         this.visitorid = visitorid;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getSeatnumber() {
-        return seatnumber;
-    }
-
-    public void setSeatnumber(Integer seatnumber) {
-        this.seatnumber = seatnumber;
-    }
-
-    public Integer getVisitorid() {
-        return visitorid;
-    }
-
-    public void setVisitorid(Integer visitorid) {
-        this.visitorid = visitorid;
-    }
-
-    public String getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(String ticket) {
-        this.ticket = ticket;
-    }
-
 }

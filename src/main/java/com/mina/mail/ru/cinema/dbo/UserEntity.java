@@ -1,5 +1,7 @@
 package com.mina.mail.ru.cinema.dbo;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 
 @Entity
+@Data
 @Table(name = "user")
 public class UserEntity {
 
@@ -31,37 +34,5 @@ public class UserEntity {
     private List<FilmTicketEntity> tickets = new ArrayList<>();
 
     public UserEntity() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public List<FilmTicketEntity> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<FilmTicketEntity> tickets) {
-        this.tickets = tickets;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }
