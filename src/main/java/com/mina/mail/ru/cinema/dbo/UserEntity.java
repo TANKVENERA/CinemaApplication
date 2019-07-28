@@ -1,6 +1,7 @@
 package com.mina.mail.ru.cinema.dbo;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "user")
 public class UserEntity {
 
@@ -33,6 +35,4 @@ public class UserEntity {
     @JoinColumn(name = "visitor_id")
     private List<FilmTicketEntity> tickets = new ArrayList<>();
 
-    public UserEntity() {
-    }
 }

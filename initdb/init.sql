@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cinema_demo
 -- ------------------------------------------------------
--- Server version	5.7.26-0ubuntu0.18.04.1
+-- Server version	5.7.18-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -15,10 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `film`
---
-
 DROP TABLE IF EXISTS `film`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -26,7 +22,7 @@ CREATE TABLE `film` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +31,7 @@ CREATE TABLE `film` (
 
 LOCK TABLES `film` WRITE;
 /*!40000 ALTER TABLE `film` DISABLE KEYS */;
-INSERT INTO `film` VALUES (1,'ALIEN'),(2,'Avatar');
+INSERT INTO `film` VALUES (1,'Avatar'),(2,'TerminatorIV'),(10,'Kin-dza-dza'),(13,'Ymka');
 /*!40000 ALTER TABLE `film` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +50,7 @@ CREATE TABLE `filmdate` (
   KEY `fk_film_date` (`film_id`),
   CONSTRAINT `fk_date` FOREIGN KEY (`film_id`) REFERENCES `film` (`id`),
   CONSTRAINT `fk_film_date` FOREIGN KEY (`film_id`) REFERENCES `film` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +59,7 @@ CREATE TABLE `filmdate` (
 
 LOCK TABLES `filmdate` WRITE;
 /*!40000 ALTER TABLE `filmdate` DISABLE KEYS */;
-INSERT INTO `filmdate` VALUES (1,'2019-08-01 12:00:00',2),(2,'2019-08-05 12:00:00',1),(3,'2019-05-01 12:00:00',2),(4,'2019-12-05 12:00:00',2),(5,'2019-10-05 12:00:00',2);
+INSERT INTO `filmdate` VALUES (1,'2019-08-04 12:00:00',1),(2,'2019-08-03 12:00:00',1),(3,'2019-08-17 12:00:00',2),(10,'2019-08-14 12:00:00',10),(13,'2019-07-10 12:00:00',13),(14,'2019-07-11 12:00:00',13);
 /*!40000 ALTER TABLE `filmdate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,12 +76,13 @@ CREATE TABLE `filmticket` (
   `seat` int(11) NOT NULL,
   `ticket` varchar(10) NOT NULL,
   `filmdate_id` int(11) DEFAULT NULL,
+  `row` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_visitor` (`visitor_id`),
   KEY `fk_filmdate` (`filmdate_id`),
   CONSTRAINT `fk_filmdate` FOREIGN KEY (`filmdate_id`) REFERENCES `filmdate` (`id`),
   CONSTRAINT `fk_visitor` FOREIGN KEY (`visitor_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +91,7 @@ CREATE TABLE `filmticket` (
 
 LOCK TABLES `filmticket` WRITE;
 /*!40000 ALTER TABLE `filmticket` DISABLE KEYS */;
-INSERT INTO `filmticket` VALUES (9,1,76,'eObFknO',1),(10,1,77,'eObFknO',1),(11,1,78,'eObFknO',1),(12,2,31,'8GYznZ3',3),(13,2,32,'8GYznZ3',3),(14,2,33,'8GYznZ3',3),(18,3,98,'egIIdUx',2),(19,3,99,'egIIdUx',2);
+INSERT INTO `filmticket` VALUES (19,2,5,'oiwMnai',1,6),(20,2,6,'oiwMnai',1,6),(24,1,1,'SZeHiT1',3,2),(25,1,2,'SZeHiT1',3,2),(26,1,3,'SZeHiT1',3,2),(31,1,1,'H47kvla',1,1),(32,1,2,'H47kvla',1,1),(33,26,1,'NYbPMms',2,8),(34,26,3,'NYbPMms',2,8),(35,26,2,'NYbPMms',2,8),(36,1,12,'2928ukw',1,8),(37,1,11,'2928ukw',1,8),(38,1,10,'2928ukw',1,8),(41,23,12,'2AF1QhF',13,3),(43,1,1,'3q6ZYGU',13,4),(44,1,2,'3q6ZYGU',13,4),(45,1,3,'3q6ZYGU',13,4),(46,1,4,'7bUkeU9',3,3),(47,1,5,'7bUkeU9',3,3),(48,1,6,'7bUkeU9',3,3);
 /*!40000 ALTER TABLE `filmticket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +107,7 @@ CREATE TABLE `user` (
   `login` varchar(100) NOT NULL,
   `role` varchar(36) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +116,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'mina','USER'),(2,'nina','USER'),(3,'mina1','USER'),(4,'GVATEMALA','USER'),(5,'admin','ADMIN'),(17,'USER_TESTUSER_TEST','USER');
+INSERT INTO `user` VALUES (1,'mina','USER'),(2,'mina2','USER'),(23,'admin','ADMIN'),(26,'nina','USER'),(27,'vino','USER');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -132,4 +129,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-22 12:54:54
+-- Dump completed on 2019-07-29  0:01:42

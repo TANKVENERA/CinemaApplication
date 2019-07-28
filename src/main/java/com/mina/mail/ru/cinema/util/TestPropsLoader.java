@@ -33,8 +33,8 @@ public class TestPropsLoader {
             testUserSecond = properties.getProperty("test.user.login.second");
             titleOne = properties.getProperty("test.film.first");
             titleTwo = properties.getProperty("test.film.second");
-            dateId = Integer.parseInt(properties.getProperty("test.date.id"));
             time = properties.getProperty("test.time");
+            dateId = Integer.parseInt(properties.getProperty("test.date.id"));
             timeFormat = properties.getProperty("test.time.format");
             ticket = properties.getProperty("test.ticket.token");
             filmId = Integer.parseInt(properties.getProperty("test.film.id"));

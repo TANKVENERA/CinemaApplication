@@ -22,22 +22,22 @@ class Main extends Component {
      setTimeout(() => this.setState({warning: ''}), 3000);
  };
 
-  render() {
-      return (<div>
-                  <div>
-                      <Head warn={(warning, color) => this.handleWarningParam(warning, color)}/>
-                  </div>
-                  <div>
-                      <Films warn={(warning, color) => this.handleWarningParam(warning, color)}/>
-                  </div>
-                  <div >
-                      {this.state.warning !== '' &&
-                        <Warning passedWarn={this.state.warning} passedColor={this.state.color}/>
-                      }
+    render() {
+        return (<div>
+            <div>
+                <Head warn={(warning, color) => this.handleWarningParam(warning, color)}/>
+            </div>
+            <div>
+                <Films warn={(warning, color) => this.handleWarningParam(warning, color)}/>
+            </div>
+            <div >
+                {this.state.warning !== '' &&
+                <Warning passedWarn={this.state.warning} passedColor={this.state.color}/>
+                }
 
-                  </div>
-      </div>);
-  }
+            </div>
+        </div>);
+    }
 }
 
 export default Main

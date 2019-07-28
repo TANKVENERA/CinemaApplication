@@ -26,5 +26,4 @@ public interface FilmRepository extends JpaRepository<FilmEntity, Integer> {
     @Query("select f.id from FilmEntity f join f.dates where f.title=:title")
     Integer getFilmId(@Param("title")String title);
 
-
 }

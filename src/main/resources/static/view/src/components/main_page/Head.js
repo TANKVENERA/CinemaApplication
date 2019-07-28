@@ -23,7 +23,7 @@ class Head extends Component {
             isOpenOrdersModal: false,
             isOpenFilmsModal: false,
             isOpenUpdateOrdersModal: false,
-            loggedInUser: {login: ''},
+            loggedInUser: {login: '', role: ''},
             authErr: "",
             userOrdersData: [],
             bookedSeats: [],
@@ -31,13 +31,48 @@ class Head extends Component {
             title: '',
             filmdate: '',
             ticketID: '',
-            date: new Date()
+            dateToUpdate: new Date(),
+            deleteFilmWarn: '',
+            filmTitleToDelete: '',
+            filmTitleToUpdate: '',
+            updateFilmWarn: ''
         }
     }
 
 
     handleDate = (date) => {
-        this.setState({date: date})
+        this.setState({dateToUpdate: date})
+    };
+
+    handleFilmTitleToDelete = (event) => {
+        this.setState({filmTitleToDelete: event.target.value})
+    };
+
+    handleFilmTitleToUpdate = (event) => {
+        this.setState({filmTitleToUpdate: event.target.value})
+    };
+
+    handleUpdateFilm = () => {
+        var date = this.state.dateToUpdate.toLocaleString();
+        var formattedDate = date.substring(0, date.indexOf(',')).replace(/\./g, '-');
+        var title = this.state.filmTitleToUpdate;
+        if (title !== '') {
+            fetch(`http://localhost:8080/cinema/rest/addFilm/?title=${title}&date=${formattedDate}`, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            }).then(result => {
+                return result.text()
+            }).then(data => {
+                this.setState({updateFilmWarn: data});
+            })
+        }
+        else {
+            this.setState({updateFilmWarn: 'Should not be empty!'});
+        }
+
     };
 
     handleLogin = (event) => {
@@ -48,14 +83,45 @@ class Head extends Component {
         this.setState({signUpLogin: event.target.value})
     };
 
-    handleSubmitUser = () => {
-        fetch(`http://localhost:8080/cinema/rest/register/?login=${this.state.signUpLogin}`, {
-            method: "POST",
-        }).then(result => { return result.text()})
-            .then(data => {const flag = !data.includes('successfully');
-                           this.setState({isOpenModal: flag});
-                           this.props.warn(data, flag ? 'red' : 'blue')
+    handleDeleteFilm = () => {
+        var title = this.state.filmTitleToDelete;
+        if (title !== '') {
+            fetch(`http://localhost:8080/cinema/rest/deleteFilm/${title}`, {
+                method: "DELETE",
+                credentials: 'include',
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            }).then(result => {
+                return result.text();
+            }).then(data => {
+                this.setState({deleteFilmWarn: data});
             })
+        }
+        else {
+            this.setState({deleteFilmWarn: 'Should not be empty!'});
+        }
+
+    };
+
+    handleSubmitUser = () => {
+        var login = this.state.signUpLogin;
+        if (login !== '') {
+            fetch(`http://localhost:8080/cinema/rest/register/?login=${this.state.signUpLogin}`, {
+                method: "POST",
+            }).then(result => {
+                return result.text()
+            })
+                .then(data => {
+                    const flag = !data.includes('successfully');
+                    this.setState({isOpenModal: flag});
+                    this.props.warn(data, flag ? 'red' : 'blue')
+                })
+        }
+        else {
+            this.props.warn('Should not be empty!', 'red')
+        }
+
     };
 
     onOpenModal = () => {
@@ -71,17 +137,17 @@ class Head extends Component {
     };
 
     handleOrders = (user) => {
-        fetch(`http://localhost:8080/cinema/rest/listOrders/?login=${user}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then(result => {
-            return result.json();
-        }).then(data =>    {
+            fetch(`http://localhost:8080/cinema/rest/listOrders/?login=${user}`, {
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            }).then(result => {
+                return result.json();
+            }).then(data =>    {
                 this.setState({userOrdersData: data, isOpenOrdersModal: true})
-        });
+            });
     };
 
     onCloseModal = () => {
@@ -124,7 +190,7 @@ class Head extends Component {
         }).then(result => {return result.json();
         }).then(data => {
             var filtered = data.tickets.filter((ticket) =>{
-                if (!this.includeSeat(seats, ticket.seatnumber, ticket.row)) {
+                if (!this.includeSeat(seats, ticket.seatNumber, ticket.row)) {
                     return ticket
                 }
                     return ''
@@ -148,19 +214,26 @@ class Head extends Component {
     };
 
     handleLoginUser = () => {
-        fetch("http://localhost:8080/cinema/rest/login", {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    'Authorization': 'Basic ' + btoa(this.state.login + ":1"),
+        var login = this.state.login;
+        if (login !== '') {
+            fetch("http://localhost:8080/cinema/rest/login", {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        'Authorization': 'Basic ' + btoa(this.state.login + ":1"),
+                    }
                 }
-            }
-        ).then(result => {
-            return result.json()
-        }).then(data =>
-            this.setState({loggedInUser: data, authErr: data.login === '' ? 'User not found!' : ''})
-        );
+            ).then(result => {
+                return result.json()
+            }).then(data => {
+                this.setState({loggedInUser: data, authErr: data.login === '' ? 'User not found!' : ''})
+            });
+        }
+        else {
+            this.setState({authErr: 'Should not be empty!'})
+        }
+
     };
 
     componentDidMount() {
@@ -229,6 +302,12 @@ class Head extends Component {
                             My Orders
                         </Button>
                     </div>
+
+                    {this.state.loggedInUser.role === "ADMIN" &&
+                        <div className="head-sign-up-button">
+                            <Button variant="outlined" onClick={this.onOpenFilmsModal}>Film tune</Button>
+                        </div>
+                    }
                 </div>
             )
         }
@@ -290,7 +369,6 @@ class Head extends Component {
     };
 
     render() {
-        console.log("DATE", this.state.date);
         return (
             <div className="head-block">
                 {this.greeting()}
@@ -299,9 +377,6 @@ class Head extends Component {
                         <Button variant="outlined" onClick={this.onOpenModal}>Sign up</Button>
                     </div>
                 }
-                <div className="head-sign-up-button">
-                    <Button variant="outlined" onClick={this.onOpenFilmsModal}>Film tune</Button>
-                </div>
                 <Modal open={this.state.isOpenModal} onClose={this.onCloseModal}
                        showCloseIcon={false} classNames={{modal: 'modal-sign-up-body'}}>
                     <div>
@@ -354,28 +429,48 @@ class Head extends Component {
                 </Modal>
                 <Modal open={this.state.isOpenFilmsModal} onClose={this.onCloseFilmsModal}
                        showCloseIcon={false} classNames={{modal: 'modal-orders-body'}}>
-                    <div>
-                        <div>
-                            <Calendar value={this.state.date} minDate={new Date(2019, 6, 1)} maxDate={new Date(2021, 6, 1)}
+                    <div >
+                        <div style={{paddingBottom: '10px'}}>
+                            <Calendar value={this.state.dateToUpdate} minDate={new Date(2019, 6, 1)} maxDate={new Date(2021, 6, 1)}
                                       onChange={this.handleDate}/>
                         </div>
-                        <div style={{height: '40px'}}>
-                            <div>
+                        <div style={{height: '40px', paddingBottom: '40px'}}>
+                            <div >
                                 <div className="head-login-item">
-                                    <input value={this.state.login} onChange={this.handleLogin} placeholder="Film"
+                                    <input value={this.state.filmTitleToUpdate} onChange={this.handleFilmTitleToUpdate} placeholder="Film title"
                                            className="input-field"/>
                                 </div>
                                 <div className="head-sign-in-button">
-                                    <Button variant="outlined" color="primary" onClick={this.handleLoginUser}>
+                                    <Button variant="outlined" color="primary" onClick={this.handleUpdateFilm}>
                                         Add/Update
                                     </Button>
                                 </div>
+                                <div className="update-label-warn">
+                                    <label>{this.state.updateFilmWarn}</label>
+                                </div>
                             </div>
                         </div>
-                        <div style={{paddingLeft: '40%'}}>
-                            <Button variant="outlined" color="secondary" onClick={this.onCloseFilmsModal}>
-                                Exit
-                            </Button>
+                            <hr/>
+                        <div style={{height: '90px'}}>
+                            <div>
+                                <div className="head-login-item">
+                                    <input value={this.state.filmTitleToDelete} onChange={this.handleFilmTitleToDelete} placeholder="Film title"
+                                           className="input-field"/>
+                                </div>
+                                <div className="head-sign-in-button">
+                                    <Button variant="outlined" color="secondary" onClick={this.handleDeleteFilm}>
+                                        Delete
+                                    </Button>
+                                </div>
+                                <div className="update-label-warn">
+                                    <label>{this.state.deleteFilmWarn}</label>
+                                </div>
+                            </div>
+                            <div style={{paddingLeft: '40%', paddingTop: '30px'}}>
+                                <Button variant="outlined" color="secondary" onClick={this.onCloseFilmsModal}>
+                                    Exit
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </Modal>

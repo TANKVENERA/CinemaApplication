@@ -76,3 +76,10 @@
     width: 35px !important;
     height: 35px !important;
 }
+
+.update-label-warn{
+    position: absolute;
+    color: red;
+    font-weight: bold;
+    font-family: arial;
+}

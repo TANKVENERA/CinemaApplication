@@ -2,6 +2,7 @@ package com.mina.mail.ru.cinema.dbo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "film")
 public class FilmEntity implements Serializable {
 
@@ -29,9 +31,6 @@ public class FilmEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
     private List<FilmDateEntity> dates;
-
-    public FilmEntity() {
-    }
 
     public FilmEntity(final String title) {
         this.title = title;

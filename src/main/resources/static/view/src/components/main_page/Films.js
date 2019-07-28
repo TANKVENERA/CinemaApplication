@@ -44,6 +44,7 @@ class Films extends Component {
                 return result.json();
             }
         }).then(data => {
+            console.log('DATA', data)
                 this.setState({
                     dates: data.dates, index: index, isInitial: false, dateIndex: 0,
                     currentFilm: uniqueFilm
@@ -61,7 +62,6 @@ class Films extends Component {
     };
 
     dateBlock(dates) {
-
             const dateBlock = dates.map((date, index) => (
                 <div key={index} style={{display: 'inline-block'}}>
                     <button type="button" className="film-button"

@@ -1,29 +1,23 @@
 package com.mina.mail.ru.cinema.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by Mina on 24.04.2019.
  */
 @Data
+@NoArgsConstructor
 public class FilmTicketDto {
 
     private Integer id;
 
-    private Integer seatnumber;
+    private Integer seatNumber;
 
     private Integer row;
 
-    private Integer visitorid;
+    private Integer visitorId;
 
     private String ticket;
 
-    public FilmTicketDto() {
-    }
-
-    public FilmTicketDto(final Integer id, final Integer seatnumber, final Integer visitorid) {
-        this.id = id;
-        this.seatnumber = seatnumber;
-        this.visitorid = visitorid;
-    }
 }

@@ -2,7 +2,6 @@ package com.mina.mail.ru.cinema;
 
 import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
-import com.mina.mail.ru.cinema.dto.FilmDto;
 import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
@@ -30,8 +29,8 @@ public class FilmTicketConverterTest {
     @BeforeClass
     public static void setUp() throws IOException {
         dbo.setId(FILM_ID);
-        dbo.setSeatnumber(SEAT);
-        dto.setVisitorid(USER_ID);
+        dbo.setSeatNumber(SEAT);
+        dto.setVisitorId(USER_ID);
     }
 
     @Test
@@ -43,12 +42,12 @@ public class FilmTicketConverterTest {
     @Test
     public void testBCheckSeat(){
         FilmTicketDto ticketDto = converter.convertToDto(dbo);
-        Assert.assertTrue("Seats are not equal!", ticketDto.getSeatnumber().equals(SEAT));
+        Assert.assertTrue("Seats are not equal!", ticketDto.getSeatNumber().equals(SEAT));
     }
 
     @Test
     public void testCCheckVisitorID(){
         FilmTicketEntity ticketDbo = converter.convertToDbo(dto);
-        Assert.assertTrue("Visitor Ids are not equal!", ticketDbo.getVisitorid().equals(USER_ID));
+        Assert.assertTrue("Visitor Ids are not equal!", ticketDbo.getVisitorId().equals(USER_ID));
     }
 }

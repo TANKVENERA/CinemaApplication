@@ -1,6 +1,7 @@
 package com.mina.mail.ru.cinema;
 
 import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.dto.SeatAndRow;
 import com.mina.mail.ru.cinema.dto.UserOrder;
 import com.mina.mail.ru.cinema.repository.FilmRepository;
 import com.mina.mail.ru.cinema.repository.FilmTicketRepository;
@@ -55,13 +56,18 @@ public class FilmTicketServiceTest {
 
     @BeforeClass
     public static void setup() {
+        final List<SeatAndRow> seatAndRows = new ArrayList<>();
+        final SeatAndRow seat1 = new SeatAndRow();
+        seat1.setSeatNmb(1);
+        seat1.setRowNmb(2);
+        seatAndRows.add(seat1);
         order = new UserOrder();
         order.setFilm(FILM);
         order.setDateId(1);
         final List<Integer> seats = new ArrayList<>();
         seats.add(10);
         seats.add(11);
-//        order.setSeats(new int[]{1, 2});
+        order.setSeats(seatAndRows);
         userEntity = new UserEntity();
         userEntity.setId(1);
     }
@@ -82,7 +88,7 @@ public class FilmTicketServiceTest {
         doReturn(userEntity).when(userRepository).getUserByName(USER);
         filmTicketService.createOrder(order, USER);
         verify(filmTicketRepository, times(1)).getTicketsById(anyString());
-//        verify(filmTicketRepository, times(2)).createOrder(anyInt(),anyInt(),anyInt(), anyString());
+       verify(filmTicketRepository, times(1)).createOrder(anyInt(), anyInt(), anyInt(),anyInt(), anyString());
     }
 
     @Test
@@ -91,8 +97,7 @@ public class FilmTicketServiceTest {
         doReturn(1).when(filmRepository).getFilmId(order.getFilm());
         doReturn(userEntity).when(userRepository).getUserByName(USER);
         filmTicketService.updateOrder(order, USER);
-//        verify(filmTicketRepository, times(1)).createOrder(10,1,1,TICKET);
-//        verify(filmTicketRepository, times(1)).createOrder(11,1,1,TICKET);
+        verify(filmTicketRepository, times(1)).createOrder(1, 2, 1,1,TICKET);
     }
 
     @Test

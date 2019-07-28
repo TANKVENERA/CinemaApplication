@@ -107,7 +107,7 @@ class Hall extends Component {
         const userOrder = this.state.userOrder;
         const successOrder = this.state.successOrder;
 
-        const blockSeats = this.props.tickets.map((ticket) =>({seatNmb: ticket.seatnumber, rowNmb: ticket.row}));
+        const blockSeats = this.props.tickets.map((ticket) =>({seatNmb: ticket.seatNumber, rowNmb: ticket.row}));
         const style = (index, seat, row) => {
 
             if (this.includeSeat(successOrder, seat, row) || this.includeSeat(blockSeats, seat, row)) {

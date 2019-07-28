@@ -44,15 +44,15 @@ public class FilmController {
 
     @GetMapping(value = "/ticketsOnDate", params = "dateId")
     public ResponseEntity<FilmDateDto> ticketsAtOneDate(@RequestParam(value = "dateId") final Integer dateId) {
-        logger.info("Film tickets at certain date are requested...");
+        logger.info("Film tickets at certain dateToUpdate are requested...");
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getTicketsByDate(dateId));
     }
 
     @PostMapping(value = "/addFilm")
     public ResponseEntity<String> addFilm(final Authentication auth, @RequestParam(value = "title") final String title,
-                                          @RequestParam(value = "firstDate") final String firstDate) throws ParseException {
+                                          @RequestParam(value = "date") final String date) throws ParseException {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(filmService.addFilm(auth, title, firstDate));
+        return ResponseEntity.status(HttpStatus.CREATED).body(filmService.addFilm(auth, title, date));
     }
 
     @DeleteMapping("/deleteFilm/{title}")
