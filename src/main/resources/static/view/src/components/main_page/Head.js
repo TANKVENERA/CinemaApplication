@@ -7,6 +7,7 @@ import './styles/head.css'
 import Button from '../../../node_modules/@material-ui/core/Button'
 import DeleteIcon from '../../../node_modules/@material-ui/icons/Delete'
 import EditIcon from '../../../node_modules/@material-ui/icons/Edit'
+import Calendar from '../../../node_modules/react-calendar'
 import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Modal from '../../../node_modules/react-responsive-modal'
 import Hall from './Hall'
@@ -20,6 +21,7 @@ class Head extends Component {
             signUpLogin: "",
             isOpenModal: false,
             isOpenOrdersModal: false,
+            isOpenFilmsModal: false,
             isOpenUpdateOrdersModal: false,
             loggedInUser: {login: ''},
             authErr: "",
@@ -28,10 +30,15 @@ class Head extends Component {
             seatsToUpdate: [],
             title: '',
             filmdate: '',
-            ticketID: ''
+            ticketID: '',
+            date: new Date()
         }
     }
 
+
+    handleDate = (date) => {
+        this.setState({date: date})
+    };
 
     handleLogin = (event) => {
         this.setState({login: event.target.value})
@@ -53,6 +60,14 @@ class Head extends Component {
 
     onOpenModal = () => {
         this.setState({isOpenModal: true})
+    };
+
+    onOpenFilmsModal = () => {
+        this.setState({isOpenFilmsModal: true})
+    };
+
+    onCloseFilmsModal = () => {
+        this.setState({isOpenFilmsModal: false})
     };
 
     handleOrders = (user) => {
@@ -275,6 +290,7 @@ class Head extends Component {
     };
 
     render() {
+        console.log("DATE", this.state.date);
         return (
             <div className="head-block">
                 {this.greeting()}
@@ -283,6 +299,9 @@ class Head extends Component {
                         <Button variant="outlined" onClick={this.onOpenModal}>Sign up</Button>
                     </div>
                 }
+                <div className="head-sign-up-button">
+                    <Button variant="outlined" onClick={this.onOpenFilmsModal}>Film tune</Button>
+                </div>
                 <Modal open={this.state.isOpenModal} onClose={this.onCloseModal}
                        showCloseIcon={false} classNames={{modal: 'modal-sign-up-body'}}>
                     <div>
@@ -331,6 +350,33 @@ class Head extends Component {
                             dateIndex={this.state.filmdate}
                             seatsToUpdate={this.state.seatsToUpdate}
                             warning={(warn, color)=> this.throwWarning(warn, color)}/>
+                    </div>
+                </Modal>
+                <Modal open={this.state.isOpenFilmsModal} onClose={this.onCloseFilmsModal}
+                       showCloseIcon={false} classNames={{modal: 'modal-orders-body'}}>
+                    <div>
+                        <div>
+                            <Calendar value={this.state.date} minDate={new Date(2019, 6, 1)} maxDate={new Date(2021, 6, 1)}
+                                      onChange={this.handleDate}/>
+                        </div>
+                        <div style={{height: '40px'}}>
+                            <div>
+                                <div className="head-login-item">
+                                    <input value={this.state.login} onChange={this.handleLogin} placeholder="Film"
+                                           className="input-field"/>
+                                </div>
+                                <div className="head-sign-in-button">
+                                    <Button variant="outlined" color="primary" onClick={this.handleLoginUser}>
+                                        Add/Update
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{paddingLeft: '40%'}}>
+                            <Button variant="outlined" color="secondary" onClick={this.onCloseFilmsModal}>
+                                Exit
+                            </Button>
+                        </div>
                     </div>
                 </Modal>
             </div>
