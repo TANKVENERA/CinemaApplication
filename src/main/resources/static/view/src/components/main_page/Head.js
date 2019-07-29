@@ -55,8 +55,7 @@ class Head extends Component {
 
     handleUpdateFilm = () => {
         var date = this.state.dateToUpdate;
-        var formattedDate = Moment(this.state.dateToUpdate).format('DD-MM-YYYY');
-
+        var formattedDate = Moment(date).format('DD-MM-YYYY');
 
         var title = this.state.filmTitleToUpdate;
         if (title !== '') {
@@ -136,7 +135,7 @@ class Head extends Component {
     };
 
     onCloseFilmsModal = () => {
-        this.setState({isOpenFilmsModal: false})
+        this.setState({isOpenFilmsModal: false, deleteFilmWarn: '', updateFilmWarn: ''})
     };
 
     handleOrders = (user) => {
