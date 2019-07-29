@@ -135,7 +135,7 @@ class Head extends Component {
     };
 
     onCloseFilmsModal = () => {
-        this.setState({isOpenFilmsModal: false, deleteFilmWarn: '', updateFilmWarn: ''})
+        this.setState({isOpenFilmsModal: false, deleteFilmWarn: '', updateFilmWarn: '', filmTitleToDelete: '', filmTitleToUpdate: ''})
     };
 
     handleOrders = (user) => {
