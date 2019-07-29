@@ -10,6 +10,7 @@ import EditIcon from '../../../node_modules/@material-ui/icons/Edit'
 import Calendar from '../../../node_modules/react-calendar'
 import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Modal from '../../../node_modules/react-responsive-modal'
+import Moment from 'moment';
 import Hall from './Hall'
 
 
@@ -53,8 +54,10 @@ class Head extends Component {
     };
 
     handleUpdateFilm = () => {
-        var date = this.state.dateToUpdate.toLocaleString();
-        var formattedDate = date.substring(0, date.indexOf(',')).replace(/\./g, '-');
+        var date = this.state.dateToUpdate;
+        var formattedDate = Moment(this.state.dateToUpdate).format('DD-MM-YYYY');
+
+
         var title = this.state.filmTitleToUpdate;
         if (title !== '') {
             fetch(`http://localhost:8080/cinema/rest/addFilm/?title=${title}&date=${formattedDate}`, {
@@ -273,7 +276,7 @@ class Head extends Component {
                     title = order.title;
                     dateId = order.dateId
                     var dateAndTime = new Date(order.filmDate);
-                    filmDate = dateAndTime.toLocaleString().replace(', ', 'T').replace(/\./g, '-');
+                    filmDate = Moment(dateAndTime).format('DD-MM-YYYYTH:mma');
                 }
                 if (j === userOrders.length - 1) {
                     tickets.push({title: title, filmDate: filmDate, ticket: ticket, seats: seats, dateId: dateId});
