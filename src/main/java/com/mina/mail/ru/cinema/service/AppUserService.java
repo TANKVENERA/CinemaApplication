@@ -1,6 +1,6 @@
 package com.mina.mail.ru.cinema.service;
 
-import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.entity.UserEntity;
 import com.mina.mail.ru.cinema.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

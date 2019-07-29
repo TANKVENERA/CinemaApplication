@@ -1,6 +1,6 @@
 package com.mina.mail.ru.cinema.service;
 
-import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.entity.UserEntity;
 import com.mina.mail.ru.cinema.repository.UserRepository;
 import com.mina.mail.ru.cinema.converter.UserConverter;
 import com.mina.mail.ru.cinema.dto.UserDto;
@@ -8,17 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

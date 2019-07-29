@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema;
 
 import com.mina.mail.ru.cinema.converter.UserConverter;
-import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.entity.UserEntity;
 import com.mina.mail.ru.cinema.dto.UserDto;
 import com.mina.mail.ru.cinema.repository.UserRepository;
 import com.mina.mail.ru.cinema.service.UserService;
@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import javax.servlet.http.Cookie;

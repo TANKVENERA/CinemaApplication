@@ -19,6 +19,8 @@ public class FilmDto {
 
     private List<FilmDateDto> dates;
 
+    private String formattedDate;
+
     public FilmDto(final String title) {
         this.title = title;
     }

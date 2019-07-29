@@ -1,9 +1,6 @@
-package com.mina.mail.ru.cinema.dbo;
+package com.mina.mail.ru.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.Setter;
-import lombok.Getter;
 
 import javax.persistence.*;
 import java.io.Serializable;

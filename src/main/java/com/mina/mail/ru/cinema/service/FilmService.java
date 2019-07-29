@@ -1,12 +1,11 @@
 package com.mina.mail.ru.cinema.service;
 
 import com.mina.mail.ru.cinema.converter.FilmDateConverter;
-import com.mina.mail.ru.cinema.dbo.FilmDateEntity;
-import com.mina.mail.ru.cinema.dbo.FilmEntity;
-import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.entity.FilmDateEntity;
+import com.mina.mail.ru.cinema.entity.FilmEntity;
+import com.mina.mail.ru.cinema.entity.FilmTicketEntity;
 import com.mina.mail.ru.cinema.dto.FilmDateDto;
 import com.mina.mail.ru.cinema.dto.FilmTicketDto;
-import com.mina.mail.ru.cinema.dto.UserDto;
 import com.mina.mail.ru.cinema.repository.FilmRepository;
 import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
@@ -84,16 +83,18 @@ public class FilmService {
         return filmDateDto;
     }
 
-    public String addFilm (final Authentication auth, final String title, final String filmDate) throws ParseException {
-        if (!filmDate.replaceAll("(\\d){2}(-){1}(\\d){2}(-){1}(\\d){4}", "isOk").equals("isOk")) {
+    public String addFilm (final Authentication auth, final FilmDto filmDto) throws ParseException {
+        String title = filmDto.getTitle();
+        String date = filmDto.getFormattedDate();
+        if (!filmDto.getFormattedDate().replaceAll("(\\d){2}(-){1}(\\d){2}(-){1}(\\d){4}", "isOk").equals("isOk")) {
             return "Wrong date pattern, use dd-mm-yyyy";
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String dateAndTime = filmDate +  " 12:00:00";
-        LocalDateTime filmdateAndTime = LocalDateTime.parse(dateAndTime, formatter);
+        String dateAndTime = date +  " 12:00:00";
+        LocalDateTime filmDateAndTime = LocalDateTime.parse(dateAndTime, formatter);
         FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
-        FilmDateEntity date = new FilmDateEntity();
-        date.setDateAndTime(filmdateAndTime);
+        FilmDateEntity dateEntity = new FilmDateEntity();
+        dateEntity.setDateAndTime(filmDateAndTime);
         if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
             return "Not enough permissions for this action";
         }
@@ -104,7 +105,7 @@ public class FilmService {
                     return "Film with date of performance - " + dateAndTime + " already exists!";
                 }
             }
-            dates.add(date);
+            dates.add(dateEntity);
             filmEntity.setDates(dates);
             filmRepository.save(filmEntity);
             return "Date of performance - " + dateAndTime + " for film - " + title + " was successfully added!";
@@ -113,7 +114,7 @@ public class FilmService {
             FilmEntity newFilm = new FilmEntity();
             newFilm.setTitle(title);
             List<FilmDateEntity> dates = new ArrayList<>();
-            dates.add(date);
+            dates.add(dateEntity);
             newFilm.setDates(dates);
             filmRepository.save(newFilm);
             return "Film - " + title + " with date of performance - " + dateAndTime + " were successfully added!";

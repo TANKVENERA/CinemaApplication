@@ -7,7 +7,7 @@ import lombok.Data;
  */
 
 @Data
-public class SeatAndRow {
+public class SeatAndRowDto {
 
     private Integer seatNmb;
     private Integer rowNmb;

@@ -1,11 +1,11 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.dbo.UserEntity;
-import com.mina.mail.ru.cinema.dto.SeatAndRow;
+import com.mina.mail.ru.cinema.entity.UserEntity;
+import com.mina.mail.ru.cinema.dto.SeatAndRowDto;
 import com.mina.mail.ru.cinema.dto.UserOrder;
 import com.mina.mail.ru.cinema.repository.FilmRepository;
 import com.mina.mail.ru.cinema.repository.FilmTicketRepository;
-import com.mina.mail.ru.cinema.dto.UserSeat;
+import com.mina.mail.ru.cinema.dto.UserSeatDto;
 import com.mina.mail.ru.cinema.repository.UserRepository;
 import com.mina.mail.ru.cinema.service.FilmTicketService;
 
@@ -44,7 +44,7 @@ public class FilmTicketServiceTest {
     @Mock
     private FilmTicketRepository filmTicketRepository;
     @Mock
-    private UserSeat tickets;
+    private UserSeatDto tickets;
     @Mock
     private FilmRepository filmRepository;
     @Mock
@@ -56,29 +56,29 @@ public class FilmTicketServiceTest {
 
     @BeforeClass
     public static void setup() {
-        final List<SeatAndRow> seatAndRows = new ArrayList<>();
-        final SeatAndRow seat1 = new SeatAndRow();
+        final List<SeatAndRowDto> seatAndRowDtos = new ArrayList<>();
+        final SeatAndRowDto seat1 = new SeatAndRowDto();
         seat1.setSeatNmb(1);
         seat1.setRowNmb(2);
-        seatAndRows.add(seat1);
+        seatAndRowDtos.add(seat1);
         order = new UserOrder();
         order.setFilm(FILM);
         order.setDateId(1);
         final List<Integer> seats = new ArrayList<>();
         seats.add(10);
         seats.add(11);
-        order.setSeats(seatAndRows);
+        order.setSeats(seatAndRowDtos);
         userEntity = new UserEntity();
         userEntity.setId(1);
     }
 
     @Test
     public void TestAGetOrders(){
-        final List<UserSeat> list = new ArrayList<>();
+        final List<UserSeatDto> list = new ArrayList<>();
         list.add(tickets);
         list.add(tickets);
         doReturn(list).when(filmTicketRepository).getAllOrders(USER);
-        final List<UserSeat> tickets = filmTicketService.getOrders(USER);
+        final List<UserSeatDto> tickets = filmTicketService.getOrders(USER);
         verify(filmTicketRepository, times(1)).getAllOrders(USER);
         Assert.assertEquals(list.size(), tickets.size());
     }

@@ -11,13 +11,9 @@ import lombok.NoArgsConstructor;
 public class FilmTicketDto {
 
     private Integer id;
-
     private Integer seatNumber;
-
     private Integer row;
-
     private Integer visitorId;
-
     private String ticket;
 
 }

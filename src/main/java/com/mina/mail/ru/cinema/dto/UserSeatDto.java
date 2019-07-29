@@ -5,7 +5,7 @@ package com.mina.mail.ru.cinema.dto;
  * Created by Mina on 13.05.2019.
  */
 
-public interface UserSeat {
+public interface UserSeatDto {
 
     Integer getSeat();
     Integer getRow();

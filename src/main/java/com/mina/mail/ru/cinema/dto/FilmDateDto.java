@@ -14,12 +14,9 @@ import java.util.List;
 public class FilmDateDto {
 
     private Integer id;
-
     private List<FilmTicketDto> tickets;
-
     @JsonIgnore
     private LocalDateTime dateAndTime;
-
     private String formattedDate;
 
 }

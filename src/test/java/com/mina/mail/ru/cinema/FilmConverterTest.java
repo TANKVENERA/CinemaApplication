@@ -1,6 +1,6 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.dbo.FilmEntity;
+import com.mina.mail.ru.cinema.entity.FilmEntity;
 import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.dto.FilmDto;
 
@@ -9,13 +9,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.IOException;
 
 /**
  * Created by Mina on 20.05.2019.

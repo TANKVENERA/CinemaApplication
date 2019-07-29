@@ -1,6 +1,6 @@
 package com.mina.mail.ru.cinema.converter;
 
-import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.entity.FilmTicketEntity;
 import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

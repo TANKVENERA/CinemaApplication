@@ -3,10 +3,10 @@ package com.mina.mail.ru.cinema;
 import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmDateConverter;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
-import com.mina.mail.ru.cinema.dbo.FilmDateEntity;
-import com.mina.mail.ru.cinema.dbo.FilmEntity;
-import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
-import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.entity.FilmDateEntity;
+import com.mina.mail.ru.cinema.entity.FilmEntity;
+import com.mina.mail.ru.cinema.entity.FilmTicketEntity;
+import com.mina.mail.ru.cinema.entity.UserEntity;
 import com.mina.mail.ru.cinema.dto.FilmDateDto;
 import com.mina.mail.ru.cinema.dto.FilmDto;
 import com.mina.mail.ru.cinema.repository.FilmRepository;
@@ -145,7 +145,7 @@ public class FilmServiceTest  {
 
     @Test
     public void TestFCheckWrongTimeFormat() throws ParseException {
-        String result = filmService.addFilm(null, TITLE_ONE, "01/07/2019");
+        String result = filmService.addFilm(null, null);
         Assert.assertEquals("Error occured when checking wrong time format!", result, "Wrong date pattern, use dd-mm-yyyy");
     }
 
@@ -155,7 +155,7 @@ public class FilmServiceTest  {
         UserEntity user = new UserEntity();
         user.setRole("USER");
         doReturn(user).when(userRepository).getUserByName(any());
-        final String result = filmService.addFilm(authentication, TITLE_ONE, "01-07-2019");
+        final String result = filmService.addFilm(authentication, null);
         Assert.assertEquals("Error occured when checking wrong permission!", "Not enough permissions for this action", result);
     }
 
@@ -166,7 +166,7 @@ public class FilmServiceTest  {
         user.setRole("ADMIN");
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);
-        final String result = filmService.addFilm(authentication, TITLE_ONE, "01-07-2019");
+        final String result = filmService.addFilm(authentication, null);
         Assert.assertTrue("Error occured when checking that film exists!", result.contains("Date of performance -"));
         verify(filmRepository, times(1)).save(any());
     }
@@ -178,7 +178,7 @@ public class FilmServiceTest  {
         user.setRole("ADMIN");
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);
-        final String result = filmService.addFilm(authentication, TITLE_ONE, "01-08-2017");
+        final String result = filmService.addFilm(authentication, null);
         Assert.assertTrue("Error occured when checking that film and date exists!", result.contains("Film with date of performance -"));
     }
 

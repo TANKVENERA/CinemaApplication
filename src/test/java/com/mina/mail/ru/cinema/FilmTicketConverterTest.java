@@ -1,6 +1,6 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.entity.FilmTicketEntity;
 import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
 import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;

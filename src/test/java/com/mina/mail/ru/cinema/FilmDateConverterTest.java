@@ -1,14 +1,8 @@
 package com.mina.mail.ru.cinema;
 
-import com.mina.mail.ru.cinema.converter.FilmConverter;
 import com.mina.mail.ru.cinema.converter.FilmDateConverter;
-import com.mina.mail.ru.cinema.converter.FilmTicketConverter;
-import com.mina.mail.ru.cinema.dbo.FilmDateEntity;
-import com.mina.mail.ru.cinema.dbo.FilmEntity;
-import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
+import com.mina.mail.ru.cinema.entity.FilmDateEntity;
 import com.mina.mail.ru.cinema.dto.FilmDateDto;
-import com.mina.mail.ru.cinema.dto.FilmDto;
-import com.mina.mail.ru.cinema.dto.FilmTicketDto;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -17,8 +11,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Mina on 20.07.2019.

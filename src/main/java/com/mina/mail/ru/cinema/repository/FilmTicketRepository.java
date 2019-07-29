@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.repository;
 
-import com.mina.mail.ru.cinema.dbo.FilmTicketEntity;
-import com.mina.mail.ru.cinema.dto.UserSeat;
+import com.mina.mail.ru.cinema.entity.FilmTicketEntity;
+import com.mina.mail.ru.cinema.dto.UserSeatDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +25,7 @@ public interface FilmTicketRepository extends JpaRepository<FilmTicketEntity, Lo
                         @Param("ticket") String ticket);
 
     @Query(value = GET_ALL_ORDERS, nativeQuery = true)
-    List<UserSeat> getAllOrders(@Param("login") String login);
+    List<UserSeatDto> getAllOrders(@Param("login") String login);
 
     @Transactional
     @Modifying

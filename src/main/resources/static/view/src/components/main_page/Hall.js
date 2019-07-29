@@ -51,8 +51,7 @@ class Hall extends Component {
 
     handleCreateOrder = (e) => {
         e.stopPropagation();
-        var action = this.props.seatsToUpdate === undefined ? 'save' : 'update';
-        fetch(`http://localhost:8080/cinema/rest/${action}`, {
+        fetch(`http://localhost:8080/cinema/rest/orders`, {
             method: this.props.seatsToUpdate === undefined ? 'POST' : 'PUT',
             credentials: 'include',
             headers: {

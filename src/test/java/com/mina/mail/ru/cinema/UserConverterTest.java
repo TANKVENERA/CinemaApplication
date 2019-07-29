@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema;
 
 import com.mina.mail.ru.cinema.converter.UserConverter;
-import com.mina.mail.ru.cinema.dbo.UserEntity;
+import com.mina.mail.ru.cinema.entity.UserEntity;
 import com.mina.mail.ru.cinema.dto.UserDto;
 import com.mina.mail.ru.cinema.util.TestPropsLoader;
 import org.junit.Assert;
@@ -9,7 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.springframework.security.core.userdetails.User;
 
 import java.io.IOException;
 

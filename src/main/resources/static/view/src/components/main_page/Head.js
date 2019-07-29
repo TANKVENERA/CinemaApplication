@@ -59,12 +59,18 @@ class Head extends Component {
 
         var title = this.state.filmTitleToUpdate;
         if (title !== '') {
-            fetch(`http://localhost:8080/cinema/rest/addFilm/?title=${title}&date=${formattedDate}`, {
+            fetch(`http://localhost:8080/cinema/rest/films`, {
                 method: "POST",
                 credentials: 'include',
                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                     "X-Requested-With": "XMLHttpRequest"
-                }
+                },
+                body: JSON.stringify({
+                    title: title,
+                    formattedDate: formattedDate
+                })
             }).then(result => {
                 return result.text()
             }).then(data => {
@@ -88,7 +94,7 @@ class Head extends Component {
     handleDeleteFilm = () => {
         var title = this.state.filmTitleToDelete;
         if (title !== '') {
-            fetch(`http://localhost:8080/cinema/rest/deleteFilm/${title}`, {
+            fetch(`http://localhost:8080/cinema/rest/films/${title}`, {
                 method: "DELETE",
                 credentials: 'include',
                 headers: {
@@ -139,7 +145,7 @@ class Head extends Component {
     };
 
     handleOrders = (user) => {
-            fetch(`http://localhost:8080/cinema/rest/listOrders/?login=${user}`, {
+            fetch(`http://localhost:8080/cinema/rest/orders/?login=${user}`, {
                 method: "GET",
                 credentials: 'include',
                 headers: {
@@ -165,7 +171,7 @@ class Head extends Component {
     };
 
     handleDeleteOrder = (ticket, login) => {
-        fetch(`http://localhost:8080/cinema/rest/deleteOrder/${ticket}`, {
+        fetch(`http://localhost:8080/cinema/rest/orders/${ticket}`, {
             method: "DELETE",
             credentials: 'include',
             headers: {
@@ -183,7 +189,7 @@ class Head extends Component {
 
     handleUpdateOrder = (title, date, seats, ticketID, dateId) => {
         this.setState({title: title, filmdate: date, ticketID: ticketID})
-        fetch(`http://localhost:8080/cinema/rest/ticketsOnDate/?dateId=${dateId}`, {
+        fetch(`http://localhost:8080/cinema/rest/tickets?dateId=${dateId}`, {
             method: "GET",
             credentials: 'include',
             headers: {

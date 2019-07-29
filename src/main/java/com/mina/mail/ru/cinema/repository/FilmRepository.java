@@ -1,7 +1,7 @@
 package com.mina.mail.ru.cinema.repository;
 
-import com.mina.mail.ru.cinema.dbo.FilmDateEntity;
-import com.mina.mail.ru.cinema.dbo.FilmEntity;
+import com.mina.mail.ru.cinema.entity.FilmDateEntity;
+import com.mina.mail.ru.cinema.entity.FilmEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +20,7 @@ public interface FilmRepository extends JpaRepository<FilmEntity, Integer> {
     @Query("select d from FilmDateEntity d where d.id=:dateId")
     FilmDateEntity getTicketsByDate(@Param("dateId") Integer dateId);
 
-    @Query("select new com.mina.mail.ru.cinema.dbo.FilmEntity(f.title)  from FilmEntity f")
+    @Query("select new com.mina.mail.ru.cinema.entity.FilmEntity(f.title)  from FilmEntity f")
     List<FilmEntity> getFilms();
 
     @Query("select f.id from FilmEntity f join f.dates where f.title=:title")

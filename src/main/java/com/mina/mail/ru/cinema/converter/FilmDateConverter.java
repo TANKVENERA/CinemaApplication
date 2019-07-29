@@ -1,6 +1,6 @@
 package com.mina.mail.ru.cinema.converter;
 
-import com.mina.mail.ru.cinema.dbo.FilmDateEntity;
+import com.mina.mail.ru.cinema.entity.FilmDateEntity;
 import com.mina.mail.ru.cinema.dto.FilmDateDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

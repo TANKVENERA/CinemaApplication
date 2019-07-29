@@ -2,7 +2,7 @@ package com.mina.mail.ru.cinema.controller;
 
 import com.mina.mail.ru.cinema.service.FilmTicketService;
 import com.mina.mail.ru.cinema.dto.UserOrder;
-import com.mina.mail.ru.cinema.dto.UserSeat;
+import com.mina.mail.ru.cinema.dto.UserSeatDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,26 +28,26 @@ public class FilmTicketController {
         this.filmTicketService = filmTicketService;
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/orders")
     public void createOrder (@RequestBody final UserOrder order, final Principal principal) {
         logger.info("Trying to save user order...");
         filmTicketService.createOrder(order, principal.getName());
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "/orders")
     public void updateOrder (@RequestBody final UserOrder order, final Principal principal) {
         logger.info("Trying to update user order...");
         filmTicketService.updateOrder(order, principal.getName());
     }
 
-    @GetMapping(value = "/listOrders", params = "login")
-    public ResponseEntity<List<UserSeat>> getAllOrders (@RequestParam("login") final String login) {
+    @GetMapping(value = "/orders", params = "login")
+    public ResponseEntity<List<UserSeatDto>> getAllOrders (@RequestParam("login") final String login) {
         logger.info("Retrieving user orders...");
         return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(login));
     }
 
-    @DeleteMapping("/deleteOrder/{ticket}")
-    public ResponseEntity<List<UserSeat>> deleteOrder(@PathVariable("ticket") final String ticket, final Principal principal) {
+    @DeleteMapping("/orders/{ticket}")
+    public ResponseEntity<List<UserSeatDto>> deleteOrder(@PathVariable("ticket") final String ticket, final Principal principal) {
        logger.info("Trying to delete order...");
        filmTicketService.deleteOrderByTicket(ticket);
        return ResponseEntity.status(HttpStatus.OK).body(filmTicketService.getOrders(principal.getName()));

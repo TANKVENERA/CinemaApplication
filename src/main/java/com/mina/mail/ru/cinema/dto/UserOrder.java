@@ -11,7 +11,7 @@ import java.util.List;
 public class UserOrder {
 
     private String film;
-    private List<SeatAndRow> seats;
+    private List<SeatAndRowDto> seats;
     private Integer dateId;
     private String ticket;
 }
