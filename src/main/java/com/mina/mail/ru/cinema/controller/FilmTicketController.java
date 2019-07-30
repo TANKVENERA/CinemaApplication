@@ -21,7 +21,7 @@ import java.util.List;
 public class FilmTicketController {
 
     private static final Logger logger = LoggerFactory.getLogger(FilmTicketController.class);
-    private FilmTicketService filmTicketService;
+    private final FilmTicketService filmTicketService;
 
     @Autowired
     public FilmTicketController(final FilmTicketService filmTicketService) {

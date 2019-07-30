@@ -19,8 +19,8 @@ import java.io.IOException;
 public class UserConverterTest {
 
     private final UserConverter converter = new UserConverter();
-    private static UserEntity dbo = new UserEntity();
-    private static UserDto dto = new UserDto();
+    private static final UserEntity dbo = new UserEntity();
+    private static final UserDto dto = new UserDto();
     private static final String USER = TestPropsLoader.testUserFirst;
 
 
@@ -32,7 +32,7 @@ public class UserConverterTest {
 
     @Test
     public void testACheckId(){
-       UserDto userDto = converter.convertToDto(dbo);
+       final UserDto userDto = converter.convertToDto(dbo);
         Assert.assertTrue("Logins are not equal!", userDto.getLogin().equals(USER));
     }
 

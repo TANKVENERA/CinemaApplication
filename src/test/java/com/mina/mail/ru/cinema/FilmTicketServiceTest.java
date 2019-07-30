@@ -88,7 +88,7 @@ public class FilmTicketServiceTest {
         doReturn(userEntity).when(userRepository).getUserByName(USER);
         filmTicketService.createOrder(order, USER);
         verify(filmTicketRepository, times(1)).getTicketsById(anyString());
-       verify(filmTicketRepository, times(1)).createOrder(anyInt(), anyInt(), anyInt(),anyInt(), anyString());
+        verify(filmTicketRepository, times(1)).createOrder(anyInt(), anyInt(), anyInt(),anyInt(), anyString());
     }
 
     @Test

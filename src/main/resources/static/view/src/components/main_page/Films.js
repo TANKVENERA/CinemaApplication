@@ -77,7 +77,6 @@ class Films extends Component {
         let filmIndex = this.state.index;
         let dateIndex = this.state.dateIndex;
         let isInitial = this.state.isInitial;
-
         return (
             <div className="main-block">
                 <div className="film-block">

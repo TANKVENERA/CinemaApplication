@@ -13,14 +13,14 @@ public class FilmConverter implements CommonConverter<FilmEntity, FilmDto> {
 
     @Override
     public FilmEntity convertToDbo(final FilmDto filmDto) {
-        FilmEntity filmEntity = new FilmEntity();
+        final FilmEntity filmEntity = new FilmEntity();
         BeanUtils.copyProperties(filmDto, filmEntity);
         return filmEntity;
     }
 
     @Override
     public FilmDto convertToDto(final FilmEntity filmEntity) {
-        FilmDto filmDto = new FilmDto();
+        final FilmDto filmDto = new FilmDto();
         BeanUtils.copyProperties(filmEntity, filmDto);
         return filmDto;
     }

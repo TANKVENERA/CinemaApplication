@@ -30,11 +30,11 @@ public class FilmService {
 
     private static final Logger logger = LoggerFactory.getLogger(FilmService.class);
 
-    private FilmRepository filmRepository;
-    private FilmConverter filmConverter;
-    private UserRepository userRepository;
-    private FilmDateConverter filmDateConverter;
-    private FilmTicketConverter ticketConverter;
+    private final FilmRepository filmRepository;
+    private final FilmConverter filmConverter;
+    private final UserRepository userRepository;
+    private final FilmDateConverter filmDateConverter;
+    private final FilmTicketConverter ticketConverter;
 
     public FilmService(final FilmRepository filmRepository, final FilmConverter filmConverter, final UserRepository userRepository, final FilmDateConverter filmDateConverter, final FilmTicketConverter ticketConverter) {
         this.filmRepository = filmRepository;
@@ -45,8 +45,8 @@ public class FilmService {
     }
 
     public List<FilmDto> getFilms() {
-        List<FilmDto> filmsDto = new ArrayList<>();
-        List<FilmEntity> filmEntities = filmRepository.getFilms();
+        final List<FilmDto> filmsDto = new ArrayList<>();
+        final List<FilmEntity> filmEntities = filmRepository.getFilms();
         logger.info("Unique films were received...");
         for (FilmEntity filmEntity : filmEntities) {
            final FilmDto filmDto = filmConverter.convertToDto(filmEntity);
@@ -56,7 +56,7 @@ public class FilmService {
     }
 
     public FilmDto getFilmByTitle(final String film) {
-        FilmEntity filmEntity = filmRepository.getFilmByTitle(film);
+        final FilmEntity filmEntity = filmRepository.getFilmByTitle(film);
         logger.info("Film " + film + " was received...");
         List<FilmDateEntity> filmDates = filmEntity.getDates();
         final List<FilmDateDto> filmDateDtos = new ArrayList<>();
@@ -71,7 +71,7 @@ public class FilmService {
     }
 
     public FilmDateDto getTicketsByDate(final Integer dateId) {
-        FilmDateEntity dateEntity = filmRepository.getTicketsByDate(dateId);
+        final FilmDateEntity dateEntity = filmRepository.getTicketsByDate(dateId);
         final List<FilmTicketDto> ticketDtos = new ArrayList<>();
 
         for (FilmTicketEntity t : dateEntity.getTickets()) {
@@ -84,16 +84,16 @@ public class FilmService {
     }
 
     public String addFilm (final Authentication auth, final FilmDto filmDto) throws ParseException {
-        String title = filmDto.getTitle();
-        String date = filmDto.getFormattedDate();
+        final String title = filmDto.getTitle();
+        final String date = filmDto.getFormattedDate();
         if (!filmDto.getFormattedDate().replaceAll("(\\d){2}(-){1}(\\d){2}(-){1}(\\d){4}", "isOk").equals("isOk")) {
             return "Wrong date pattern, use dd-mm-yyyy";
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String dateAndTime = date +  " 12:00:00";
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        final String dateAndTime = date +  " 12:00:00";
         LocalDateTime filmDateAndTime = LocalDateTime.parse(dateAndTime, formatter);
-        FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
-        FilmDateEntity dateEntity = new FilmDateEntity();
+        final FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
+        final FilmDateEntity dateEntity = new FilmDateEntity();
         dateEntity.setDateAndTime(filmDateAndTime);
         if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
             return "Not enough permissions for this action";
@@ -111,9 +111,9 @@ public class FilmService {
             return "Date of performance - " + dateAndTime + " for film - " + title + " was successfully added!";
         }
         else {
-            FilmEntity newFilm = new FilmEntity();
+            final FilmEntity newFilm = new FilmEntity();
             newFilm.setTitle(title);
-            List<FilmDateEntity> dates = new ArrayList<>();
+            final List<FilmDateEntity> dates = new ArrayList<>();
             dates.add(dateEntity);
             newFilm.setDates(dates);
             filmRepository.save(newFilm);
@@ -144,7 +144,7 @@ public class FilmService {
             return "Not enough permissions for this action";
         }
         else {
-            FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
+            final FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
             if (filmEntity != null) {
                 filmRepository.deleteById(filmEntity.getId());
                 logger.info("Film was deleted.");

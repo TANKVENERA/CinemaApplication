@@ -13,14 +13,14 @@ public class UserConverter implements CommonConverter<UserEntity, UserDto> {
 
     @Override
     public UserEntity convertToDbo(final UserDto userDto) {
-        UserEntity userEntity = new UserEntity();
+        final UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(userDto, userEntity);
         return userEntity;
     }
 
     @Override
     public UserDto convertToDto(final UserEntity userEntity) {
-        UserDto userDto = new UserDto();
+        final UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userEntity, userDto);
         return userDto;
     }

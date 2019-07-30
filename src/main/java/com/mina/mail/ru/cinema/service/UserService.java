@@ -25,8 +25,8 @@ import java.util.List;
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    private UserRepository userRepository;
-    private UserConverter userConverter;
+    private final UserRepository userRepository;
+    private final UserConverter userConverter;
 
     @Autowired
     public UserService(final UserRepository userRepository, final UserConverter userConverter) {
@@ -36,7 +36,7 @@ public class UserService {
 
     public List<UserDto> getAllUsers() {
         final List<UserDto> usersDto = new ArrayList<>();
-        List<UserEntity> usersEntity = userRepository.findAll();
+        final List<UserEntity> usersEntity = userRepository.findAll();
 
         for (UserEntity d : usersEntity) {
             usersDto.add(userConverter.convertToDto(d));
@@ -45,7 +45,7 @@ public class UserService {
     }
 
     public UserDto getUser(final String login) {
-        UserEntity userEntity = userRepository.getUserByName(login);
+        final UserEntity userEntity = userRepository.getUserByName(login);
         final UserDto userDto = userConverter.convertToDto(userEntity);
         return userDto;
     }
@@ -53,8 +53,8 @@ public class UserService {
     public String createUser(final String login) {
         final UserDto userDto = new UserDto(login, "USER");
         userDto.setLogin(login);
-        UserEntity userEntity = userConverter.convertToDbo(userDto);
-        UserEntity existedUser = userRepository.getUserByName(userDto.getLogin());
+        final UserEntity userEntity = userConverter.convertToDbo(userDto);
+        final UserEntity existedUser = userRepository.getUserByName(userDto.getLogin());
         if (existedUser != null) {
             logger.warn("User already exists!");
             return "User already exists!";
@@ -100,7 +100,6 @@ public class UserService {
 
     /**For test purposes**/
     public void deleteUser (final String login) {
-        UserEntity user = userRepository.getUserByName(login);
         userRepository.delete(userRepository.getUserByName(login));
     }
 

@@ -22,9 +22,9 @@ import java.util.List;
 public class FilmTicketService {
 
     private static final Logger logger = LoggerFactory.getLogger(FilmTicketService.class);
-    private FilmTicketRepository filmTicketRepository;
-    private FilmRepository filmRepository;
-    private UserRepository userRepository;
+    private final FilmTicketRepository filmTicketRepository;
+    private final FilmRepository filmRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public FilmTicketService(final FilmTicketRepository filmTicketRepository, final FilmRepository filmRepository, final UserRepository userRepository) {
@@ -40,11 +40,11 @@ public class FilmTicketService {
     }
 
     public void createOrder (final UserOrder order, final String login) {
-        Integer userId = userRepository.getUserByName(login).getId();
+        final Integer userId = userRepository.getUserByName(login).getId();
         String ticketToken;
         for (;;) {
             ticketToken = RandomString.make(7);
-            List<FilmTicketEntity>  tickets = filmTicketRepository.getTicketsById(ticketToken);
+            final List<FilmTicketEntity>  tickets = filmTicketRepository.getTicketsById(ticketToken);
             if (tickets.size() == 0) {
                 logger.info("Generated ticket was verified. Start saving order.");
                 break;
@@ -62,9 +62,9 @@ public class FilmTicketService {
     }
 
     public void updateOrder (final UserOrder order, final String login) {
-        Integer filmId = filmRepository.getFilmId(order.getFilm());
-        Integer userId = userRepository.getUserByName(login).getId();
-        List<SeatAndRowDto> seats = order.getSeats();
+        final Integer filmId = filmRepository.getFilmId(order.getFilm());
+        final Integer userId = userRepository.getUserByName(login).getId();
+        final List<SeatAndRowDto> seats = order.getSeats();
         deleteOrderByTicket(order.getTicket());
         for (SeatAndRowDto seatAndRowDto : seats) {
             filmTicketRepository.createOrder(seatAndRowDto.getSeatNmb(), seatAndRowDto.getRowNmb(), userId, filmId, order.getTicket());

@@ -65,19 +65,19 @@ public class FilmServiceTest  {
     private static final String WRONG_TIME_FORMAT = TestPropsLoader.wrongTimeFormat;
     private static final String DATE_ONE = TestPropsLoader.dateOne;
     private static final String DATE_TWO = TestPropsLoader.dateTwo;
-    private static List<FilmEntity> filmEntities = new ArrayList<>();
-    private static List<FilmDateEntity> dates = new ArrayList<>();
-    private static List<FilmTicketEntity> tickets = new ArrayList<>();
-    private static FilmDateDto dateDto =  new FilmDateDto();
-    private static FilmDto filmDto = new FilmDto();
+    private static final List<FilmEntity> filmEntities = new ArrayList<>();
+    private static final List<FilmDateEntity> dates = new ArrayList<>();
+    private static final List<FilmTicketEntity> tickets = new ArrayList<>();
+    private static final FilmDateDto dateDto =  new FilmDateDto();
+    private static final FilmDto filmDto = new FilmDto();
 
 
     @BeforeClass
     public static void setup() throws IOException{
-        FilmEntity film1 = new FilmEntity();
-        FilmEntity film2 = new FilmEntity();
-        FilmDateEntity date = new FilmDateEntity();
-        FilmTicketEntity ticket = new FilmTicketEntity();
+        final FilmEntity film1 = new FilmEntity();
+        final FilmEntity film2 = new FilmEntity();
+        final FilmDateEntity date = new FilmDateEntity();
+        final FilmTicketEntity ticket = new FilmTicketEntity();
         ticket.setTicket(TICKET);
         tickets.add(ticket);
         dateDto.setId(DATE_ID);
@@ -122,7 +122,7 @@ public class FilmServiceTest  {
     public void TestCGetTicketsByDate() {
        doReturn(dates.get(0)).when(filmRepository).getTicketsByDate(DATE_ID);
        doReturn(dateDto).when(dateConverter).convertToDto(any());
-       FilmDateDto result = filmService.getTicketsByDate(DATE_ID);
+       final FilmDateDto result = filmService.getTicketsByDate(DATE_ID);
        verify(ticketConverter, times(1)).convertToDto(any());
        verify(dateConverter, times(1)).convertToDto(any());
        Assert.assertTrue(result.getId().equals(DATE_ID));
@@ -131,8 +131,8 @@ public class FilmServiceTest  {
 
     @Test
     public void TestDDeleteFilmWithNotEnoughPermissions() {
-        Authentication authentication = Mockito.mock(Authentication.class);
-        UserEntity user = new UserEntity();
+        final Authentication authentication = Mockito.mock(Authentication.class);
+        final UserEntity user = new UserEntity();
         user.setRole(ROLE_USER);
         doReturn(user).when(userRepository).getUserByName(any());
         final String result =  filmService.deleteFilm(TITLE_ONE, authentication);
@@ -141,8 +141,8 @@ public class FilmServiceTest  {
 
     @Test
     public void TestEDeleteFilmNotFound() {
-        Authentication authentication = Mockito.mock(Authentication.class);
-        UserEntity user = new UserEntity();
+        final Authentication authentication = Mockito.mock(Authentication.class);
+        final UserEntity user = new UserEntity();
         user.setRole(ROLE_ADMIN);
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(null).when(filmRepository).getFilmByTitle(TITLE_TWO);
@@ -153,15 +153,15 @@ public class FilmServiceTest  {
     @Test
     public void TestFCheckWrongTimeFormat() throws ParseException {
         filmDto.setFormattedDate(WRONG_TIME_FORMAT);
-        String result = filmService.addFilm(null, filmDto);
+        final String result = filmService.addFilm(null, filmDto);
         Assert.assertEquals("Error occured when checking wrong time format!", result, "Wrong date pattern, use dd-mm-yyyy");
     }
 
     @Test
     public void TestGCheckUserRole() throws ParseException{
         filmDto.setFormattedDate(DATE_ONE);
-        Authentication auth = Mockito.mock(Authentication.class);
-        UserEntity user = new UserEntity();
+        final Authentication auth = Mockito.mock(Authentication.class);
+        final UserEntity user = new UserEntity();
         user.setRole(ROLE_USER);
         doReturn(user).when(userRepository).getUserByName(any());
         final String result = filmService.addFilm(auth, filmDto);
@@ -172,13 +172,12 @@ public class FilmServiceTest  {
     public void TestHCheckAdminRole() throws ParseException{
         filmDto.setTitle(TITLE_ONE);
         filmDto.setFormattedDate(DATE_TWO);
-        Authentication authentication = Mockito.mock(Authentication.class);
-        UserEntity user = new UserEntity();
+        final Authentication authentication = Mockito.mock(Authentication.class);
+        final UserEntity user = new UserEntity();
         user.setRole(ROLE_ADMIN);
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);
         final String result = filmService.addFilm(authentication, filmDto);
-        System.out.println(result);
         Assert.assertTrue("Error occured when checking that film exists!", result.contains("Date of performance -"));
         verify(filmRepository, times(1)).save(any());
     }
@@ -187,8 +186,8 @@ public class FilmServiceTest  {
     public void TestICheckFilmAndDateExists () throws ParseException {
         filmDto.setTitle(TITLE_ONE);
         filmDto.setFormattedDate(DATE_ONE);
-        Authentication authentication = Mockito.mock(Authentication.class);
-        UserEntity  user = new UserEntity();
+        final Authentication authentication = Mockito.mock(Authentication.class);
+        final UserEntity  user = new UserEntity();
         user.setRole(ROLE_ADMIN);
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);

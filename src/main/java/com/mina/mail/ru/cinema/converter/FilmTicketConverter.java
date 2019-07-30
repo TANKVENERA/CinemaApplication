@@ -13,14 +13,14 @@ public class FilmTicketConverter implements CommonConverter<FilmTicketEntity, Fi
 
     @Override
     public FilmTicketEntity convertToDbo(final FilmTicketDto filmTicketDto) {
-        FilmTicketEntity filmTicketEntity = new FilmTicketEntity();
+        final FilmTicketEntity filmTicketEntity = new FilmTicketEntity();
         BeanUtils.copyProperties(filmTicketDto, filmTicketEntity);
         return filmTicketEntity;
     }
 
     @Override
     public FilmTicketDto convertToDto(final FilmTicketEntity filmTicketEntity) {
-        FilmTicketDto filmTicketDto = new FilmTicketDto();
+        final FilmTicketDto filmTicketDto = new FilmTicketDto();
         BeanUtils.copyProperties(filmTicketEntity, filmTicketDto);
         return filmTicketDto;
     }

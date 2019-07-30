@@ -35,19 +35,19 @@ public class FilmTicketConverterTest {
 
     @Test
     public void testACheckId(){
-        FilmTicketDto ticketDto = converter.convertToDto(dbo);
+        final FilmTicketDto ticketDto = converter.convertToDto(dbo);
         Assert.assertTrue("Ids are not equal!", ticketDto.getId().equals(1));
     }
 
     @Test
     public void testBCheckSeat(){
-        FilmTicketDto ticketDto = converter.convertToDto(dbo);
+        final FilmTicketDto ticketDto = converter.convertToDto(dbo);
         Assert.assertTrue("Seats are not equal!", ticketDto.getSeatNumber().equals(SEAT));
     }
 
     @Test
     public void testCCheckVisitorID(){
-        FilmTicketEntity ticketDbo = converter.convertToDbo(dto);
+        final FilmTicketEntity ticketDbo = converter.convertToDbo(dto);
         Assert.assertTrue("Visitor Ids are not equal!", ticketDbo.getVisitorId().equals(USER_ID));
     }
 }

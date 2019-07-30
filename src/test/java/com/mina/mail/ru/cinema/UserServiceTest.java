@@ -47,13 +47,13 @@ public class UserServiceTest {
     private static final String USER_FIRST = TestPropsLoader.testUserFirst;
     private static final String USER_SECOND = TestPropsLoader.testUserSecond;
     private static final Integer USER_ID = TestPropsLoader.userId;
-    private static List<UserEntity> userEntities = new ArrayList<>();
+    private static final List<UserEntity> userEntities = new ArrayList<>();
 
     @BeforeClass
     public static void setup() {
-        UserEntity user1 = new UserEntity();
+        final UserEntity user1 = new UserEntity();
         user1.setLogin(USER_FIRST);
-        UserEntity user2 = new UserEntity();
+        final UserEntity user2 = new UserEntity();
         user2.setLogin(USER_SECOND);
         userEntities.add(user1);
         userEntities.add(user2);
@@ -63,7 +63,7 @@ public class UserServiceTest {
     public void TestAGetAllUsers() {
         doReturn(userEntities).when(userRepository).findAll();
         for (UserEntity u : userEntities) {
-            UserDto userDto = new UserDto();
+            final UserDto userDto = new UserDto();
             userDto.setLogin(u.getLogin());
             doReturn(userDto).when(userConverter).convertToDto(u);
         }
@@ -78,7 +78,7 @@ public class UserServiceTest {
     @Test
     public void TestBGetUser() {
         doReturn(userEntities.get(0)).when(userRepository).getUserByName(anyString());
-        UserDto userDto = new UserDto();
+        final UserDto userDto = new UserDto();
         userDto.setLogin(userEntities.get(0).getLogin());
         doReturn(userDto).when(userConverter).convertToDto(any());
         final UserDto user = userService.getUser(anyString());
@@ -91,7 +91,7 @@ public class UserServiceTest {
     public void TestCCreateUser() {
         doReturn(userEntities.get(0)).when(userConverter).convertToDbo(any());
         doReturn(userEntities.get(0)).when(userRepository).getUserByName(anyString());
-       final String result = userService.createUser(userEntities.get(0).getLogin());
+        final String result = userService.createUser(userEntities.get(0).getLogin());
         Assert.assertTrue(result == "User already exists!" );
     }
 
@@ -100,7 +100,7 @@ public class UserServiceTest {
     public void TestDCreateUser() {
         doReturn(userEntities.get(0)).when(userConverter).convertToDbo(any());
         doReturn(null).when(userRepository).getUserByName(anyString());
-       final String result = userService.createUser(userEntities.get(0).getLogin());
+        final String result = userService.createUser(userEntities.get(0).getLogin());
         Assert.assertTrue(result == "User was created successfully!" );
         verify(userRepository, times(1)).save(any());
     }

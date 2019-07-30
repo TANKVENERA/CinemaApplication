@@ -30,13 +30,13 @@ public class FilmConverterTest  {
 
     @Test
     public void testAConvertToDto () {
-        FilmDto dto = converter.convertToDto(dbo);
+        final FilmDto dto = converter.convertToDto(dbo);
         Assert.assertEquals("Titles are not equal!", dto.getTitle(), TITLE_ONE);
     }
 
     @Test
     public void testBConvertToDbo () {
-        FilmEntity filmEntity = converter.convertToDbo(dto);
+        final FilmEntity filmEntity = converter.convertToDbo(dto);
         Assert.assertEquals("Titles are not equal!", filmEntity.getTitle(), TITLE_ONE);
     }
 }

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class AppUserService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public AppUserService(final UserRepository userRepository) {
@@ -29,7 +29,7 @@ public class AppUserService implements UserDetailsService {
 
     @Override
     public final UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
-        UserEntity currentUser = userRepository.getUserByName(login);
+        final UserEntity currentUser = userRepository.getUserByName(login);
         UserBuilder builder;
         logger.info("Trying to sign in. Comparing user credentials...");
         if (currentUser != null) {

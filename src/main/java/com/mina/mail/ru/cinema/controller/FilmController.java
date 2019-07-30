@@ -23,7 +23,7 @@ import java.util.List;
 public class FilmController {
 
     private static final Logger logger = LoggerFactory.getLogger(FilmController.class);
-    private FilmService filmService;
+    private final FilmService filmService;
 
     @Autowired
     public FilmController(final FilmService filmService) {
