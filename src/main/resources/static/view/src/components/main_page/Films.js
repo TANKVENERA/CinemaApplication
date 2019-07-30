@@ -30,7 +30,7 @@ class Films extends Component {
     }
 
     handleClick = (index, uniqueFilm) => {
-        fetch(`http://localhost:8080/cinema/rest/dates/?film=${uniqueFilm}`, {
+        fetch(`http://localhost:8080/cinema/rest/films/${uniqueFilm}`, {
             method: "GET",
             credentials: 'include',
             headers: {
@@ -44,7 +44,6 @@ class Films extends Component {
                 return result.json();
             }
         }).then(data => {
-            console.log('DATA', data)
                 this.setState({
                     dates: data.dates, index: index, isInitial: false, dateIndex: 0,
                     currentFilm: uniqueFilm

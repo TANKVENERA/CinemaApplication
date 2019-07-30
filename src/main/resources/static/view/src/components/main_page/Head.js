@@ -115,8 +115,16 @@ class Head extends Component {
     handleSubmitUser = () => {
         var login = this.state.signUpLogin;
         if (login !== '') {
-            fetch(`http://localhost:8080/cinema/rest/register/?login=${this.state.signUpLogin}`, {
+            fetch(`http://localhost:8080/cinema/rest/register`, {
                 method: "POST",
+                headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "X-Requested-With": "XMLHttpRequest"
+                            },
+                            body: JSON.stringify({
+                                login: login
+                                })
             }).then(result => {
                 return result.text()
             })
@@ -209,7 +217,7 @@ class Head extends Component {
     };
 
     signOut = () => {
-        fetch("http://localhost:8080/cinema/rest/signout", {
+        fetch("http://localhost:8080/cinema/rest/logout", {
                 method: 'GET',
                 credentials: 'include'
             }
@@ -245,7 +253,7 @@ class Head extends Component {
     };
 
     componentDidMount() {
-        fetch("http://localhost:8080/cinema/rest/checkauth", {
+        fetch("http://localhost:8080/cinema/rest/session", {
             credentials: 'include',
             headers: {
                 "X-Requested-With": "XMLHttpRequest"

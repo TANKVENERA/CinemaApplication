@@ -36,10 +36,10 @@ public class FilmController {
         return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilms());
     }
 
-    @GetMapping(value = "/dates", params = "film")
-    public ResponseEntity<FilmDto> datesByFilm(@RequestParam(value = "film") final String film) {
+    @GetMapping(value = "/films/{title}")
+    public ResponseEntity<FilmDto> getFilmByTitle(@PathVariable("title") final String title) {
         logger.info("Film with all dates is requested...");
-        return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmByTitle(film));
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.getFilmByTitle(title));
     }
 
     @GetMapping(value = "/tickets", params = "dateId")

@@ -37,7 +37,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/checkauth")
+    @GetMapping(value = "/session")
     public ResponseEntity<UserDto> checkAuth(final Authentication auth) {
         logger.info("Checking if user is signed in...");
         return ResponseEntity.status(HttpStatus.OK).body(userService.checkAuthentication(auth));
@@ -48,19 +48,19 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.login(auth));
     }
 
-    @GetMapping(value = "/signout")
+    @GetMapping(value = "/logout")
     public ResponseEntity<UserDto> logout(final HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.logout(request));
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<String> createUser (@RequestParam("login") final String login) {
+    public ResponseEntity<String> saveUser (@RequestBody final UserDto userDto) {
         logger.info("Trying to save new user...");
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(login));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto.getLogin()));
     }
 
     /** Used for test purposes**/
-    @GetMapping("/")
+    @GetMapping("/users")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
