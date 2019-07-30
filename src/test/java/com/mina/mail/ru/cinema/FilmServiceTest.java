@@ -57,13 +57,20 @@ public class FilmServiceTest  {
     private static final String TITLE_ONE = TestPropsLoader.titleOne;
     private static final String TITLE_TWO = TestPropsLoader.titleTwo;
     private static final Integer DATE_ID = TestPropsLoader.dateId;
-    private static final String TIME = TestPropsLoader.time;
+    private static final String DATE_AND_TIME = TestPropsLoader.time;
     private static final String TIME_FORMAT = TestPropsLoader.timeFormat;
     private static final String TICKET = TestPropsLoader.ticket;
+    private static final String ROLE_USER = TestPropsLoader.roleUser;
+    private static final String ROLE_ADMIN = TestPropsLoader.roleAdmin;
+    private static final String WRONG_TIME_FORMAT = TestPropsLoader.wrongTimeFormat;
+    private static final String DATE_ONE = TestPropsLoader.dateOne;
+    private static final String DATE_TWO = TestPropsLoader.dateTwo;
     private static List<FilmEntity> filmEntities = new ArrayList<>();
     private static List<FilmDateEntity> dates = new ArrayList<>();
     private static List<FilmTicketEntity> tickets = new ArrayList<>();
     private static FilmDateDto dateDto =  new FilmDateDto();
+    private static FilmDto filmDto = new FilmDto();
+
 
     @BeforeClass
     public static void setup() throws IOException{
@@ -74,10 +81,10 @@ public class FilmServiceTest  {
         ticket.setTicket(TICKET);
         tickets.add(ticket);
         dateDto.setId(DATE_ID);
-        dateDto.setDateAndTime(LocalDateTime.parse(TIME, DateTimeFormatter.ofPattern(TIME_FORMAT)));
+        dateDto.setDateAndTime(LocalDateTime.parse(DATE_AND_TIME, DateTimeFormatter.ofPattern(TIME_FORMAT)));
         date.setId(DATE_ID);
         date.setTickets(tickets);
-        date.setDateAndTime(LocalDateTime.parse(TIME, DateTimeFormatter.ofPattern(TIME_FORMAT)));
+        date.setDateAndTime(LocalDateTime.parse(DATE_AND_TIME, DateTimeFormatter.ofPattern(TIME_FORMAT)));
         dates.add(date);
         film1.setTitle(TITLE_ONE);
         film1.setDates(dates);
@@ -126,7 +133,7 @@ public class FilmServiceTest  {
     public void TestDDeleteFilmWithNotEnoughPermissions() {
         Authentication authentication = Mockito.mock(Authentication.class);
         UserEntity user = new UserEntity();
-        user.setRole("USER");
+        user.setRole(ROLE_USER);
         doReturn(user).when(userRepository).getUserByName(any());
         final String result =  filmService.deleteFilm(TITLE_ONE, authentication);
         Assert.assertEquals("Error occured when checking wrong permission!", "Not enough permissions for this action", result);
@@ -136,7 +143,7 @@ public class FilmServiceTest  {
     public void TestEDeleteFilmNotFound() {
         Authentication authentication = Mockito.mock(Authentication.class);
         UserEntity user = new UserEntity();
-        user.setRole("ADMIN");
+        user.setRole(ROLE_ADMIN);
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(null).when(filmRepository).getFilmByTitle(TITLE_TWO);
         final String result = filmService.deleteFilm(TITLE_TWO, authentication);
@@ -145,40 +152,47 @@ public class FilmServiceTest  {
 
     @Test
     public void TestFCheckWrongTimeFormat() throws ParseException {
-        String result = filmService.addFilm(null, null);
+        filmDto.setFormattedDate(WRONG_TIME_FORMAT);
+        String result = filmService.addFilm(null, filmDto);
         Assert.assertEquals("Error occured when checking wrong time format!", result, "Wrong date pattern, use dd-mm-yyyy");
     }
 
     @Test
     public void TestGCheckUserRole() throws ParseException{
-        Authentication authentication = Mockito.mock(Authentication.class);
+        filmDto.setFormattedDate(DATE_ONE);
+        Authentication auth = Mockito.mock(Authentication.class);
         UserEntity user = new UserEntity();
-        user.setRole("USER");
+        user.setRole(ROLE_USER);
         doReturn(user).when(userRepository).getUserByName(any());
-        final String result = filmService.addFilm(authentication, null);
+        final String result = filmService.addFilm(auth, filmDto);
         Assert.assertEquals("Error occured when checking wrong permission!", "Not enough permissions for this action", result);
     }
 
     @Test
     public void TestHCheckAdminRole() throws ParseException{
+        filmDto.setTitle(TITLE_ONE);
+        filmDto.setFormattedDate(DATE_TWO);
         Authentication authentication = Mockito.mock(Authentication.class);
-        UserEntity  user = new UserEntity();
-        user.setRole("ADMIN");
+        UserEntity user = new UserEntity();
+        user.setRole(ROLE_ADMIN);
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);
-        final String result = filmService.addFilm(authentication, null);
+        final String result = filmService.addFilm(authentication, filmDto);
+        System.out.println(result);
         Assert.assertTrue("Error occured when checking that film exists!", result.contains("Date of performance -"));
         verify(filmRepository, times(1)).save(any());
     }
 
     @Test
     public void TestICheckFilmAndDateExists () throws ParseException {
+        filmDto.setTitle(TITLE_ONE);
+        filmDto.setFormattedDate(DATE_ONE);
         Authentication authentication = Mockito.mock(Authentication.class);
         UserEntity  user = new UserEntity();
-        user.setRole("ADMIN");
+        user.setRole(ROLE_ADMIN);
         doReturn(user).when(userRepository).getUserByName(any());
         doReturn(filmEntities.get(0)).when(filmRepository).getFilmByTitle(TITLE_ONE);
-        final String result = filmService.addFilm(authentication, null);
+        final String result = filmService.addFilm(authentication, filmDto);
         Assert.assertTrue("Error occured when checking that film and date exists!", result.contains("Film with date of performance -"));
     }
 
