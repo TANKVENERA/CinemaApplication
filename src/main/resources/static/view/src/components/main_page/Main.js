@@ -4,6 +4,8 @@
 
 import React, {Component} from 'react'
 import './styles/hall.css'
+import './styles/films.css'
+import './styles/head.css'
 import Films from './Films'
 import Head from './Head'
 import Warning from './Warning'

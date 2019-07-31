@@ -3,7 +3,6 @@
  */
 
 import React, {Component} from 'react';
-import './styles/head.css'
 import Button from '../../../node_modules/@material-ui/core/Button'
 import DeleteIcon from '../../../node_modules/@material-ui/icons/Delete'
 import EditIcon from '../../../node_modules/@material-ui/icons/Edit'

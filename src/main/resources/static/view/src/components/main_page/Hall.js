@@ -132,7 +132,7 @@ class Hall extends Component {
                             </div>
                         ))}
                     </div>
-                    <div style={{width: '420px'}}>
+                    <div className="hall">
                         {this.state.seats.map((seat, index) => (
                             <div key={index} className="seat-block" >
                                 <RadioButton disabled={this.includeSeat(successOrder, seat.seat, seat.row) ||

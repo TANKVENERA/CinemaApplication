@@ -4,8 +4,8 @@
 
 import React, {Component} from 'react'
 import SwipeableViews from '../../../node_modules/react-swipeable-views'
+import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Hall from './Hall'
-import './styles/films.css'
 
 class Films extends Component {
 
@@ -17,7 +17,8 @@ class Films extends Component {
             isInitial: true,
             films: [],
             dates: [],
-            currentFilm: ''
+            currentFilm: '',
+            isDateActive: {index: '', isActive: true}
         }
     }
 
@@ -53,7 +54,7 @@ class Films extends Component {
     };
 
     handleDatesChange = (index) => {
-        this.setState({dateIndex: index})
+        this.setState({dateIndex: index, isDateActive: {index: index, isActive: false}})
     };
 
     throwWarning = (warn, color) => {
@@ -62,8 +63,10 @@ class Films extends Component {
 
     dateBlock(dates) {
             const dateBlock = dates.map((date, index) => (
-                <div key={index} style={{display: 'inline-block'}}>
-                    <button type="button" className="film-button"
+                <div key={index} className="date-button-block">
+                    <button type="button" disabled={this.state.isDateActive.isActive === false &&
+                                                    this.state.isDateActive.index === index ? true : false}
+                            className="date-button date-style"
                             onClick={() => this.handleDatesChange(index)}>
                         {date.formattedDate}
                     </button>
