@@ -18,7 +18,8 @@ class Films extends Component {
             films: [],
             dates: [],
             currentFilm: '',
-            isDateActive: {index: '', isActive: true}
+            isDateActive: {index: 0, isActive: false},
+            isFilmActive: {index: 0, isActive: true}
         }
     }
 
@@ -30,7 +31,7 @@ class Films extends Component {
                 this.setState({films: data})});
     }
 
-    handleClick = (index, uniqueFilm) => {
+    handleFilmsChange = (index, uniqueFilm) => {
         fetch(`http://localhost:8080/cinema/rest/films/${uniqueFilm}`, {
             method: "GET",
             credentials: 'include',
@@ -47,7 +48,9 @@ class Films extends Component {
         }).then(data => {
                 this.setState({
                     dates: data.dates, index: index, isInitial: false, dateIndex: 0,
-                    currentFilm: uniqueFilm
+                    currentFilm: uniqueFilm,
+                    isFilmActive: {index: index, isActive: false},
+                    isDateActive: {index: 0, isActive: false}
                 });
             }
         ).catch(error => this.props.warn('Unauthorized!', 'red'));
@@ -85,8 +88,10 @@ class Films extends Component {
                 <div className="film-block">
                     {this.state.films.map((film, index) => (
                         <div key={index}>
-                            <button type="button" className="film-button"
-                                    onClick={() => this.handleClick(index, film.title)}>
+                            <button type="button" disabled={this.state.isFilmActive.isActive === false &&
+                                                            this.state.isFilmActive.index === index ? true : false}
+                                    className="film-button"
+                                    onClick={() => this.handleFilmsChange(index, film.title)}>
                                 {film.title}
                             </button>
                         </div>))}
