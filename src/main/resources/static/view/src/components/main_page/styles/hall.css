@@ -22,6 +22,11 @@
   transform: scale(1.25);
   background: #f34444;
   transition: all 200ms ease-in;
+  opacity: 0.7;
+}
+
+.seat:active {
+ transform: translateY(3px);
 }
 
 .seat-chosen, .seat:active, .seat-ordered{
