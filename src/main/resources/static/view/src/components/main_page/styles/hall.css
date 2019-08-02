@@ -5,7 +5,8 @@
 .seat-block {
     display: inline-block;
     padding-right:5px;
-    padding-bottom: 5px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
 }
 
 .seat {
@@ -15,6 +16,12 @@
     height: 40px;
     background: #488bf8;
     cursor: pointer;
+}
+
+.seat:hover {
+  transform: scale(1.25);
+  background: #f34444;
+  transition: all 200ms ease-in;
 }
 
 .seat-chosen, .seat:active, .seat-ordered{
