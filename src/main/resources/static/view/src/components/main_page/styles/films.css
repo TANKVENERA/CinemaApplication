@@ -8,14 +8,69 @@
     vertical-align: top;
 }
 
+.film-unit {
+    display: inline-flex;
+}
+
 .hall-block {
     display: table-cell;
     width: 400px;
 }
 
+.action-block {
+    padding-left: 120px;
+}
+
+.separator {
+    margin: 0 !important;
+}
+
+.md-done-btn, .md-close-btn {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    height: 50px;
+}
+
+.dd-menu-items {
+    display: inline-flex;
+    width: 50px;
+    margin: 0 !important;
+    width: 140px;
+}
+
+.dd-items-left {
+    margin-top: 40px !important;
+}
+
+.dd-menu-items:hover {
+    background-color: transparent !important;
+}
+
+.gear:hover {
+    animation: rotation 4s infinite linear;
+}
+
 .date-button-block {
     display: inline-block;
     padding-right: 20px;
+}
+
+
+.md-done-btn-block {
+    padding: 0 2em !important;
+    min-width: 40px !important;
+}
+
+.md-done-btn:hover, .md-close-btn:hover {
+    transform: scale(1.8);
+    transition: all 400ms;
+}
+
+.md-close-btn-block {
+    padding: 0 0 !important;
+    min-width: 40px !important;
 }
 
 .date-style {
@@ -61,4 +116,14 @@
    background-color: #c4c4c5 !important;
    color: black !important;
 }
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
 

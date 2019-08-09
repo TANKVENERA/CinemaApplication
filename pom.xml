@@ -113,7 +113,7 @@
 			</resource>
 			<resource>
 				<directory>src/main/resources/properties</directory>
-				<filtering>true</filtering>
+				<filtering>false</filtering>
 			</resource>
 		</resources>
 	</build>

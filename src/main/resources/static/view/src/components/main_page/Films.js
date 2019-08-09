@@ -4,9 +4,8 @@
 
 import React, {Component} from 'react'
 import SwipeableViews from '../../../node_modules/react-swipeable-views'
-import Fab from '../../../node_modules/@material-ui/core/Fab'
 import Hall from './Hall'
-
+import SettingsBlock from './SettingsBlock'
 class Films extends Component {
 
     constructor(props){
@@ -19,7 +18,8 @@ class Films extends Component {
             dates: [],
             currentFilm: '',
             isDateActive: {index: 0, isActive: false},
-            isFilmActive: {index: 0, isActive: true}
+            isFilmActive: {index: 0, isActive: true},
+            drawer: false
         }
     }
 
@@ -64,6 +64,11 @@ class Films extends Component {
         this.props.warn(warn, color)
     };
 
+    onXChange = () => {
+        var x = this.state.drawer;
+        this.setState({drawer: !x});
+    }
+
     dateBlock(dates) {
             const dateBlock = dates.map((date, index) => (
                 <div key={index} className="date-button-block">
@@ -87,16 +92,20 @@ class Films extends Component {
             <div className="main-block">
                 <div className="film-block">
                     {this.state.films.map((film, index) => (
-                        <div key={index}>
-                            <button type="button" disabled={this.state.isFilmActive.isActive === false &&
-                                                            this.state.isFilmActive.index === index ? true : false}
-                                    className="film-button"
-                                    onClick={() => this.handleFilmsChange(index, film.title)}>
-                                {film.title}
-                            </button>
+                        <div key={index} className="film-unit">
+                            <div >
+                                <button type="button" disabled={this.state.isFilmActive.isActive === false &&
+                                this.state.isFilmActive.index === index ? true : false}
+                                        className="film-button"
+                                        onClick={() => this.handleFilmsChange(index, film.title)}>
+                                    {film.title}
+                                </button>
+                            </div>
+                            <div>
+                                <SettingsBlock filmDates={dates}/>
+                            </div>
                         </div>))}
                 </div>
-
                 <div className="hall-block">
                     <SwipeableViews index={filmIndex}>
                         {this.state.films.map((film, index) => (
@@ -122,6 +131,7 @@ class Films extends Component {
                         ))}
                     </SwipeableViews>
                 </div>
+
             </div>)
     }
 }
