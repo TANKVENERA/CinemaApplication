@@ -15,7 +15,8 @@ class Main extends Component {
         super();
         this.state = {
             warning: '',
-            color: ''
+            color: '',
+            userRole: ''
         }
     }
 
@@ -24,13 +25,22 @@ class Main extends Component {
      setTimeout(() => this.setState({warning: ''}), 3000);
  };
 
+
+ handleUserRole = (role) => {
+     this.setState({userRole: role});
+ }
+
+
+
     render() {
         return (<div>
             <div>
-                <Head warn={(warning, color) => this.handleWarningParam(warning, color)}/>
+                <Head warn={(warning, color) => this.handleWarningParam(warning, color)}
+                      userRole = {(role) => this.handleUserRole(role)}/>
             </div>
             <div>
-                <Films warn={(warning, color) => this.handleWarningParam(warning, color)}/>
+                <Films warn={(warning, color) => this.handleWarningParam(warning, color)}
+                       passedUserRole={this.state.userRole}/>
             </div>
             <div >
                 {this.state.warning !== '' &&

@@ -184,4 +184,16 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="23" author="belski">
+        <dropForeignKeyConstraint baseTableName="filmticket" constraintName="fk_filmdate"/>
+    </changeSet>
+
+    <changeSet id="24" author="belski">
+        <addForeignKeyConstraint baseTableName="filmticket" baseColumnNames="filmdate_id"
+                                 constraintName="fk_filmdate"
+                                 referencedTableName="filmdate"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
 </databaseChangeLog>

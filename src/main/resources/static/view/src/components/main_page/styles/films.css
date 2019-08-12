@@ -1,20 +1,23 @@
 .main-block {
-    display: table;
 }
 
 .film-block {
-    display: table-cell;
     padding-right: 100px;
-    vertical-align: top;
+    padding-bottom: 30px;
+    padding-left: 60px;
+    width: 640px;
 }
 
 .film-unit {
     display: inline-flex;
+    padding-right: 20px;
+    padding-bottom: 20px;
 }
 
 .hall-block {
     display: table-cell;
     width: 400px;
+    padding-left: 100px;
 }
 
 .action-block {
@@ -35,13 +38,30 @@
 
 .dd-menu-items {
     display: inline-flex;
-    width: 50px;
     margin: 0 !important;
-    width: 140px;
+    width: 100px;
+
+}
+
+.label-opts {
+    padding: 1em 0em !important;
+}
+
+.label-btn {
+    padding-left: 16px;
+}
+
+.add-date-btn-block {
+    display: inline-flex;
+    padding-left: 30%;
+    width: 40%;
+    padding-top: 15px;
+    padding-left: 108px;
 }
 
 .dd-items-left {
     margin-top: 40px !important;
+    width: 50px;
 }
 
 .dd-menu-items:hover {
@@ -59,7 +79,7 @@
 
 
 .md-done-btn-block {
-    padding: 0 2em !important;
+    padding: 0 1em !important;
     min-width: 40px !important;
 }
 
@@ -70,7 +90,7 @@
 
 .md-close-btn-block {
     padding: 0 0 !important;
-    min-width: 40px !important;
+    min-width: 30px !important;
 }
 
 .date-style {
@@ -79,9 +99,8 @@
 
 .film-button, .date-button {
     font-weight: 500;
-    font-size: 18px;
-    height: 40px;
-    margin-bottom: 15px;
+    font-size: 15px;
+    height: 30px;
     width: max-content;
     border: 1px solid transparent;
     border-color: black;
@@ -94,12 +113,21 @@
     background-color: white;
 }
 
+.notification-container{
+    height: 130px;
+}
+
 .film-button:hover {
     cursor: pointer;
     background-size: 200px 200px;
     background-color: #488bf8;
     color: #fff;
     outline: none;
+}
+
+.label-menu {
+    font-size: 14px !important;
+
 }
 
 .date-button:hover {

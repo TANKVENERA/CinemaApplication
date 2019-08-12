@@ -20,6 +20,7 @@
     "react-icons": "^3.7.0",
     "react-moment": "^0.9.2",
     "react-motion-drawer": "^3.1.0",
+    "react-notifications": "^1.4.3",
     "react-responsive-modal": "^3.6.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",

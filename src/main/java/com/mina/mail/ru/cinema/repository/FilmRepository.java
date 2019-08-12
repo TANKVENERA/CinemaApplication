@@ -3,8 +3,10 @@ package com.mina.mail.ru.cinema.repository;
 import com.mina.mail.ru.cinema.entity.FilmDateEntity;
 import com.mina.mail.ru.cinema.entity.FilmEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,5 +27,10 @@ public interface FilmRepository extends JpaRepository<FilmEntity, Integer> {
 
     @Query("select f.id from FilmEntity f join f.dates where f.title=:title")
     Integer getFilmId(@Param("title")String title);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM filmdate where id=:id", nativeQuery = true)
+    void deleteDate(@Param("id")Integer id);
 
 }

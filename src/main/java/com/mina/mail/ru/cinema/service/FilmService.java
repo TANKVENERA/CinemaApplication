@@ -95,7 +95,7 @@ public class FilmService {
         final FilmEntity filmEntity = filmRepository.getFilmByTitle(title);
         final FilmDateEntity dateEntity = new FilmDateEntity();
         dateEntity.setDateAndTime(filmDateAndTime);
-        if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
+        if (checkPermission(auth)) {
             return "Not enough permissions for this action";
         }
         else if (filmEntity != null) {
@@ -140,7 +140,7 @@ public class FilmService {
     }
 
     public String deleteFilm(final String title, final Authentication auth) {
-        if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
+        if (checkPermission(auth)) {
             return "Not enough permissions for this action";
         }
         else {
@@ -154,6 +154,24 @@ public class FilmService {
                 return "Film was not found";
             }
         }
+    }
+
+    public String deleteDate (final Integer id, final Authentication auth) {
+        if (checkPermission(auth)) {
+            return "Not enough permissions for this action";
+        }
+        else {
+            filmRepository.deleteDate(id);
+            logger.info("Date was deleted.");
+            return "Date was deleted.";
+        }
+    }
+
+    public boolean checkPermission (final Authentication auth) {
+        if (!userRepository.getUserByName(auth.getName()).getRole().equals("ADMIN")) {
+            return true;
+        }
+        else return false;
     }
 
 

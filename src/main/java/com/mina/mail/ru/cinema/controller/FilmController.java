@@ -59,4 +59,11 @@ public class FilmController {
         return ResponseEntity.status(HttpStatus.OK).body(filmService.deleteFilm(title, auth));
 
     }
+
+    @DeleteMapping("/dates/{id}")
+    public ResponseEntity<String> deleteDate (@PathVariable("id") final Integer id, final Authentication auth) {
+        logger.info("Trying to delete date...");
+        return ResponseEntity.status(HttpStatus.OK).body(filmService.deleteDate(id, auth));
+
+    }
 }

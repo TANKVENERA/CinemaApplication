@@ -105,7 +105,6 @@ class Hall extends Component {
     render(){
         const userOrder = this.state.userOrder;
         const successOrder = this.state.successOrder;
-
         const blockSeats = this.props.tickets.map((ticket) =>({seatNmb: ticket.seatNumber, rowNmb: ticket.row}));
         const style = (index, seat, row) => {
 
@@ -125,7 +124,8 @@ class Hall extends Component {
                     <div>
                         {this.state.seats.map((seat, index) => (
                             seat.seat%12 === 0 &&
-                            <div key={index} style={{display: 'block', paddingRight: '15px', paddingBottom: '5px'}}>
+                            <div key={index} style={{display: 'block', paddingRight: '15px', paddingBottom: '2.5px',
+                                                     paddingTop: '2.5px'}}>
                                 <RadioButton disabled={true} className="seat-chosen">
                                     <label>{seat.row}</label>
                                 </RadioButton>
